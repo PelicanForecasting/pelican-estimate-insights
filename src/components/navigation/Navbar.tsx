@@ -1,11 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isToolsDropdownOpen, setIsToolsDropdownOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,9 +21,37 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu when route changes
+  useEffect(() => {
+    closeMenu();
+  }, [location.pathname]);
+
   const closeMenu = () => {
     setIsMobileMenuOpen(false);
     setIsToolsDropdownOpen(false);
+  };
+
+  // Function to handle smooth scrolling to sections on the home page
+  const handleSectionLink = (sectionId: string) => {
+    closeMenu();
+    
+    // If we're not on the home page, navigate to home first then scroll
+    if (location.pathname !== '/') {
+      // We'll set a timeout to allow for the navigation to complete
+      // before trying to scroll to the section
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      // If we're already on the home page, just scroll to the section
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   return (
@@ -49,15 +78,24 @@ const Navbar = () => {
           </div>
           
           <div className="hidden md:flex md:items-center md:space-x-6">
-            <Link to="/#services" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
+            <button 
+              onClick={() => handleSectionLink('services')} 
+              className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline"
+            >
               Services
-            </Link>
-            <Link to="/#customer-journey" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
+            </button>
+            <button 
+              onClick={() => handleSectionLink('customer-journey')} 
+              className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline"
+            >
               Process
-            </Link>
-            <Link to="/#about" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
+            </button>
+            <button 
+              onClick={() => handleSectionLink('about')} 
+              className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline"
+            >
               About Us
-            </Link>
+            </button>
             
             {/* Tools Dropdown */}
             <div className="relative">
@@ -103,12 +141,12 @@ const Navbar = () => {
               )}
             </div>
             
-            <Link 
-              to="/#contact" 
+            <button 
+              onClick={() => handleSectionLink('contact')} 
               className="ml-2 px-5 py-2 rounded-full bg-gradient-to-r from-pelican-navy to-pelican-teal text-white hover:opacity-90 transition-colors"
             >
               Contact Us
-            </Link>
+            </button>
           </div>
           
           <div className="md:hidden flex items-center">
@@ -134,27 +172,24 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white shadow-lg">
           <div className="pt-2 pb-4 space-y-1 px-4">
-            <Link 
-              to="/#services" 
-              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100"
-              onClick={closeMenu}
+            <button 
+              onClick={() => handleSectionLink('services')} 
+              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100 w-full text-left"
             >
               Services
-            </Link>
-            <Link 
-              to="/#customer-journey" 
-              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100"
-              onClick={closeMenu}
+            </button>
+            <button 
+              onClick={() => handleSectionLink('customer-journey')} 
+              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100 w-full text-left"
             >
               Process
-            </Link>
-            <Link 
-              to="/#about" 
-              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100"
-              onClick={closeMenu}
+            </button>
+            <button 
+              onClick={() => handleSectionLink('about')} 
+              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100 w-full text-left"
             >
               About Us
-            </Link>
+            </button>
             
             {/* Tools Section */}
             <div className="border-b border-gray-100">
@@ -200,13 +235,12 @@ const Navbar = () => {
               )}
             </div>
             
-            <Link 
-              to="/#contact" 
-              className="block py-3 mt-2 text-center rounded-full bg-gradient-to-r from-pelican-navy to-pelican-teal text-white hover:opacity-90"
-              onClick={closeMenu}
+            <button 
+              onClick={() => handleSectionLink('contact')} 
+              className="block py-3 mt-2 text-center rounded-full bg-gradient-to-r from-pelican-navy to-pelican-teal text-white hover:opacity-90 w-full"
             >
               Contact Us
-            </Link>
+            </button>
           </div>
         </div>
       )}

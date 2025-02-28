@@ -104,7 +104,7 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-20 relative">
+    <section className="py-20 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-pelican-cream to-white z-0"></div>
       <div className="section-container relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16 reveal">
@@ -149,18 +149,18 @@ const Services = () => {
                   Labor Burden Calculator
                 </Link>
                 <span className="text-gray-300 mx-1">•</span>
-                <Link to="/bid-hit-ratio-calculator" className="inline-flex items-center text-pelican-teal hover:text-pelican-navy">
-                  <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                  </svg>
-                  Bid-Hit Ratio Calculator
-                </Link>
-                <span className="text-gray-300 mx-1">•</span>
                 <Link to="/quadrilateral-deck-calculator" className="inline-flex items-center text-pelican-teal hover:text-pelican-navy">
                   <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                   </svg>
                   Quadrilateral Deck Calculator
+                </Link>
+                <span className="text-gray-300 mx-1">•</span>
+                <Link to="/estimating-maturity" className="inline-flex items-center text-pelican-teal hover:text-pelican-navy">
+                  <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                  Estimating Maturity Assessment
                 </Link>
               </div>
             </div>

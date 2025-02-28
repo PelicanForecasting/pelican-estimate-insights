@@ -27,41 +27,55 @@ const Index = () => {
     return () => elements.forEach(el => observer.unobserve(el));
   }, []);
 
-  // Scroll to section if URL has hash
+  // Handler for URL hash navigation
   useEffect(() => {
-    // Get hash from URL (e.g., #services)
-    const hash = window.location.hash;
-    
-    // If hash exists, scroll to the section
-    if (hash) {
-      // Remove the # symbol
-      const sectionId = hash.substring(1);
+    // Handle hash navigation after page load
+    const handleHashNavigation = () => {
+      const hash = window.location.hash;
       
-      // Get the element
-      const element = document.getElementById(sectionId);
-      
-      // If element exists, scroll to it (with a slight delay to ensure all elements are loaded)
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+      if (hash) {
+        const sectionId = hash.substring(1);
+        const element = document.getElementById(sectionId);
+        
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
+      } else {
+        window.scrollTo(0, 0);
       }
-    } else {
-      // No hash, scroll to top
-      window.scrollTo(0, 0);
-    }
+    };
+
+    // Call once on mount
+    handleHashNavigation();
+
+    // Set up event listener for hash changes
+    window.addEventListener('hashchange', handleHashNavigation);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashNavigation);
+    };
   }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-pelican-cream/30">
       <Navbar />
       <Hero />
-      <Services />
+      <div id="services">
+        <Services />
+      </div>
       <Benefits />
-      <CustomerJourney />
+      <div id="customer-journey">
+        <CustomerJourney />
+      </div>
       <Testimonials />
-      <About />
-      <Contact />
+      <div id="about">
+        <About />
+      </div>
+      <div id="contact">
+        <Contact />
+      </div>
       <Footer />
     </div>
   );

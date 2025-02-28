@@ -49,7 +49,7 @@ const CustomerJourney = () => {
   }, []);
 
   return (
-    <section id="customer-journey" className="py-20 bg-white relative overflow-hidden">
+    <section className="py-20 bg-white relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-pelican-cream rounded-full opacity-50 filter blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-pelican-teal/10 rounded-full opacity-40 filter blur-3xl translate-x-1/3 translate-y-1/3"></div>
@@ -120,9 +120,17 @@ const CustomerJourney = () => {
         </div>
         
         <div className="mt-12 text-center reveal" style={{ transform: 'translateY(20px)' }}>
-          <a href="#contact" className="pelican-button bg-pelican-navy text-white hover:bg-pelican-teal">
+          <button 
+            onClick={() => {
+              const contactSection = document.getElementById('contact');
+              if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="pelican-button bg-pelican-navy text-white hover:bg-pelican-teal"
+          >
             Start Your Journey Today
-          </a>
+          </button>
         </div>
       </div>
     </section>
