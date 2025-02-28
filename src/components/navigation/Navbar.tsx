@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isToolsDropdownOpen, setIsToolsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +20,11 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const closeMenu = () => {
+    setIsMobileMenuOpen(false);
+    setIsToolsDropdownOpen(false);
+  };
+
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -31,9 +37,10 @@ const Navbar = () => {
             <Link 
               to="/" 
               className="text-xl font-bold text-pelican-navy flex items-center"
+              onClick={closeMenu}
             >
               <img 
-                src="/lovable-uploads/a37be70b-5b36-4a3a-a3be-8d9bb25fbbb0.png" 
+                src="/placeholder.svg" 
                 alt="Pelican Forecasting Logo" 
                 className="h-10 mr-2" 
               />
@@ -54,9 +61,58 @@ const Navbar = () => {
             <Link to="/#about" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
               About Us
             </Link>
-            <Link to="/estimating-maturity" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
-              Assessment
-            </Link>
+            
+            {/* Tools Dropdown */}
+            <div className="relative">
+              <button 
+                onClick={() => setIsToolsDropdownOpen(!isToolsDropdownOpen)}
+                className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline flex items-center"
+              >
+                Tools
+                <svg 
+                  className={`ml-1 w-4 h-4 transition-transform ${isToolsDropdownOpen ? 'transform rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {isToolsDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg py-2 z-50">
+                  <Link 
+                    to="/estimating-maturity" 
+                    className="block px-4 py-2 text-pelican-navy hover:bg-gray-100"
+                    onClick={closeMenu}
+                  >
+                    Estimating Maturity Assessment
+                  </Link>
+                  <Link 
+                    to="/labor-burden-calculator" 
+                    className="block px-4 py-2 text-pelican-navy hover:bg-gray-100"
+                    onClick={closeMenu}
+                  >
+                    Labor Burden Calculator
+                  </Link>
+                  <Link 
+                    to="/bid-hit-ratio-calculator" 
+                    className="block px-4 py-2 text-pelican-navy hover:bg-gray-100"
+                    onClick={closeMenu}
+                  >
+                    Bid-Hit Ratio Calculator
+                  </Link>
+                  <Link 
+                    to="/estimate-accuracy-tracker" 
+                    className="block px-4 py-2 text-pelican-navy hover:bg-gray-100"
+                    onClick={closeMenu}
+                  >
+                    Estimate Accuracy Tracker
+                  </Link>
+                </div>
+              )}
+            </div>
+            
             <Link 
               to="/#contact" 
               className="ml-2 px-5 py-2 rounded-full bg-pelican-navy text-white hover:bg-pelican-teal transition-colors"
@@ -91,47 +147,100 @@ const Navbar = () => {
             <Link 
               to="/#services" 
               className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={closeMenu}
             >
               Services
             </Link>
             <Link 
               to="/#benefits" 
               className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={closeMenu}
             >
               Benefits
             </Link>
             <Link 
               to="/#customer-journey" 
               className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={closeMenu}
             >
               Customer Journey
             </Link>
             <Link 
               to="/#about" 
               className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={closeMenu}
             >
               About Us
             </Link>
-            <Link 
-              to="/estimating-maturity" 
-              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Assessment
-            </Link>
+            
+            {/* Tools Section */}
+            <div className="border-b border-gray-100">
+              <button
+                className="w-full text-left py-3 text-pelican-navy hover:text-pelican-teal flex justify-between items-center"
+                onClick={() => setIsToolsDropdownOpen(!isToolsDropdownOpen)}
+              >
+                Tools
+                <svg 
+                  className={`ml-1 w-4 h-4 transition-transform ${isToolsDropdownOpen ? 'transform rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {isToolsDropdownOpen && (
+                <div className="pl-4 pb-2">
+                  <Link 
+                    to="/estimating-maturity" 
+                    className="block py-2 text-pelican-navy hover:text-pelican-teal"
+                    onClick={closeMenu}
+                  >
+                    Estimating Maturity Assessment
+                  </Link>
+                  <Link 
+                    to="/labor-burden-calculator" 
+                    className="block py-2 text-pelican-navy hover:text-pelican-teal"
+                    onClick={closeMenu}
+                  >
+                    Labor Burden Calculator
+                  </Link>
+                  <Link 
+                    to="/bid-hit-ratio-calculator" 
+                    className="block py-2 text-pelican-navy hover:text-pelican-teal"
+                    onClick={closeMenu}
+                  >
+                    Bid-Hit Ratio Calculator
+                  </Link>
+                  <Link 
+                    to="/estimate-accuracy-tracker" 
+                    className="block py-2 text-pelican-navy hover:text-pelican-teal"
+                    onClick={closeMenu}
+                  >
+                    Estimate Accuracy Tracker
+                  </Link>
+                </div>
+              )}
+            </div>
+            
             <Link 
               to="/#contact" 
               className="block py-3 mt-2 text-center rounded-full bg-pelican-navy text-white hover:bg-pelican-teal"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={closeMenu}
             >
               Contact Us
             </Link>
           </div>
         </div>
+      )}
+      
+      {/* Click outside to close dropdown on desktop */}
+      {isToolsDropdownOpen && (
+        <div 
+          className="fixed inset-0 z-40 bg-transparent"
+          onClick={() => setIsToolsDropdownOpen(false)}
+        ></div>
       )}
     </nav>
   );
