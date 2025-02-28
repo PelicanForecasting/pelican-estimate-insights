@@ -260,6 +260,8 @@ const EstimatingMaturity = () => {
 
   // Determine maturity level based on score
   const getMaturityLevel = () => {
+    const totalPossibleScore = 48; // 12 questions, max 4 points each
+    
     if (score >= 40) return "Optimized Stage";
     if (score >= 30) return "Advanced Stage";
     if (score >= 20) return "Developing Stage";
@@ -470,7 +472,7 @@ const EstimatingMaturity = () => {
               <div className="space-y-6">
                 <h3 className="text-xl font-bold text-pelican-navy">Section Breakdown</h3>
                 
-                {sections.map((section, index) => {
+                {sections.map((section) => {
                   const sectionQuestions = questions.filter(q => q.section === section.title);
                   const sectionScore = sectionQuestions.reduce((sum, q) => sum + (q.answer !== null ? q.answer + 1 : 0), 0);
                   const maxScore = sectionQuestions.length * 4;
@@ -548,7 +550,7 @@ const EstimatingMaturity = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`pelican-button bg-pelican-navy text-white hover:bg-pelican-teal flex-1 flex items-center justify-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                    className={`px-6 py-3 rounded-full font-medium bg-pelican-navy text-white hover:bg-pelican-teal transition-all flex-1 flex items-center justify-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                   >
                     {isSubmitting ? (
                       <>
@@ -566,7 +568,7 @@ const EstimatingMaturity = () => {
                   <button
                     type="button"
                     onClick={resetAssessment}
-                    className="pelican-button border border-pelican-navy text-pelican-navy hover:bg-pelican-navy/5 flex-1"
+                    className="px-6 py-3 rounded-full font-medium border border-pelican-navy text-pelican-navy hover:bg-pelican-navy/5 transition-all flex-1"
                   >
                     Retake Assessment
                   </button>
@@ -582,7 +584,7 @@ const EstimatingMaturity = () => {
                     Speak with our estimating experts to discuss your assessment results and explore how Pelican Forecasting Group can help you enhance your estimating capabilities.
                   </p>
                   <a 
-                    href="#contact" 
+                    href="/#contact" 
                     className="inline-block px-6 py-3 rounded-full font-medium bg-pelican-teal text-white transition-all hover:bg-pelican-orange"
                   >
                     Schedule Now

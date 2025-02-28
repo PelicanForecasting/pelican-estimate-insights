@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Bird } from 'lucide-react'; // Using Bird icon as a placeholder for Pelican
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,11 +33,7 @@ const Navbar = () => {
               to="/" 
               className="text-xl font-bold text-pelican-navy flex items-center"
             >
-              <img 
-                src="/lovable-uploads/a37be70b-5b36-4a3a-a3be-8d9bb25fbbb0.png" 
-                alt="Pelican Forecasting Logo" 
-                className="h-10 mr-2" 
-              />
+              <Bird className="h-10 w-10 text-pelican-teal mr-2" />
               <span>Pelican Forecasting</span>
             </Link>
           </div>
