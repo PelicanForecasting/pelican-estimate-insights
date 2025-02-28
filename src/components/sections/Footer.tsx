@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,11 +10,11 @@ const Footer = () => {
       <div className="section-container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
-            <a href="#" className="text-white flex items-center mb-6">
+            <Link to="/" className="text-white flex items-center mb-6">
               <span className="text-white font-display text-2xl font-bold">
                 Pelican<span className="text-pelican-teal">Forecasting</span>
               </span>
-            </a>
+            </Link>
             <p className="text-white/70 mb-6">
               Transforming construction estimating through data-driven insights and analytics.
             </p>
@@ -40,34 +41,40 @@ const Footer = () => {
             <h4 className="text-white font-bold text-lg mb-5">Quick Links</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#services" className="text-white/70 hover:text-pelican-teal transition-colors">Services</a>
+                <Link to="/#services" className="text-white/70 hover:text-pelican-teal transition-colors">Services</Link>
               </li>
               <li>
-                <a href="#about" className="text-white/70 hover:text-pelican-teal transition-colors">About Us</a>
+                <Link to="/#benefits" className="text-white/70 hover:text-pelican-teal transition-colors">Benefits</Link>
               </li>
               <li>
-                <a href="#testimonials" className="text-white/70 hover:text-pelican-teal transition-colors">Testimonials</a>
+                <Link to="/#testimonials" className="text-white/70 hover:text-pelican-teal transition-colors">Testimonials</Link>
               </li>
               <li>
-                <a href="#contact" className="text-white/70 hover:text-pelican-teal transition-colors">Contact</a>
+                <Link to="/#about" className="text-white/70 hover:text-pelican-teal transition-colors">About Us</Link>
+              </li>
+              <li>
+                <Link to="/#contact" className="text-white/70 hover:text-pelican-teal transition-colors">Contact</Link>
               </li>
             </ul>
           </div>
           
           <div>
-            <h4 className="text-white font-bold text-lg mb-5">Services</h4>
+            <h4 className="text-white font-bold text-lg mb-5">Our Tools</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#services" className="text-white/70 hover:text-pelican-teal transition-colors">Historic Data Analysis</a>
+                <Link to="/estimating-maturity" className="text-white/70 hover:text-pelican-teal transition-colors">Estimating Maturity Assessment</Link>
               </li>
               <li>
-                <a href="#services" className="text-white/70 hover:text-pelican-teal transition-colors">Cost Forecasting Models</a>
+                <Link to="/labor-burden-calculator" className="text-white/70 hover:text-pelican-teal transition-colors">Labor Burden Calculator</Link>
               </li>
               <li>
-                <a href="#services" className="text-white/70 hover:text-pelican-teal transition-colors">Estimating Process Optimization</a>
+                <Link to="/bid-hit-ratio-calculator" className="text-white/70 hover:text-pelican-teal transition-colors">Bid-Hit Ratio Calculator</Link>
               </li>
               <li>
-                <a href="#services" className="text-white/70 hover:text-pelican-teal transition-colors">Performance Benchmarking</a>
+                <Link to="/estimate-accuracy-tracker" className="text-white/70 hover:text-pelican-teal transition-colors">Estimate Accuracy Tracker</Link>
+              </li>
+              <li>
+                <Link to="/quadrilateral-deck-calculator" className="text-white/70 hover:text-pelican-teal transition-colors">Quadrilateral Deck Calculator</Link>
               </li>
             </ul>
           </div>

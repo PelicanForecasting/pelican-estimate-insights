@@ -1,5 +1,6 @@
 
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const ServiceCard = ({ 
   title, 
@@ -128,6 +129,47 @@ const Services = () => {
               index={index}
             />
           ))}
+        </div>
+        
+        <div className="mt-16 bg-pelican-teal/5 p-8 rounded-xl reveal">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="md:w-2/3">
+              <h3 className="text-2xl font-bold text-pelican-navy mb-4">
+                Free Construction Estimating Tools
+              </h3>
+              <p className="text-pelican-grey mb-4">
+                Try our free online calculators designed specifically for construction estimators and project managers. 
+                These tools can help you improve accuracy and save time on your next project.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link to="/labor-burden-calculator" className="inline-flex items-center text-pelican-teal hover:text-pelican-navy">
+                  <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                  Labor Burden Calculator
+                </Link>
+                <span className="text-gray-300 mx-1">•</span>
+                <Link to="/bid-hit-ratio-calculator" className="inline-flex items-center text-pelican-teal hover:text-pelican-navy">
+                  <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                  Bid-Hit Ratio Calculator
+                </Link>
+                <span className="text-gray-300 mx-1">•</span>
+                <Link to="/quadrilateral-deck-calculator" className="inline-flex items-center text-pelican-teal hover:text-pelican-navy">
+                  <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                  Quadrilateral Deck Calculator
+                </Link>
+              </div>
+            </div>
+            <div className="md:w-1/3 flex justify-center">
+              <Link to="/estimating-maturity" className="pelican-button bg-pelican-navy text-white hover:bg-pelican-teal">
+                Try Our Free Tools
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>

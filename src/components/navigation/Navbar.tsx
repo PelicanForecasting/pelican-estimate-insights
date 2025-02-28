@@ -40,7 +40,7 @@ const Navbar = () => {
               onClick={closeMenu}
             >
               <img 
-                src="/placeholder.svg" 
+                src="/lovable-uploads/a37be70b-5b36-4a3a-a3be-8d9bb25fbbb0.png" 
                 alt="Pelican Forecasting Logo" 
                 className="h-10 mr-2" 
               />
@@ -56,7 +56,7 @@ const Navbar = () => {
               Benefits
             </Link>
             <Link to="/#customer-journey" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
-              Customer Journey
+              Process
             </Link>
             <Link to="/#about" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
               About Us
@@ -80,7 +80,7 @@ const Navbar = () => {
               </button>
               
               {isToolsDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg py-2 z-50">
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-50">
                   <Link 
                     to="/estimating-maturity" 
                     className="block px-4 py-2 text-pelican-navy hover:bg-gray-100"
@@ -108,6 +108,13 @@ const Navbar = () => {
                     onClick={closeMenu}
                   >
                     Estimate Accuracy Tracker
+                  </Link>
+                  <Link 
+                    to="/quadrilateral-deck-calculator" 
+                    className="block px-4 py-2 text-pelican-navy hover:bg-gray-100"
+                    onClick={closeMenu}
+                  >
+                    Quadrilateral Deck Calculator
                   </Link>
                 </div>
               )}
@@ -163,7 +170,7 @@ const Navbar = () => {
               className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100"
               onClick={closeMenu}
             >
-              Customer Journey
+              Process
             </Link>
             <Link 
               to="/#about" 
@@ -219,6 +226,13 @@ const Navbar = () => {
                     onClick={closeMenu}
                   >
                     Estimate Accuracy Tracker
+                  </Link>
+                  <Link 
+                    to="/quadrilateral-deck-calculator" 
+                    className="block py-2 text-pelican-navy hover:text-pelican-teal"
+                    onClick={closeMenu}
+                  >
+                    Quadrilateral Deck Calculator
                   </Link>
                 </div>
               )}

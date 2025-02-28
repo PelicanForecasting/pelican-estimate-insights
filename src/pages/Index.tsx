@@ -27,6 +27,31 @@ const Index = () => {
     return () => elements.forEach(el => observer.unobserve(el));
   }, []);
 
+  // Scroll to section if URL has hash
+  useEffect(() => {
+    // Get hash from URL (e.g., #services)
+    const hash = window.location.hash;
+    
+    // If hash exists, scroll to the section
+    if (hash) {
+      // Remove the # symbol
+      const sectionId = hash.substring(1);
+      
+      // Get the element
+      const element = document.getElementById(sectionId);
+      
+      // If element exists, scroll to it (with a slight delay to ensure all elements are loaded)
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    } else {
+      // No hash, scroll to top
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />

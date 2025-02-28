@@ -60,6 +60,38 @@ const Hero = () => {
                 <span>Construction Focused</span>
               </div>
             </div>
+            
+            {/* Free Tools Section */}
+            <div className="mt-6 p-4 bg-white/70 rounded-lg border border-pelican-teal/20 shadow-sm">
+              <h3 className="text-pelican-navy font-bold text-lg mb-2">Free Construction Tools</h3>
+              <p className="text-sm text-pelican-grey mb-3">Access our suite of free estimating and forecasting tools:</p>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <a href="/labor-burden-calculator" className="flex items-center text-pelican-teal hover:underline">
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                  </svg>
+                  Labor Burden Calculator
+                </a>
+                <a href="/bid-hit-ratio-calculator" className="flex items-center text-pelican-teal hover:underline">
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                  </svg>
+                  Bid-Hit Ratio Calculator
+                </a>
+                <a href="/estimate-accuracy-tracker" className="flex items-center text-pelican-teal hover:underline">
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                  </svg>
+                  Estimate Accuracy Tracker
+                </a>
+                <a href="/quadrilateral-deck-calculator" className="flex items-center text-pelican-teal hover:underline">
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                  </svg>
+                  Quadrilateral Deck Calculator
+                </a>
+              </div>
+            </div>
           </div>
           
           <div className="lg:w-1/2 reveal flex justify-center items-center" style={{ transform: 'translateY(20px)' }}>
