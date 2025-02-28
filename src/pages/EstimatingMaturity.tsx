@@ -1,606 +1,648 @@
 
-import React, { useState, useEffect } from 'react';
-import { useToast } from "@/components/ui/use-toast";
+import React, { useState } from 'react';
 import Navbar from '../components/navigation/Navbar';
 import Footer from '../components/sections/Footer';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Separator } from "@/components/ui/separator";
+import { Progress } from "@/components/ui/progress";
+import { useToast } from "@/hooks/use-toast";
 
-// Define the question type
 type Question = {
   id: number;
   text: string;
-  options: string[];
-  section: string;
-  answer: number | null;
+  options: {
+    value: string;
+    label: string;
+    score: number;
+  }[];
 };
 
-// Define the section type
-type Section = {
+type Category = {
   id: number;
   title: string;
   description: string;
+  questions: Question[];
+};
+
+type MaturityLevel = {
+  level: string;
+  range: [number, number];
+  description: string;
+  recommendations: string[];
 };
 
 const EstimatingMaturity = () => {
   const { toast } = useToast();
-  const [currentSection, setCurrentSection] = useState(0);
-  const [score, setScore] = useState(0);
+  const [currentCategory, setCurrentCategory] = useState(0);
+  const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [scores, setScores] = useState<Record<number, number>>({});
   const [showResults, setShowResults] = useState(false);
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [company, setCompany] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  // Define the sections
-  const sections: Section[] = [
-    {
-      id: 1,
-      title: "Process & Methodology",
-      description: "These questions assess how structured and standardized your estimating processes are."
-    },
-    {
-      id: 2,
-      title: "Data & Technology",
-      description: "These questions evaluate your use of technology and how you manage historical project data."
-    },
-    {
-      id: 3,
-      title: "Analysis & Decision Making",
-      description: "These questions examine how you analyze data to make estimating decisions."
-    },
-    {
-      id: 4,
-      title: "Team & Knowledge",
-      description: "These questions assess how knowledge is managed and transferred within your organization."
-    }
-  ];
+  const [currentStep, setCurrentStep] = useState<'intro' | 'assessment' | 'results'>('intro');
 
-  // Define all questions
-  const [questions, setQuestions] = useState<Question[]>([
-    // Section 1: Process & Methodology
+  // Assessment categories
+  const categories: Category[] = [
     {
       id: 1,
-      text: "How would you describe your current estimating process?",
-      options: [
-        "Ad-hoc (different approach for each estimate)",
-        "Informal (consistent but not documented)",
-        "Standardized (documented process followed by all estimators)",
-        "Optimized (standardized with continuous improvement)"
-      ],
-      section: "Process & Methodology",
-      answer: null
+      title: "Organizational Structure & Strategy",
+      description: "How your estimating department is organized and integrated with other business functions",
+      questions: [
+        {
+          id: 1,
+          text: "How is your estimating function structured within your organization?",
+          options: [
+            { value: "a", label: "No dedicated estimating resources; project managers or executives handle estimates ad-hoc", score: 1 },
+            { value: "b", label: "Part-time estimator(s) who also perform other duties", score: 2 },
+            { value: "c", label: "Dedicated estimating staff, but no formal department structure", score: 3 },
+            { value: "d", label: "Formal estimating department with defined roles and reporting structure", score: 4 },
+            { value: "e", label: "Strategic estimating department that informs business development and company direction", score: 5 },
+          ]
+        },
+        {
+          id: 2,
+          text: "How does estimating integrate with other business functions?",
+          options: [
+            { value: "a", label: "Little to no formal integration with other departments", score: 1 },
+            { value: "b", label: "Basic handoff procedures between estimating and operations", score: 2 },
+            { value: "c", label: "Regular coordination with operations, purchasing, and project management", score: 3 },
+            { value: "d", label: "Formal integration processes with all relevant departments", score: 4 },
+            { value: "e", label: "Full integration in a collaborative environment with shared goals and metrics", score: 5 },
+          ]
+        },
+        {
+          id: 3,
+          text: "How are estimating goals aligned with organizational strategy?",
+          options: [
+            { value: "a", label: "No clear connection between estimating and company strategy", score: 1 },
+            { value: "b", label: "Basic understanding of how estimating supports business goals", score: 2 },
+            { value: "c", label: "Estimating department has defined goals tied to company objectives", score: 3 },
+            { value: "d", label: "Estimating strategy is a key component of overall business planning", score: 4 },
+            { value: "e", label: "Estimating is viewed as a strategic function that drives company direction and growth", score: 5 },
+          ]
+        }
+      ]
     },
     {
       id: 2,
-      text: "How are estimating standards maintained in your organization?",
-      options: [
-        "Tribal knowledge (experience-based, not documented)",
-        "Basic templates and checklists",
-        "Comprehensive estimating manual with standards",
-        "Standards with regular review and updates"
-      ],
-      section: "Process & Methodology",
-      answer: null
+      title: "Process & Methodology",
+      description: "The systems and approaches used to develop estimates",
+      questions: [
+        {
+          id: 4,
+          text: "What level of standardization exists in your estimating processes?",
+          options: [
+            { value: "a", label: "No standardized processes; each estimate is approached differently", score: 1 },
+            { value: "b", label: "Basic templates exist but are inconsistently used", score: 2 },
+            { value: "c", label: "Standardized processes for most estimate types", score: 3 },
+            { value: "d", label: "Comprehensive, documented processes with quality control steps", score: 4 },
+            { value: "e", label: "Fully standardized, continuously improved processes with regular audits", score: 5 },
+          ]
+        },
+        {
+          id: 5,
+          text: "How do you develop and maintain estimating cost databases?",
+          options: [
+            { value: "a", label: "No formal cost database; rely primarily on vendor quotes", score: 1 },
+            { value: "b", label: "Basic cost library with minimal updating", score: 2 },
+            { value: "c", label: "Maintained cost database updated at regular intervals", score: 3 },
+            { value: "d", label: "Comprehensive cost database with formal update procedures and validation", score: 4 },
+            { value: "e", label: "Dynamic cost database integrated with historical project data and external indices", score: 5 },
+          ]
+        },
+        {
+          id: 6,
+          text: "How do you approach risk assessment and contingency development?",
+          options: [
+            { value: "a", label: "No formal risk assessment; standard markup used for all projects", score: 1 },
+            { value: "b", label: "Basic risk consideration with simple contingency percentages", score: 2 },
+            { value: "c", label: "Identified risks with appropriate contingencies for each project", score: 3 },
+            { value: "d", label: "Formal risk register with quantified impacts and tailored contingencies", score: 4 },
+            { value: "e", label: "Advanced risk modeling with statistical methods and scenario analysis", score: 5 },
+          ]
+        }
+      ]
     },
     {
       id: 3,
-      text: "How do you incorporate lessons learned from completed projects?",
-      options: [
-        "Informally or rarely",
-        "Post-project reviews but limited integration into future estimates",
-        "Structured feedback process for major projects",
-        "Systematic analysis of all projects with database of learnings"
-      ],
-      section: "Process & Methodology",
-      answer: null
+      title: "Technology & Tools",
+      description: "The software and technical resources used to support estimating functions",
+      questions: [
+        {
+          id: 7,
+          text: "What estimating software do you currently utilize?",
+          options: [
+            { value: "a", label: "Spreadsheets only (Excel or similar)", score: 1 },
+            { value: "b", label: "Basic estimating software with limited features", score: 2 },
+            { value: "c", label: "Industry-standard estimating software", score: 3 },
+            { value: "d", label: "Advanced estimating software with integration to other systems", score: 4 },
+            { value: "e", label: "Enterprise-level integrated estimating platform with business intelligence capabilities", score: 5 },
+          ]
+        },
+        {
+          id: 8,
+          text: "How do you leverage technology for takeoffs and quantity development?",
+          options: [
+            { value: "a", label: "Manual takeoffs from paper plans", score: 1 },
+            { value: "b", label: "Basic digital takeoff tools with limited functionality", score: 2 },
+            { value: "c", label: "Standard digital takeoff software regularly used", score: 3 },
+            { value: "d", label: "Advanced takeoff tools integrated with estimating software", score: 4 },
+            { value: "e", label: "Automated quantity extraction from BIM models with verification workflows", score: 5 },
+          ]
+        },
+        {
+          id: 9,
+          text: "How are estimating data and insights shared across the organization?",
+          options: [
+            { value: "a", label: "Manual distribution of PDFs or printed estimates", score: 1 },
+            { value: "b", label: "Digital file sharing with basic organization", score: 2 },
+            { value: "c", label: "Centralized digital repository with structured access", score: 3 },
+            { value: "d", label: "Integrated systems allowing controlled access across departments", score: 4 },
+            { value: "e", label: "Real-time dashboards and analytics accessible to all stakeholders", score: 5 },
+          ]
+        }
+      ]
     },
-    // Section 2: Data & Technology
     {
       id: 4,
-      text: "What tools do you currently use for estimating?",
-      options: [
-        "Spreadsheets (Excel, Google Sheets)",
-        "Specialized estimating software (HCSS HeavyBid, etc.)",
-        "Custom-built solutions",
-        "ERP system with estimating module"
-      ],
-      section: "Data & Technology",
-      answer: null
+      title: "Talent & Training",
+      description: "The skills, capabilities, and development of estimating personnel",
+      questions: [
+        {
+          id: 10,
+          text: "What is the experience level of your estimating team?",
+          options: [
+            { value: "a", label: "Limited estimating experience; primarily learning on the job", score: 1 },
+            { value: "b", label: "Mix of entry-level and moderately experienced estimators", score: 2 },
+            { value: "c", label: "Solid team with good industry experience", score: 3 },
+            { value: "d", label: "Highly experienced team with specialized expertise", score: 4 },
+            { value: "e", label: "Industry-leading experts with diverse experience and specializations", score: 5 },
+          ]
+        },
+        {
+          id: 11,
+          text: "What professional development exists for estimating personnel?",
+          options: [
+            { value: "a", label: "No formal training program; learn through experience only", score: 1 },
+            { value: "b", label: "Occasional training when requested", score: 2 },
+            { value: "c", label: "Regular internal and external training opportunities", score: 3 },
+            { value: "d", label: "Structured development program with clear advancement paths", score: 4 },
+            { value: "e", label: "Comprehensive talent development strategy with mentoring, certification support, and leadership preparation", score: 5 },
+          ]
+        },
+        {
+          id: 12,
+          text: "How do you measure and incentivize estimator performance?",
+          options: [
+            { value: "a", label: "No formal performance metrics for estimators", score: 1 },
+            { value: "b", label: "Basic productivity metrics (estimates completed, etc.)", score: 2 },
+            { value: "c", label: "Performance measured against established standards", score: 3 },
+            { value: "d", label: "Comprehensive performance metrics tied to project outcomes", score: 4 },
+            { value: "e", label: "Sophisticated performance evaluation system with both individual and team incentives tied to company success", score: 5 },
+          ]
+        }
+      ]
     },
     {
       id: 5,
-      text: "How do you store and access historical project data?",
-      options: [
-        "Paper records/Filing cabinets",
-        "Digital files (folders on server/cloud)",
-        "Basic database",
-        "Integrated system with search capabilities"
-      ],
-      section: "Data & Technology",
-      answer: null
-    },
-    {
-      id: 6,
-      text: "How do your estimating systems connect with other business systems?",
-      options: [
-        "No integration (manual data transfer)",
-        "Limited export/import capabilities",
-        "Partial integration with some systems",
-        "Full integration across platforms"
-      ],
-      section: "Data & Technology",
-      answer: null
-    },
-    // Section 3: Analysis & Decision Making
-    {
-      id: 7,
-      text: "How do you analyze the accuracy of past estimates?",
-      options: [
-        "Limited or no formal analysis",
-        "Basic comparison of estimated vs. actual costs",
-        "Structured analysis for selected projects",
-        "Comprehensive analysis with statistical methods"
-      ],
-      section: "Analysis & Decision Making",
-      answer: null
-    },
-    {
-      id: 8,
-      text: "How do you forecast production rates for new projects?",
-      options: [
-        "Industry standards or rules of thumb",
-        "General company experience",
-        "Historical averages from similar projects",
-        "Statistical analysis with confidence intervals"
-      ],
-      section: "Analysis & Decision Making",
-      answer: null
-    },
-    {
-      id: 9,
-      text: "How do you make bid/no-bid decisions?",
-      options: [
-        "Gut feeling/experience",
-        "Basic criteria checklist",
-        "Formal scoring system",
-        "Data-driven analysis with multiple factors"
-      ],
-      section: "Analysis & Decision Making",
-      answer: null
-    },
-    // Section 4: Team & Knowledge
-    {
-      id: 10,
-      text: "How is estimating knowledge transferred in your organization?",
-      options: [
-        "On-the-job learning",
-        "Informal mentoring",
-        "Structured training program",
-        "Comprehensive development with certification"
-      ],
-      section: "Team & Knowledge",
-      answer: null
-    },
-    {
-      id: 11,
-      text: "What happens when experienced estimators leave your company?",
-      options: [
-        "Significant knowledge loss",
-        "Some documentation but substantial impact",
-        "Key information documented but nuances lost",
-        "Minimal impact due to knowledge management systems"
-      ],
-      section: "Team & Knowledge",
-      answer: null
-    },
-    {
-      id: 12,
-      text: "How confident are your estimators in their productivity assumptions?",
-      options: [
-        "Limited confidence (high contingencies)",
-        "Moderate confidence for familiar work",
-        "Good confidence with some uncertainty",
-        "High confidence based on data analysis"
-      ],
-      section: "Team & Knowledge",
-      answer: null
+      title: "Performance & Analytics",
+      description: "How estimate accuracy is measured and improved over time",
+      questions: [
+        {
+          id: 13,
+          text: "How do you track and analyze estimate accuracy?",
+          options: [
+            { value: "a", label: "Little to no tracking of estimate vs. actual costs", score: 1 },
+            { value: "b", label: "Basic comparison of final costs to estimates", score: 2 },
+            { value: "c", label: "Regular cost analysis with organized variance tracking", score: 3 },
+            { value: "d", label: "Detailed variance analysis by cost category with root cause assessment", score: 4 },
+            { value: "e", label: "Sophisticated analytics system that identifies patterns and automatically suggests process improvements", score: 5 },
+          ]
+        },
+        {
+          id: 14,
+          text: "How are estimating lessons learned captured and applied?",
+          options: [
+            { value: "a", label: "No formal process for capturing lessons learned", score: 1 },
+            { value: "b", label: "Occasional informal discussions about past projects", score: 2 },
+            { value: "c", label: "Regular post-project reviews with documented lessons", score: 3 },
+            { value: "d", label: "Structured knowledge management system for estimating insights", score: 4 },
+            { value: "e", label: "Comprehensive continuous improvement program with measurable implementation of lessons learned", score: 5 },
+          ]
+        },
+        {
+          id: 15,
+          text: "How do you evaluate bid performance and market position?",
+          options: [
+            { value: "a", label: "Minimal awareness of competitive position", score: 1 },
+            { value: "b", label: "Basic tracking of win rates", score: 2 },
+            { value: "c", label: "Regular analysis of bid results with market comparisons", score: 3 },
+            { value: "d", label: "Detailed competitive analysis with strategic bid positioning", score: 4 },
+            { value: "e", label: "Advanced market intelligence system that informs strategic bidding and identifies optimal project opportunities", score: 5 },
+          ]
+        }
+      ]
     }
-  ]);
+  ];
 
-  // Get questions for the current section
-  const currentQuestions = questions.filter(
-    q => q.section === sections[currentSection].title
-  );
+  // Maturity levels with descriptions
+  const maturityLevels: MaturityLevel[] = [
+    {
+      level: "Level 1: Initial",
+      range: [1, 1.8],
+      description: "Estimating processes are largely ad-hoc and reactive. Success depends primarily on individual effort rather than established systems.",
+      recommendations: [
+        "Designate dedicated estimating resources",
+        "Develop basic templates and checklists",
+        "Invest in basic estimating software",
+        "Begin tracking estimate accuracy"
+      ]
+    },
+    {
+      level: "Level 2: Developing",
+      range: [1.81, 2.6],
+      description: "Basic estimating processes exist but may be inconsistently applied. Some standardization is present but significant variation remains.",
+      recommendations: [
+        "Formalize estimating procedures and standards",
+        "Develop a structured cost database",
+        "Implement regular team training sessions",
+        "Establish a basic bid/no-bid decision process"
+      ]
+    },
+    {
+      level: "Level 3: Defined",
+      range: [2.61, 3.4],
+      description: "Standard estimating processes are defined and generally followed. Consistent approaches are used across most projects.",
+      recommendations: [
+        "Integrate estimating with other business functions",
+        "Enhance risk assessment methodologies",
+        "Implement more advanced software solutions",
+        "Develop formal performance metrics"
+      ]
+    },
+    {
+      level: "Level 4: Managed",
+      range: [3.41, 4.2],
+      description: "Estimating processes are well-defined and measured. Data-driven decisions inform continuous improvements.",
+      recommendations: [
+        "Implement advanced analytics for estimate performance",
+        "Develop specialized expertise within the team",
+        "Create strategic integration with business development",
+        "Establish sophisticated knowledge management systems"
+      ]
+    },
+    {
+      level: "Level 5: Optimizing",
+      range: [4.21, 5],
+      description: "Estimating is a strategic function with continuous optimization. Innovative approaches drive competitive advantage and business growth.",
+      recommendations: [
+        "Develop predictive analytics capabilities",
+        "Pioneer new estimation methodologies",
+        "Create industry thought leadership",
+        "Invest in cutting-edge technology solutions"
+      ]
+    }
+  ];
 
-  // Calculate total score
-  const calculateScore = () => {
-    const totalScore = questions.reduce((sum, q) => {
-      return sum + (q.answer !== null ? q.answer + 1 : 0);
-    }, 0);
-    setScore(totalScore);
-  };
-
-  // Handle answer selection
-  const handleAnswerSelect = (questionId: number, answerIndex: number) => {
-    setQuestions(questions.map(q => 
-      q.id === questionId ? { ...q, answer: answerIndex } : q
-    ));
-  };
-
-  // Navigate to the next section
-  const nextSection = () => {
-    // Check if all questions in the current section are answered
-    const unansweredQuestions = currentQuestions.filter(q => q.answer === null);
+  const handleOptionChange = (questionId: number, value: string) => {
+    const newAnswers = { ...answers, [questionId]: value };
+    setAnswers(newAnswers);
     
-    if (unansweredQuestions.length > 0) {
+    // Find the option to get the score
+    const category = categories.find(cat => 
+      cat.questions.some(q => q.id === questionId)
+    );
+    
+    if (category) {
+      const question = category.questions.find(q => q.id === questionId);
+      if (question) {
+        const option = question.options.find(opt => opt.value === value);
+        if (option) {
+          const newScores = { ...scores, [questionId]: option.score };
+          setScores(newScores);
+        }
+      }
+    }
+  };
+
+  const handleNext = () => {
+    const categoryQuestions = categories[currentCategory].questions;
+    const allAnswered = categoryQuestions.every(q => answers[q.id]);
+    
+    if (!allAnswered) {
       toast({
         title: "Please answer all questions",
-        description: "You need to answer all questions before proceeding to the next section.",
+        description: "All questions in this section must be answered before proceeding.",
         variant: "destructive"
       });
       return;
     }
-
-    if (currentSection < sections.length - 1) {
-      setCurrentSection(currentSection + 1);
+    
+    if (currentCategory < categories.length - 1) {
+      setCurrentCategory(currentCategory + 1);
       window.scrollTo(0, 0);
     } else {
-      calculateScore();
       setShowResults(true);
       window.scrollTo(0, 0);
     }
   };
 
-  // Navigate to the previous section
-  const prevSection = () => {
-    if (currentSection > 0) {
-      setCurrentSection(currentSection - 1);
+  const handlePrevious = () => {
+    if (currentCategory > 0) {
+      setCurrentCategory(currentCategory - 1);
       window.scrollTo(0, 0);
     }
   };
 
-  // Determine maturity level based on score
-  const getMaturityLevel = () => {
-    if (score >= 40) return "Optimized Stage";
-    if (score >= 30) return "Advanced Stage";
-    if (score >= 20) return "Developing Stage";
-    return "Foundational Stage";
-  };
-
-  // Get description based on maturity level
-  const getMaturityDescription = () => {
-    switch(getMaturityLevel()) {
-      case "Optimized Stage":
-        return "Your estimating function is highly mature. Focus on continuous refinement and cutting-edge analytics to maintain your competitive advantage.";
-      case "Advanced Stage":
-        return "Your estimating capabilities are strong but could be enhanced with predictive analytics and deeper integration. Focus on statistical analysis and strategic intelligence.";
-      case "Developing Stage":
-        return "You have established basics but could benefit from improved analytics and integration. Focus on connecting your existing data and developing more sophisticated analysis.";
-      default:
-        return "Your estimating process has significant opportunity for improvement through systematization and data utilization. Focus on documenting processes and centralizing historical information.";
-    }
-  };
-
-  // Handle form submission for detailed report
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      toast({
-        title: "Report request submitted!",
-        description: "We'll email your detailed assessment report shortly.",
-      });
-      setIsSubmitting(false);
-    }, 1500);
-  };
-
-  // Reset the assessment
-  const resetAssessment = () => {
-    setQuestions(questions.map(q => ({ ...q, answer: null })));
-    setCurrentSection(0);
-    setShowResults(false);
-    setScore(0);
-    setEmail('');
-    setName('');
-    setCompany('');
+  const startAssessment = () => {
+    setCurrentStep('assessment');
     window.scrollTo(0, 0);
   };
 
-  // Intersection Observer for scroll animations
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
+  const viewResults = () => {
+    setCurrentStep('results');
+    window.scrollTo(0, 0);
+  };
+
+  // Calculate scores by category and overall
+  const calculateCategoryScore = (categoryId: number) => {
+    const category = categories.find(cat => cat.id === categoryId);
+    if (!category) return 0;
+    
+    let totalScore = 0;
+    let answeredQuestions = 0;
+    
+    category.questions.forEach(question => {
+      if (scores[question.id]) {
+        totalScore += scores[question.id];
+        answeredQuestions++;
+      }
+    });
+    
+    return answeredQuestions > 0 ? totalScore / answeredQuestions : 0;
+  };
+
+  const calculateOverallScore = () => {
+    let totalScore = 0;
+    let totalQuestions = 0;
+    
+    categories.forEach(category => {
+      category.questions.forEach(question => {
+        if (scores[question.id]) {
+          totalScore += scores[question.id];
+          totalQuestions++;
         }
       });
-    }, { threshold: 0.1 });
+    });
     
-    const elements = document.querySelectorAll('.reveal');
-    elements.forEach(el => observer.observe(el));
-    
-    return () => elements.forEach(el => observer.unobserve(el));
-  }, []);
+    return totalQuestions > 0 ? totalScore / totalQuestions : 0;
+  };
 
-  return (
-    <div className="min-h-screen bg-pelican-cream">
-      <Navbar />
-      
-      <div className="py-20 bg-pelican-navy text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="text-center">
-            <h1 className="text-3xl md:text-5xl font-bold mb-4 reveal">Estimating Maturity Self-Assessment</h1>
-            <p className="text-lg md:text-xl opacity-90 max-w-3xl mx-auto reveal" style={{ transform: 'translateY(20px)' }}>
-              Evaluate your current estimating capabilities and discover opportunities for improvement
+  const getMaturityLevel = (score: number) => {
+    return maturityLevels.find(level => 
+      score >= level.range[0] && score <= level.range[1]
+    ) || maturityLevels[0];
+  };
+
+  const overallScore = calculateOverallScore();
+  const maturityLevel = getMaturityLevel(overallScore);
+  const percentageScore = (overallScore / 5) * 100;
+
+  const isCurrentCategoryComplete = () => {
+    const categoryQuestions = categories[currentCategory].questions;
+    return categoryQuestions.every(q => answers[q.id]);
+  };
+
+  const calculateProgress = () => {
+    const totalQuestions = categories.reduce((sum, cat) => sum + cat.questions.length, 0);
+    const answeredQuestions = Object.keys(answers).length;
+    return (answeredQuestions / totalQuestions) * 100;
+  };
+
+  const renderIntroduction = () => (
+    <div className="max-w-3xl mx-auto">
+      <Card className="mb-8 border-pelican-teal/20 shadow-lg">
+        <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white">
+          <CardTitle className="text-2xl">Estimating Maturity Assessment</CardTitle>
+          <CardDescription className="text-white/80">
+            Evaluate your organization's estimating capabilities and identify opportunities for improvement
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <div className="space-y-4">
+            <p>
+              Welcome to the Pelican Forecasting Estimating Maturity Assessment. This tool helps construction companies 
+              evaluate their current estimating practices across five key dimensions and identify opportunities for improvement.
             </p>
+            
+            <h3 className="text-lg font-medium text-pelican-navy">What This Assessment Covers:</h3>
+            <ul className="list-disc pl-5 space-y-2">
+              {categories.map(category => (
+                <li key={category.id}>
+                  <span className="font-medium">{category.title}</span>: {category.description}
+                </li>
+              ))}
+            </ul>
+            
+            <h3 className="text-lg font-medium text-pelican-navy">How It Works:</h3>
+            <ol className="list-decimal pl-5 space-y-2">
+              <li>Answer 15 questions across five categories</li>
+              <li>Receive a detailed maturity rating on a 1-5 scale</li>
+              <li>Get customized recommendations based on your results</li>
+              <li>Use insights to develop an improvement roadmap</li>
+            </ol>
+            
+            <p className="text-sm text-gray-500 mt-4">
+              Your responses are confidential and will only be used to generate your assessment results.
+              The assessment takes approximately 10-15 minutes to complete.
+            </p>
+          </div>
+        </CardContent>
+        <CardFooter className="flex justify-center border-t border-gray-100 pt-6">
+          <Button 
+            onClick={startAssessment}
+            className="bg-gradient-to-r from-pelican-navy to-pelican-teal hover:opacity-90 text-white px-8 py-2"
+          >
+            Start Assessment
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+
+  const renderAssessment = () => (
+    <div className="max-w-3xl mx-auto">
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-pelican-navy mb-2">
+          {categories[currentCategory].title}
+        </h2>
+        <p className="text-gray-600 mb-4">
+          {categories[currentCategory].description}
+        </p>
+        <div className="mb-6">
+          <Progress value={calculateProgress()} className="h-2" />
+          <div className="flex justify-between mt-2 text-sm text-gray-500">
+            <span>Progress: {Math.round(calculateProgress())}%</span>
+            <span>Category {currentCategory + 1} of {categories.length}</span>
           </div>
         </div>
       </div>
       
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-        {!showResults ? (
-          <div className="bg-white rounded-2xl shadow-lg p-8 reveal" style={{ transform: 'translateY(20px)' }}>
-            <div className="mb-8">
-              <div className="flex justify-between mb-4">
-                <div>
-                  <h2 className="text-xl md:text-2xl font-bold text-pelican-navy">
-                    Section {currentSection + 1}: {sections[currentSection].title}
-                  </h2>
-                  <p className="text-pelican-grey mt-2">{sections[currentSection].description}</p>
-                </div>
-                <div className="text-sm text-pelican-grey">
-                  Section {currentSection + 1} of {sections.length}
-                </div>
-              </div>
+      <Card className="mb-8 border-pelican-teal/20 shadow-md">
+        <CardContent className="pt-6">
+          {categories[currentCategory].questions.map((question, index) => (
+            <div key={question.id} className={index > 0 ? "mt-8 pt-8 border-t border-gray-100" : ""}>
+              <h3 className="text-lg font-medium text-pelican-navy mb-4">
+                {index + 1}. {question.text}
+              </h3>
               
-              <div className="w-full bg-gray-200 rounded-full h-2 mb-6">
-                <div 
-                  className="bg-pelican-teal h-2 rounded-full transition-all duration-500" 
-                  style={{ width: `${((currentSection + 1) / sections.length) * 100}%` }}
-                ></div>
+              <RadioGroup
+                value={answers[question.id] || ""}
+                onValueChange={(value) => handleOptionChange(question.id, value)}
+                className="space-y-3"
+              >
+                {question.options.map((option) => (
+                  <div key={option.value} className="flex items-start space-x-2 rounded-lg border border-gray-200 p-3 hover:bg-gray-50">
+                    <RadioGroupItem value={option.value} id={`q${question.id}-${option.value}`} className="mt-1" />
+                    <Label
+                      htmlFor={`q${question.id}-${option.value}`}
+                      className="flex-grow cursor-pointer text-gray-700"
+                    >
+                      {option.label}
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </div>
+          ))}
+        </CardContent>
+        <CardFooter className="flex justify-between border-t border-gray-100 pt-6">
+          <Button
+            onClick={handlePrevious}
+            variant="outline"
+            disabled={currentCategory === 0}
+          >
+            Previous
+          </Button>
+          
+          {currentCategory < categories.length - 1 ? (
+            <Button 
+              onClick={handleNext}
+              disabled={!isCurrentCategoryComplete()}
+              className="bg-gradient-to-r from-pelican-navy to-pelican-teal hover:opacity-90 text-white"
+            >
+              Next
+            </Button>
+          ) : (
+            <Button 
+              onClick={viewResults}
+              disabled={!isCurrentCategoryComplete()}
+              className="bg-gradient-to-r from-pelican-navy to-pelican-teal hover:opacity-90 text-white"
+            >
+              View Results
+            </Button>
+          )}
+        </CardFooter>
+      </Card>
+    </div>
+  );
+
+  const renderResults = () => (
+    <div className="max-w-4xl mx-auto">
+      <Card className="mb-8 border-pelican-teal/20 shadow-lg overflow-hidden">
+        <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white">
+          <CardTitle className="text-2xl">Your Estimating Maturity Results</CardTitle>
+          <CardDescription className="text-white/80">
+            Based on your responses to the assessment questions
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <div className="text-center mb-8">
+            <h3 className="text-xl font-bold text-pelican-navy mb-2">Overall Maturity Level</h3>
+            <div className="text-3xl font-bold text-pelican-teal mb-3">
+              {maturityLevel.level}
+            </div>
+            <div className="max-w-md mx-auto mb-4">
+              <Progress value={percentageScore} className="h-3" />
+              <div className="flex justify-between mt-1 text-sm">
+                <span>Basic</span>
+                <span>Developing</span>
+                <span>Advanced</span>
               </div>
             </div>
-            
-            <div className="space-y-10">
-              {currentQuestions.map((question) => (
-                <div key={question.id} className="border-b border-gray-100 pb-8 last:border-0">
-                  <h3 className="text-lg md:text-xl font-medium text-pelican-navy mb-4">
-                    {question.text}
-                  </h3>
-                  <div className="space-y-3">
-                    {question.options.map((option, index) => (
-                      <label 
-                        key={index}
-                        className={`
-                          block p-4 border rounded-lg transition-all cursor-pointer
-                          ${question.answer === index 
-                            ? 'border-pelican-teal bg-pelican-teal/5 shadow-sm' 
-                            : 'border-gray-200 hover:border-pelican-teal/50 hover:bg-gray-50'
-                          }
-                        `}
-                      >
-                        <div className="flex items-center">
-                          <div className={`
-                            w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0
-                            ${question.answer === index 
-                              ? 'border-pelican-teal' 
-                              : 'border-gray-300'
-                            }
-                          `}>
-                            {question.answer === index && (
-                              <div className="w-3 h-3 rounded-full bg-pelican-teal"></div>
-                            )}
-                          </div>
-                          <span className="ml-3 text-pelican-navy">{option}</span>
-                        </div>
-                        <input
-                          type="radio"
-                          className="sr-only"
-                          name={`question-${question.id}`}
-                          checked={question.answer === index}
-                          onChange={() => handleAnswerSelect(question.id, index)}
-                        />
-                      </label>
-                    ))}
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              {maturityLevel.description}
+            </p>
+          </div>
+          
+          <Separator className="my-8" />
+          
+          <div className="mb-8">
+            <h3 className="text-xl font-bold text-pelican-navy mb-4">Category Breakdown</h3>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {categories.map((category) => {
+                const score = calculateCategoryScore(category.id);
+                const categoryLevel = getMaturityLevel(score);
+                return (
+                  <Card key={category.id} className="border border-gray-200">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-base">{category.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm text-gray-500">Score: {score.toFixed(1)}</span>
+                        <span className="text-sm font-medium">Level {Math.ceil(score)}</span>
+                      </div>
+                      <Progress value={(score / 5) * 100} className="h-2" />
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+          
+          <Separator className="my-8" />
+          
+          <div>
+            <h3 className="text-xl font-bold text-pelican-navy mb-4">Recommendations</h3>
+            <p className="text-gray-600 mb-6">
+              Based on your assessment results, we recommend focusing on these areas to improve your estimating maturity:
+            </p>
+            <div className="grid gap-4 md:grid-cols-2">
+              {maturityLevel.recommendations.map((recommendation, index) => (
+                <div key={index} className="flex items-start space-x-3 p-4 rounded-lg bg-pelican-cream/30">
+                  <div className="rounded-full bg-pelican-teal/10 p-1">
+                    <svg className="w-5 h-5 text-pelican-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                   </div>
+                  <span>{recommendation}</span>
                 </div>
               ))}
             </div>
-            
-            <div className="mt-10 flex justify-between">
-              <button 
-                onClick={prevSection}
-                disabled={currentSection === 0}
-                className={`
-                  px-6 py-3 rounded-full font-medium transition-all
-                  ${currentSection === 0 
-                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
-                    : 'bg-white border border-pelican-navy text-pelican-navy hover:bg-pelican-navy/5'
-                  }
-                `}
-              >
-                Previous Section
-              </button>
-              <button 
-                onClick={nextSection}
-                className="px-6 py-3 rounded-full font-medium bg-pelican-navy text-white transition-all hover:bg-pelican-teal"
-              >
-                {currentSection < sections.length - 1 ? 'Next Section' : 'See Results'}
-              </button>
-            </div>
           </div>
-        ) : (
-          <div className="reveal" style={{ transform: 'translateY(20px)' }}>
-            <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-              <div className="text-center mb-8">
-                <div className="inline-block px-4 py-1 rounded-full bg-pelican-teal/10 text-pelican-teal font-medium text-sm mb-4">
-                  Assessment Complete
-                </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-pelican-navy mb-4">
-                  Your Estimating Maturity Score: {score}/48
-                </h2>
-                <p className="text-lg text-pelican-grey">
-                  You are at the <span className="font-bold text-pelican-navy">{getMaturityLevel()}</span>
-                </p>
-              </div>
-              
-              <div className="mb-8">
-                <div className="w-full h-3 bg-gray-200 rounded-full mb-3">
-                  <div 
-                    className="h-3 rounded-full transition-all duration-1000 bg-gradient-to-r from-pelican-orange to-pelican-teal"
-                    style={{ width: `${(score / 48) * 100}%` }}
-                  ></div>
-                </div>
-                <div className="flex justify-between text-sm text-pelican-grey">
-                  <span>Foundational</span>
-                  <span>Developing</span>
-                  <span>Advanced</span>
-                  <span>Optimized</span>
-                </div>
-              </div>
-              
-              <div className="p-6 bg-pelican-cream/30 rounded-xl mb-8">
-                <h3 className="text-xl font-bold text-pelican-navy mb-3">What This Means</h3>
-                <p className="text-pelican-grey">
-                  {getMaturityDescription()}
-                </p>
-              </div>
-              
-              <div className="space-y-6">
-                <h3 className="text-xl font-bold text-pelican-navy">Section Breakdown</h3>
-                
-                {sections.map((section, index) => {
-                  const sectionQuestions = questions.filter(q => q.section === section.title);
-                  const sectionScore = sectionQuestions.reduce((sum, q) => sum + (q.answer !== null ? q.answer + 1 : 0), 0);
-                  const maxScore = sectionQuestions.length * 4;
-                  const percentage = (sectionScore / maxScore) * 100;
-                  
-                  return (
-                    <div key={section.id} className="border-b border-gray-100 pb-4 last:border-0">
-                      <div className="flex justify-between mb-2">
-                        <h4 className="font-medium text-pelican-navy">{section.title}</h4>
-                        <span className="text-pelican-grey">{sectionScore}/{maxScore} points</span>
-                      </div>
-                      <div className="w-full h-2 bg-gray-200 rounded-full">
-                        <div 
-                          className={`h-2 rounded-full ${
-                            percentage < 30 ? 'bg-pelican-orange' : 
-                            percentage < 60 ? 'bg-yellow-400' : 
-                            'bg-pelican-teal'
-                          }`}
-                          style={{ width: `${percentage}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            
-            <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-              <h3 className="text-xl font-bold text-pelican-navy mb-4">Get Your Detailed Assessment Report</h3>
-              <p className="text-pelican-grey mb-6">
-                Complete the form below to receive a comprehensive report with personalized recommendations based on your assessment results.
-              </p>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-pelican-navy font-medium mb-2">Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pelican-teal"
-                    placeholder="Your name"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="company" className="block text-pelican-navy font-medium mb-2">Company</label>
-                  <input
-                    type="text"
-                    id="company"
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pelican-teal"
-                    placeholder="Your company name"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-pelican-navy font-medium mb-2">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pelican-teal"
-                    placeholder="Your email address"
-                    required
-                  />
-                </div>
-                
-                <div className="flex flex-col md:flex-row gap-4 pt-4">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={`pelican-button bg-pelican-navy text-white hover:bg-pelican-teal flex-1 flex items-center justify-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Sending...
-                      </>
-                    ) : (
-                      'Get Detailed Report'
-                    )}
-                  </button>
-                  
-                  <button
-                    type="button"
-                    onClick={resetAssessment}
-                    className="pelican-button border border-pelican-navy text-pelican-navy hover:bg-pelican-navy/5 flex-1"
-                  >
-                    Retake Assessment
-                  </button>
-                </div>
-              </form>
-            </div>
-            
-            <div className="bg-pelican-navy text-white rounded-2xl shadow-lg p-8">
-              <div className="flex flex-col md:flex-row items-center gap-8">
-                <div className="md:w-2/3">
-                  <h3 className="text-xl font-bold mb-4">Schedule a Free Consultation</h3>
-                  <p className="opacity-90 mb-6">
-                    Speak with our estimating experts to discuss your assessment results and explore how Pelican Forecasting Group can help you enhance your estimating capabilities.
-                  </p>
-                  <a 
-                    href="#contact" 
-                    className="inline-block px-6 py-3 rounded-full font-medium bg-pelican-teal text-white transition-all hover:bg-pelican-orange"
-                  >
-                    Schedule Now
-                  </a>
-                </div>
-                <div className="md:w-1/3 rounded-xl overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" 
-                    alt="Construction estimating meeting" 
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-      
+        </CardContent>
+        <CardFooter className="flex flex-col space-y-4 border-t border-gray-100 pt-6">
+          <p className="text-sm text-gray-500 text-center">
+            Want to discuss these results and develop a customized improvement plan?
+          </p>
+          <Button className="bg-gradient-to-r from-pelican-navy to-pelican-teal hover:opacity-90 text-white w-full sm:w-auto sm:self-center">
+            <a href="/#contact">Contact Our Consultants</a>
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+
+  return (
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-pelican-cream/30">
+      <Navbar />
+      <main className="flex-grow pt-24 px-4 pb-16">
+        {currentStep === 'intro' && renderIntroduction()}
+        {currentStep === 'assessment' && renderAssessment()}
+        {currentStep === 'results' && renderResults()}
+      </main>
       <Footer />
     </div>
   );

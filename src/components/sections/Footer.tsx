@@ -6,7 +6,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-pelican-navy text-white py-12">
+    <footer className="bg-gradient-to-r from-pelican-navy to-pelican-navy/90 text-white py-12">
       <div className="section-container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
@@ -44,7 +44,7 @@ const Footer = () => {
                 <Link to="/#services" className="text-white/70 hover:text-pelican-teal transition-colors">Services</Link>
               </li>
               <li>
-                <Link to="/#benefits" className="text-white/70 hover:text-pelican-teal transition-colors">Benefits</Link>
+                <Link to="/#customer-journey" className="text-white/70 hover:text-pelican-teal transition-colors">Process</Link>
               </li>
               <li>
                 <Link to="/#testimonials" className="text-white/70 hover:text-pelican-teal transition-colors">Testimonials</Link>
@@ -66,12 +66,6 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/labor-burden-calculator" className="text-white/70 hover:text-pelican-teal transition-colors">Labor Burden Calculator</Link>
-              </li>
-              <li>
-                <Link to="/bid-hit-ratio-calculator" className="text-white/70 hover:text-pelican-teal transition-colors">Bid-Hit Ratio Calculator</Link>
-              </li>
-              <li>
-                <Link to="/estimate-accuracy-tracker" className="text-white/70 hover:text-pelican-teal transition-colors">Estimate Accuracy Tracker</Link>
               </li>
               <li>
                 <Link to="/quadrilateral-deck-calculator" className="text-white/70 hover:text-pelican-teal transition-colors">Quadrilateral Deck Calculator</Link>

@@ -52,9 +52,6 @@ const Navbar = () => {
             <Link to="/#services" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
               Services
             </Link>
-            <Link to="/#benefits" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
-              Benefits
-            </Link>
             <Link to="/#customer-journey" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
               Process
             </Link>
@@ -96,20 +93,6 @@ const Navbar = () => {
                     Labor Burden Calculator
                   </Link>
                   <Link 
-                    to="/bid-hit-ratio-calculator" 
-                    className="block px-4 py-2 text-pelican-navy hover:bg-gray-100"
-                    onClick={closeMenu}
-                  >
-                    Bid-Hit Ratio Calculator
-                  </Link>
-                  <Link 
-                    to="/estimate-accuracy-tracker" 
-                    className="block px-4 py-2 text-pelican-navy hover:bg-gray-100"
-                    onClick={closeMenu}
-                  >
-                    Estimate Accuracy Tracker
-                  </Link>
-                  <Link 
                     to="/quadrilateral-deck-calculator" 
                     className="block px-4 py-2 text-pelican-navy hover:bg-gray-100"
                     onClick={closeMenu}
@@ -122,7 +105,7 @@ const Navbar = () => {
             
             <Link 
               to="/#contact" 
-              className="ml-2 px-5 py-2 rounded-full bg-pelican-navy text-white hover:bg-pelican-teal transition-colors"
+              className="ml-2 px-5 py-2 rounded-full bg-gradient-to-r from-pelican-navy to-pelican-teal text-white hover:opacity-90 transition-colors"
             >
               Contact Us
             </Link>
@@ -157,13 +140,6 @@ const Navbar = () => {
               onClick={closeMenu}
             >
               Services
-            </Link>
-            <Link 
-              to="/#benefits" 
-              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100"
-              onClick={closeMenu}
-            >
-              Benefits
             </Link>
             <Link 
               to="/#customer-journey" 
@@ -214,20 +190,6 @@ const Navbar = () => {
                     Labor Burden Calculator
                   </Link>
                   <Link 
-                    to="/bid-hit-ratio-calculator" 
-                    className="block py-2 text-pelican-navy hover:text-pelican-teal"
-                    onClick={closeMenu}
-                  >
-                    Bid-Hit Ratio Calculator
-                  </Link>
-                  <Link 
-                    to="/estimate-accuracy-tracker" 
-                    className="block py-2 text-pelican-navy hover:text-pelican-teal"
-                    onClick={closeMenu}
-                  >
-                    Estimate Accuracy Tracker
-                  </Link>
-                  <Link 
                     to="/quadrilateral-deck-calculator" 
                     className="block py-2 text-pelican-navy hover:text-pelican-teal"
                     onClick={closeMenu}
@@ -240,7 +202,7 @@ const Navbar = () => {
             
             <Link 
               to="/#contact" 
-              className="block py-3 mt-2 text-center rounded-full bg-pelican-navy text-white hover:bg-pelican-teal"
+              className="block py-3 mt-2 text-center rounded-full bg-gradient-to-r from-pelican-navy to-pelican-teal text-white hover:opacity-90"
               onClick={closeMenu}
             >
               Contact Us
