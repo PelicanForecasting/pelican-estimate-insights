@@ -32,13 +32,11 @@ const Navbar = () => {
               to="/" 
               className="text-xl font-bold text-pelican-navy flex items-center"
             >
-              <svg 
-                className="w-8 h-8 mr-2 text-pelican-teal" 
-                fill="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-              </svg>
+              <img 
+                src="/lovable-uploads/a37be70b-5b36-4a3a-a3be-8d9bb25fbbb0.png" 
+                alt="Pelican Forecasting Logo" 
+                className="h-10 mr-2" 
+              />
               <span>Pelican Forecasting</span>
             </Link>
           </div>
@@ -49,6 +47,9 @@ const Navbar = () => {
             </Link>
             <Link to="/#benefits" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
               Benefits
+            </Link>
+            <Link to="/#customer-journey" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
+              Customer Journey
             </Link>
             <Link to="/#about" className="text-pelican-navy hover:text-pelican-teal transition-colors link-underline">
               About Us
@@ -100,6 +101,13 @@ const Navbar = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Benefits
+            </Link>
+            <Link 
+              to="/#customer-journey" 
+              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Customer Journey
             </Link>
             <Link 
               to="/#about" 

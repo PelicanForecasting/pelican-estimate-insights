@@ -76,7 +76,7 @@ const Hero = () => {
               </div>
               <div className="glass rounded-2xl p-1 shadow-lg max-w-md">
                 <img 
-                  src="/lovable-uploads/76943e31-cad5-458c-9154-29d5b44c13f9.png" 
+                  src="/lovable-uploads/a37be70b-5b36-4a3a-a3be-8d9bb25fbbb0.png" 
                   alt="Pelican Forecasting Group logo" 
                   className="w-full h-auto rounded-xl"
                 />
