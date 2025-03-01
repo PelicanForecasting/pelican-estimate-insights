@@ -4,68 +4,101 @@ import Navbar from '@/components/navigation/Navbar';
 import Footer from '@/components/sections/Footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-interface Coordinates {
-  x: number;
-  y: number;
-}
+// Import types
+import { 
+  Coordinates,
+  DeckResults,
+  MaterialCost,
+  CanvasParams,
+  DEFAULT_COORDINATES,
+  DEFAULT_MATERIALS,
+  DEFAULT_CANVAS_PARAMS,
+  CalculationMethod,
+  SideLengthsDiagonalsData,
+  SideLengthsAngleData,
+  DEFAULT_SIDE_LENGTHS_DIAGONALS,
+  DEFAULT_SIDE_LENGTHS_ANGLE
+} from '@/features/quadrilateral-deck-calculator/types';
 
-interface DeckResults {
-  area: number;
-  perimeter: number;
-  deckingBoards: number;
-  joist: number;
-  fascia: number;
-  screws: number;
-}
+// Import calculation utilities
+import {
+  calculateAreaFromCoordinates,
+  calculatePerimeterFromCoordinates,
+  calculateAreaFromSideLengthsDiagonals,
+  calculatePerimeterFromSideLengths,
+  calculateAreaFromSideLengthsAngle,
+  generateCoordinatesFromSideLengthsAngle,
+  generateCoordinatesFromSideLengthsDiagonals,
+  calculateDeckMetrics,
+  validateShape
+} from '@/features/quadrilateral-deck-calculator/utils/calculations';
 
-interface MaterialCost {
-  deckingCostPerSqFt: number;
-  joistCostPerFt: number;
-  fasciaCostPerFt: number;
-  screwsCostPer100: number;
-}
+// Import components
+import CoordinatesInput from '@/features/quadrilateral-deck-calculator/components/CoordinatesInput';
+import SideLengthsDiagonalsInput from '@/features/quadrilateral-deck-calculator/components/SideLengthsDiagonalsInput';
+import SideLengthsAngleInput from '@/features/quadrilateral-deck-calculator/components/SideLengthsAngleInput';
+import MaterialCostInput from '@/features/quadrilateral-deck-calculator/components/MaterialCostInput';
+import CalculationGuide from '@/features/quadrilateral-deck-calculator/components/CalculationGuide';
+import ResultsDisplay from '@/features/quadrilateral-deck-calculator/components/ResultsDisplay';
+import ShapeVisualizer from '@/features/quadrilateral-deck-calculator/components/ShapeVisualizer';
+import MethodSelector from '@/features/quadrilateral-deck-calculator/components/MethodSelector';
 
-const DEFAULT_COORDINATES: Coordinates[] = [
-  { x: 0, y: 0 },
-  { x: 20, y: 0 },
-  { x: 20, y: 16 },
-  { x: 0, y: 16 }
-];
-
-const DEFAULT_MATERIALS: MaterialCost = {
-  deckingCostPerSqFt: 8.50,
-  joistCostPerFt: 2.75,
-  fasciaCostPerFt: 3.25,
-  screwsCostPer100: 12.99
-};
-
-const QuadrilateralDeckCalculator = () => {
+const QuadrilateralDeckCalculator: React.FC = () => {
   const { toast } = useToast();
+  
+  // State for the calculation method
+  const [calculationMethod, setCalculationMethod] = useState<CalculationMethod>("coordinates");
+  
+  // State for coordinates method
   const [coordinates, setCoordinates] = useState<Coordinates[]>(DEFAULT_COORDINATES);
+  
+  // State for side lengths + diagonals method
+  const [sideLengthsDiagonals, setSideLengthsDiagonals] = useState<SideLengthsDiagonalsData>(
+    DEFAULT_SIDE_LENGTHS_DIAGONALS
+  );
+  
+  // State for side lengths + angle method
+  const [sideLengthsAngle, setSideLengthsAngle] = useState<SideLengthsAngleData>(
+    DEFAULT_SIDE_LENGTHS_ANGLE
+  );
+  
+  // Common states
   const [materials, setMaterials] = useState<MaterialCost>(DEFAULT_MATERIALS);
   const [results, setResults] = useState<DeckResults | null>(null);
-  const [activeTab, setActiveTab] = useState<string>("coordinates");
+  const [activeTab, setActiveTab] = useState<string>("input");
   
-  // Calculate canvas scale and offsets for displaying the shape
-  const [canvasParams, setCanvasParams] = useState({
-    scale: 15,
-    offsetX: 50,
-    offsetY: 50,
-    canvasWidth: 400,
-    canvasHeight: 300
-  });
-
+  // Canvas parameters
+  const [canvasParams, setCanvasParams] = useState<CanvasParams>(DEFAULT_CANVAS_PARAMS);
+  
+  // For visualization - we need to generate coordinates for all methods
+  const [visualCoordinates, setVisualCoordinates] = useState<Coordinates[]>(coordinates);
+  
+  // Effect to update visualization coordinates when input method changes
+  useEffect(() => {
+    if (calculationMethod === "coordinates") {
+      setVisualCoordinates(coordinates);
+    } else if (calculationMethod === "sideLengthsDiagonals") {
+      setVisualCoordinates(generateCoordinatesFromSideLengthsDiagonals(sideLengthsDiagonals));
+    } else if (calculationMethod === "sideLengthsAngle") {
+      setVisualCoordinates(generateCoordinatesFromSideLengthsAngle(sideLengthsAngle));
+    }
+  }, [calculationMethod, coordinates, sideLengthsDiagonals, sideLengthsAngle]);
+  
   // Effect to recalculate canvas parameters when coordinates change
   useEffect(() => {
-    if (coordinates.length === 4) {
-      const xValues = coordinates.map(coord => coord.x);
-      const yValues = coordinates.map(coord => coord.y);
+    if (visualCoordinates.length === 4) {
+      const xValues = visualCoordinates.map(coord => coord.x);
+      const yValues = visualCoordinates.map(coord => coord.y);
       
       const minX = Math.min(...xValues);
       const maxX = Math.max(...xValues);
@@ -87,9 +120,9 @@ const QuadrilateralDeckCalculator = () => {
         offsetY: 50 - minY * scale
       });
     }
-  }, [coordinates]);
-
-  // Update a specific coordinate
+  }, [visualCoordinates]);
+  
+  // Update a specific coordinate for coordinates method
   const handleCoordinateChange = (index: number, axis: 'x' | 'y', value: string) => {
     const numValue = parseFloat(value);
     if (isNaN(numValue)) return;
@@ -98,7 +131,32 @@ const QuadrilateralDeckCalculator = () => {
     newCoordinates[index][axis] = numValue;
     setCoordinates(newCoordinates);
   };
-
+  
+  // Update a field for side lengths + diagonals method
+  const handleSideLengthsDiagonalsChange = (field: keyof SideLengthsDiagonalsData, value: string) => {
+    const numValue = parseFloat(value);
+    if (isNaN(numValue) || numValue <= 0) return;
+    
+    setSideLengthsDiagonals({
+      ...sideLengthsDiagonals,
+      [field]: numValue
+    });
+  };
+  
+  // Update a field for side lengths + angle method
+  const handleSideLengthsAngleChange = (field: keyof SideLengthsAngleData, value: string) => {
+    const numValue = parseFloat(value);
+    if (isNaN(numValue) || numValue <= 0) return;
+    
+    // For angle, ensure it's between 1 and 179 degrees
+    if (field === 'angle' && (numValue < 1 || numValue > 179)) return;
+    
+    setSideLengthsAngle({
+      ...sideLengthsAngle,
+      [field]: numValue
+    });
+  };
+  
   // Update material costs
   const handleMaterialChange = (key: keyof MaterialCost, value: string) => {
     const numValue = parseFloat(value);
@@ -109,71 +167,48 @@ const QuadrilateralDeckCalculator = () => {
       [key]: numValue
     });
   };
-
-  // Calculate the area of a quadrilateral using the Shoelace formula
-  const calculateArea = (coords: Coordinates[]): number => {
-    if (coords.length !== 4) return 0;
-    
-    let area = 0;
-    for (let i = 0; i < coords.length; i++) {
-      const j = (i + 1) % coords.length;
-      area += coords[i].x * coords[j].y;
-      area -= coords[j].x * coords[i].y;
-    }
-    
-    return Math.abs(area) / 2;
-  };
-
-  // Calculate the perimeter of the quadrilateral
-  const calculatePerimeter = (coords: Coordinates[]): number => {
-    if (coords.length !== 4) return 0;
-    
-    let perimeter = 0;
-    for (let i = 0; i < coords.length; i++) {
-      const j = (i + 1) % coords.length;
-      const dx = coords[j].x - coords[i].x;
-      const dy = coords[j].y - coords[i].y;
-      perimeter += Math.sqrt(dx * dx + dy * dy);
-    }
-    
-    return perimeter;
-  };
-
-  // Calculate all deck metrics
-  const calculateDeckMetrics = () => {
+  
+  // Calculate all deck metrics based on selected method
+  const calculateDeckMetricsForSelectedMethod = () => {
     try {
-      const area = calculateArea(coordinates);
-      const perimeter = calculatePerimeter(coordinates);
+      let area = 0;
+      let perimeter = 0;
+      
+      // Calculate area and perimeter based on selected method
+      if (calculationMethod === "coordinates") {
+        area = calculateAreaFromCoordinates(coordinates);
+        perimeter = calculatePerimeterFromCoordinates(coordinates);
+      } else if (calculationMethod === "sideLengthsDiagonals") {
+        area = calculateAreaFromSideLengthsDiagonals(sideLengthsDiagonals);
+        perimeter = calculatePerimeterFromSideLengths(
+          sideLengthsDiagonals.sideA,
+          sideLengthsDiagonals.sideB,
+          sideLengthsDiagonals.sideC,
+          sideLengthsDiagonals.sideD
+        );
+      } else if (calculationMethod === "sideLengthsAngle") {
+        area = calculateAreaFromSideLengthsAngle(sideLengthsAngle);
+        perimeter = calculatePerimeterFromSideLengths(
+          sideLengthsAngle.sideA,
+          sideLengthsAngle.sideB,
+          sideLengthsAngle.sideC,
+          sideLengthsAngle.sideD
+        );
+      }
       
       // Validate the shape
-      if (area <= 0) {
+      if (!validateShape(area)) {
         toast({
           title: "Invalid Shape",
-          description: "Please check your coordinates. The shape may be invalid or the points entered in the wrong order.",
+          description: "Please check your measurements. The shape may be invalid or the measurements you've entered don't form a valid quadrilateral.",
           variant: "destructive"
         });
         return;
       }
       
-      // Calculate materials
-      // Assumptions:
-      // - Decking boards: 5.5" wide (standard 6" nominal width)
-      // - Joists: 16" on center
-      // - 4 screws per sq ft for decking
-      
-      const deckingBoardsNeeded = Math.ceil(area / (5.5/12)); // 5.5" wide boards
-      const joistNeeded = Math.ceil((area / (16/12)) * 1.15); // 15% extra for waste
-      const fasciaNeeded = Math.ceil(perimeter * 1.1); // 10% extra for waste
-      const screwsNeeded = Math.ceil(area * 4); // 4 screws per sq ft
-      
-      setResults({
-        area: parseFloat(area.toFixed(2)),
-        perimeter: parseFloat(perimeter.toFixed(2)),
-        deckingBoards: deckingBoardsNeeded,
-        joist: joistNeeded,
-        fascia: fasciaNeeded,
-        screws: screwsNeeded
-      });
+      // Calculate materials and set results
+      const deckResults = calculateDeckMetrics(area, perimeter);
+      setResults(deckResults);
       
       // Move to results tab
       setActiveTab("results");
@@ -188,86 +223,52 @@ const QuadrilateralDeckCalculator = () => {
         description: "There was an error calculating your deck measurements. Please check your inputs.",
         variant: "destructive"
       });
+      console.error("Calculation error:", error);
     }
   };
-
+  
   // Reset to default values
   const handleReset = () => {
     setCoordinates(DEFAULT_COORDINATES);
+    setSideLengthsDiagonals(DEFAULT_SIDE_LENGTHS_DIAGONALS);
+    setSideLengthsAngle(DEFAULT_SIDE_LENGTHS_ANGLE);
     setMaterials(DEFAULT_MATERIALS);
     setResults(null);
-    setActiveTab("coordinates");
+    setActiveTab("input");
     
     toast({
       title: "Calculator Reset",
       description: "All values have been reset to defaults.",
     });
   };
-
-  // Render the quadrilateral on canvas
-  const renderQuadrilateral = () => {
-    const canvas = document.getElementById('deckCanvas') as HTMLCanvasElement;
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    
-    // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw the quadrilateral
-    ctx.beginPath();
-    coordinates.forEach((coord, index) => {
-      const canvasX = coord.x * canvasParams.scale + canvasParams.offsetX;
-      const canvasY = coord.y * canvasParams.scale + canvasParams.offsetY;
-      
-      if (index === 0) {
-        ctx.moveTo(canvasX, canvasY);
-      } else {
-        ctx.lineTo(canvasX, canvasY);
-      }
-      
-      // Draw and label points
-      ctx.fillStyle = '#2D4654'; // pelican-navy
-      ctx.beginPath();
-      ctx.arc(canvasX, canvasY, 5, 0, Math.PI * 2);
-      ctx.fill();
-      
-      ctx.fillStyle = '#2D4654';
-      ctx.font = '12px sans-serif';
-      ctx.fillText(`P${index+1} (${coord.x}, ${coord.y})`, canvasX + 10, canvasY - 10);
-    });
-    
-    // Close the path back to the first point
-    const firstX = coordinates[0].x * canvasParams.scale + canvasParams.offsetX;
-    const firstY = coordinates[0].y * canvasParams.scale + canvasParams.offsetY;
-    ctx.lineTo(firstX, firstY);
-    
-    // Style and stroke the shape
-    ctx.strokeStyle = '#26809D'; // pelican-teal
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    
-    // Fill with semi-transparent color
-    ctx.fillStyle = 'rgba(38, 128, 157, 0.2)'; // pelican-teal with transparency
-    ctx.fill();
-  };
-
-  // Call render function when coordinates change
-  useEffect(() => {
-    renderQuadrilateral();
-  }, [coordinates, canvasParams]);
-
-  // Calculate total material costs
-  const calculateMaterialCosts = () => {
-    if (!results) return 0;
-    
-    const deckingCost = results.area * materials.deckingCostPerSqFt;
-    const joistCost = results.joist * materials.joistCostPerFt;
-    const fasciaCost = results.fascia * materials.fasciaCostPerFt;
-    const screwsCost = (results.screws / 100) * materials.screwsCostPer100;
-    
-    return deckingCost + joistCost + fasciaCost + screwsCost;
+  
+  // Render the appropriate input method
+  const renderInputMethod = () => {
+    switch (calculationMethod) {
+      case "coordinates":
+        return (
+          <CoordinatesInput 
+            coordinates={coordinates} 
+            onCoordinateChange={handleCoordinateChange} 
+          />
+        );
+      case "sideLengthsDiagonals":
+        return (
+          <SideLengthsDiagonalsInput 
+            data={sideLengthsDiagonals} 
+            onDataChange={handleSideLengthsDiagonalsChange} 
+          />
+        );
+      case "sideLengthsAngle":
+        return (
+          <SideLengthsAngleInput 
+            data={sideLengthsAngle} 
+            onDataChange={handleSideLengthsAngleChange} 
+          />
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -294,272 +295,69 @@ const QuadrilateralDeckCalculator = () => {
           </CardHeader>
           <CardContent className="p-8">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-3 mb-8">
-                <TabsTrigger value="coordinates">1. Coordinates</TabsTrigger>
-                <TabsTrigger value="materials">2. Materials</TabsTrigger>
-                <TabsTrigger value="results" disabled={!results}>3. Results</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 mb-8">
+                <TabsTrigger value="input">1. Input Measurements</TabsTrigger>
+                <TabsTrigger value="results" disabled={!results}>2. Results</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="coordinates" className="space-y-6">
+              <TabsContent value="input" className="space-y-6">
+                {/* Method selector */}
+                <MethodSelector method={calculationMethod} onChange={setCalculationMethod} />
+                
                 <div className="flex flex-col md:flex-row gap-8">
                   <div className="w-full md:w-1/2 space-y-6">
-                    <div className="text-xl font-medium text-pelican-navy">Enter Deck Coordinates</div>
-                    <p className="text-pelican-slate">
-                      Enter the four corner points of your deck in a clockwise or counter-clockwise order.
-                      All measurements should be in feet.
-                    </p>
-                    
-                    <div className="grid grid-cols-2 gap-4">
-                      {coordinates.map((coord, index) => (
-                        <div key={index} className="space-y-2">
-                          <Label>Point {index + 1}</Label>
-                          <div className="flex gap-2">
-                            <div className="space-y-1 flex-1">
-                              <Label htmlFor={`x-${index}`} className="text-xs">X</Label>
-                              <Input
-                                id={`x-${index}`}
-                                type="number"
-                                value={coord.x}
-                                onChange={(e) => handleCoordinateChange(index, 'x', e.target.value)}
-                                step="0.1"
-                              />
-                            </div>
-                            <div className="space-y-1 flex-1">
-                              <Label htmlFor={`y-${index}`} className="text-xs">Y</Label>
-                              <Input
-                                id={`y-${index}`}
-                                type="number"
-                                value={coord.y}
-                                onChange={(e) => handleCoordinateChange(index, 'y', e.target.value)}
-                                step="0.1"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                    {/* Dynamic input method */}
+                    {renderInputMethod()}
                     
                     <div className="flex justify-between mt-6">
                       <Button variant="outline" onClick={handleReset}>
                         Reset
                       </Button>
-                      <Button variant="secondary" onClick={() => setActiveTab("materials")}>
-                        Next: Materials
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  <div className="w-full md:w-1/2 bg-pelican-lightGray/20 rounded-lg p-4">
-                    <div className="text-xl font-medium text-pelican-navy mb-4">Deck Preview</div>
-                    <div className="bg-white border border-pelican-lightGray rounded-lg overflow-hidden">
-                      <canvas 
-                        id="deckCanvas" 
-                        width={canvasParams.canvasWidth} 
-                        height={canvasParams.canvasHeight}
-                        className="mx-auto"
-                      ></canvas>
-                    </div>
-                    <p className="text-sm text-pelican-slate mt-4">
-                      This preview shows the shape of your deck based on the coordinates entered.
-                      Points are labeled P1-P4 with their coordinates.
-                    </p>
-                  </div>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="materials" className="space-y-6">
-                <div className="flex flex-col md:flex-row gap-8">
-                  <div className="w-full md:w-1/2 space-y-6">
-                    <div className="text-xl font-medium text-pelican-navy">Enter Material Costs</div>
-                    <p className="text-pelican-slate">
-                      Enter the cost of each material to calculate the total project cost.
-                      All costs should be in USD.
-                    </p>
-                    
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="deckingCost">Decking Cost (per sq ft)</Label>
-                        <Input
-                          id="deckingCost"
-                          type="number"
-                          value={materials.deckingCostPerSqFt}
-                          onChange={(e) => handleMaterialChange('deckingCostPerSqFt', e.target.value)}
-                          step="0.01"
-                          min="0"
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="joistCost">Joist Cost (per linear ft)</Label>
-                        <Input
-                          id="joistCost"
-                          type="number"
-                          value={materials.joistCostPerFt}
-                          onChange={(e) => handleMaterialChange('joistCostPerFt', e.target.value)}
-                          step="0.01"
-                          min="0"
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="fasciaCost">Fascia Cost (per linear ft)</Label>
-                        <Input
-                          id="fasciaCost"
-                          type="number"
-                          value={materials.fasciaCostPerFt}
-                          onChange={(e) => handleMaterialChange('fasciaCostPerFt', e.target.value)}
-                          step="0.01"
-                          min="0"
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="screwsCost">Screws Cost (per 100)</Label>
-                        <Input
-                          id="screwsCost"
-                          type="number"
-                          value={materials.screwsCostPer100}
-                          onChange={(e) => handleMaterialChange('screwsCostPer100', e.target.value)}
-                          step="0.01"
-                          min="0"
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="flex justify-between mt-6">
-                      <Button variant="outline" onClick={() => setActiveTab("coordinates")}>
-                        Back: Coordinates
-                      </Button>
-                      <Button variant="accent" onClick={calculateDeckMetrics}>
+                      <Button variant="accent" onClick={calculateDeckMetricsForSelectedMethod}>
                         Calculate Results
                       </Button>
                     </div>
                   </div>
                   
-                  <div className="w-full md:w-1/2 bg-pelican-lightGray/20 rounded-lg p-4">
-                    <div className="text-xl font-medium text-pelican-navy mb-4">Calculation Guide</div>
-                    <div className="space-y-4 text-pelican-slate">
-                      <p>
-                        <strong>Decking Boards:</strong> Calculated based on standard 5.5" wide deck boards and the total square footage.
-                      </p>
-                      <p>
-                        <strong>Joists:</strong> Calculated based on 16" on center spacing with a 15% waste factor.
-                      </p>
-                      <p>
-                        <strong>Fascia:</strong> Calculated based on the perimeter of the deck with a 10% waste factor.
-                      </p>
-                      <p>
-                        <strong>Screws:</strong> Calculated at approximately 4 screws per square foot.
-                      </p>
-                      <p className="italic text-sm mt-4">
-                        Note: These calculations provide estimates only and may vary based on specific design requirements.
-                        Always consult with a professional before purchasing materials.
-                      </p>
-                    </div>
+                  <div className="w-full md:w-1/2">
+                    <ShapeVisualizer 
+                      coordinates={visualCoordinates}
+                      canvasParams={canvasParams}
+                      canvasId="deckCanvas"
+                    />
+                  </div>
+                </div>
+                
+                <div className="border-t border-pelican-lightGray/20 pt-6 mt-6">
+                  <h3 className="text-xl font-medium text-pelican-navy mb-4">Material Costs</h3>
+                  <div className="flex flex-col md:flex-row gap-8">
+                    <MaterialCostInput 
+                      materials={materials}
+                      onMaterialChange={handleMaterialChange}
+                    />
+                    <CalculationGuide />
                   </div>
                 </div>
               </TabsContent>
               
               <TabsContent value="results" className="space-y-6">
                 {results && (
-                  <div className="flex flex-col md:flex-row gap-8">
-                    <div className="w-full md:w-1/2 space-y-6">
-                      <div className="text-xl font-medium text-pelican-navy">Deck Measurements</div>
-                      
-                      <div className="bg-pelican-lightGray/10 p-4 rounded-lg space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-pelican-slate">Area:</span>
-                          <span className="font-medium">{results.area} sq ft</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-pelican-slate">Perimeter:</span>
-                          <span className="font-medium">{results.perimeter} ft</span>
-                        </div>
-                      </div>
-                      
-                      <div className="text-xl font-medium text-pelican-navy mt-4">Material Estimates</div>
-                      
-                      <div className="bg-pelican-lightGray/10 p-4 rounded-lg space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-pelican-slate">Decking Boards:</span>
-                          <span className="font-medium">{results.deckingBoards} pcs</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-pelican-slate">Joists:</span>
-                          <span className="font-medium">{results.joist} linear ft</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-pelican-slate">Fascia:</span>
-                          <span className="font-medium">{results.fascia} linear ft</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-pelican-slate">Screws:</span>
-                          <span className="font-medium">{results.screws} pcs</span>
-                        </div>
-                      </div>
-                      
-                      <div className="bg-pelican-navy/5 p-6 rounded-lg">
-                        <div className="text-xl font-medium text-pelican-navy mb-2">Estimated Total Cost</div>
-                        <div className="text-3xl font-bold text-pelican-navy">
-                          ${calculateMaterialCosts().toFixed(2)}
-                        </div>
-                        <div className="text-sm text-pelican-slate mt-2">
-                          Based on the material costs entered
-                        </div>
-                      </div>
-                      
-                      <div className="flex justify-between mt-6">
-                        <Button variant="outline" onClick={() => setActiveTab("materials")}>
-                          Back: Materials
-                        </Button>
-                        <Button variant="accent" onClick={handleReset}>
-                          Start New Calculation
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="w-full md:w-1/2 bg-pelican-lightGray/20 rounded-lg p-4">
-                      <div className="text-xl font-medium text-pelican-navy mb-4">Deck Visualization</div>
-                      <div className="bg-white border border-pelican-lightGray rounded-lg overflow-hidden">
-                        <canvas 
-                          id="resultCanvas" 
-                          width={canvasParams.canvasWidth} 
-                          height={canvasParams.canvasHeight}
-                          className="mx-auto"
-                        ></canvas>
-                      </div>
-                      <div className="mt-6 space-y-4">
-                        <div className="text-lg font-medium text-pelican-navy">Material Breakdown</div>
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span>Decking ({materials.deckingCostPerSqFt.toFixed(2)}/sq ft):</span>
-                            <span>${(results.area * materials.deckingCostPerSqFt).toFixed(2)}</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span>Joists (${materials.joistCostPerFt.toFixed(2)}/ft):</span>
-                            <span>${(results.joist * materials.joistCostPerFt).toFixed(2)}</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span>Fascia (${materials.fasciaCostPerFt.toFixed(2)}/ft):</span>
-                            <span>${(results.fascia * materials.fasciaCostPerFt).toFixed(2)}</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span>Screws (${materials.screwsCostPer100.toFixed(2)}/100):</span>
-                            <span>${((results.screws / 100) * materials.screwsCostPer100).toFixed(2)}</span>
-                          </div>
-                          <Separator className="my-2" />
-                          <div className="flex justify-between font-medium">
-                            <span>Total Cost:</span>
-                            <span>${calculateMaterialCosts().toFixed(2)}</span>
-                          </div>
-                        </div>
-                      </div>
-                      <p className="text-sm text-pelican-slate mt-6">
-                        This calculator provides estimates for planning purposes. Actual material needs may vary based on specific design requirements and waste factors.
-                      </p>
-                    </div>
-                  </div>
+                  <ResultsDisplay 
+                    results={results}
+                    materials={materials}
+                    canvasWidth={canvasParams.canvasWidth}
+                    canvasHeight={canvasParams.canvasHeight}
+                  />
                 )}
+                
+                <div className="flex justify-between mt-6">
+                  <Button variant="outline" onClick={() => setActiveTab("input")}>
+                    Back to Input
+                  </Button>
+                  <Button variant="accent" onClick={handleReset}>
+                    Start New Calculation
+                  </Button>
+                </div>
               </TabsContent>
             </Tabs>
           </CardContent>
@@ -572,8 +370,8 @@ const QuadrilateralDeckCalculator = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
               </svg>
             </div>
-            <h3 className="text-xl font-heading font-medium text-pelican-navy mb-2">Accurate Measurements</h3>
-            <p className="text-pelican-slate">Calculate precise areas for irregular quadrilateral shapes</p>
+            <h3 className="text-xl font-heading font-medium text-pelican-navy mb-2">Multiple Measurement Methods</h3>
+            <p className="text-pelican-slate">Choose from three different ways to calculate your deck area based on the measurements you have available</p>
           </div>
           
           <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-pelican-cream">
@@ -583,7 +381,7 @@ const QuadrilateralDeckCalculator = () => {
               </svg>
             </div>
             <h3 className="text-xl font-heading font-medium text-pelican-navy mb-2">Material Estimates</h3>
-            <p className="text-pelican-slate">Get detailed breakdowns of decking, framing, and fasteners needed</p>
+            <p className="text-pelican-slate">Get detailed breakdowns of decking, framing, and fasteners needed for your project</p>
           </div>
           
           <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-pelican-cream">
@@ -592,8 +390,8 @@ const QuadrilateralDeckCalculator = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h3 className="text-xl font-heading font-medium text-pelican-navy mb-2">Time Savings</h3>
-            <p className="text-pelican-slate">Save hours on complex calculations and reduce material waste</p>
+            <h3 className="text-xl font-heading font-medium text-pelican-navy mb-2">Visual Preview</h3>
+            <p className="text-pelican-slate">See a real-time visualization of your deck shape as you input measurements</p>
           </div>
         </div>
       </main>
