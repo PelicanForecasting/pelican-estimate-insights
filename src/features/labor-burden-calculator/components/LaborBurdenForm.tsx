@@ -19,7 +19,7 @@ const LaborBurdenForm = ({ inputs, onInputChange, onSubmit }: LaborBurdenFormPro
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="baseRate">Base Hourly Rate ($)</Label>
+        <Label htmlFor="baseRate" className="text-pelican-navy font-medium">Base Hourly Rate ($)</Label>
         <Input 
           id="baseRate" 
           type="number" 
@@ -27,12 +27,13 @@ const LaborBurdenForm = ({ inputs, onInputChange, onSubmit }: LaborBurdenFormPro
           min="0" 
           value={inputs.baseHourlyRate || ''}
           onChange={handleInputChange('baseHourlyRate')}
+          className="border-pelican-mediumGray focus:border-pelican-teal"
           required
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="federalTax">Federal Payroll Taxes (%)</Label>
+        <Label htmlFor="federalTax" className="text-pelican-navy font-medium">Federal Payroll Taxes (%)</Label>
         <Input 
           id="federalTax" 
           type="number" 
@@ -40,11 +41,12 @@ const LaborBurdenForm = ({ inputs, onInputChange, onSubmit }: LaborBurdenFormPro
           min="0" 
           value={inputs.federalTaxRate || ''}
           onChange={handleInputChange('federalTaxRate')}
+          className="border-pelican-mediumGray focus:border-pelican-teal"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="stateTax">State Payroll Taxes (%)</Label>
+        <Label htmlFor="stateTax" className="text-pelican-navy font-medium">State Payroll Taxes (%)</Label>
         <Input 
           id="stateTax" 
           type="number" 
@@ -52,11 +54,12 @@ const LaborBurdenForm = ({ inputs, onInputChange, onSubmit }: LaborBurdenFormPro
           min="0" 
           value={inputs.stateTaxRate || ''}
           onChange={handleInputChange('stateTaxRate')}
+          className="border-pelican-mediumGray focus:border-pelican-teal"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="workersComp">Workers' Compensation (%)</Label>
+        <Label htmlFor="workersComp" className="text-pelican-navy font-medium">Workers' Compensation (%)</Label>
         <Input 
           id="workersComp" 
           type="number" 
@@ -64,11 +67,12 @@ const LaborBurdenForm = ({ inputs, onInputChange, onSubmit }: LaborBurdenFormPro
           min="0" 
           value={inputs.workersCompRate || ''}
           onChange={handleInputChange('workersCompRate')}
+          className="border-pelican-mediumGray focus:border-pelican-teal"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="healthInsurance">Health Insurance ($/hr)</Label>
+        <Label htmlFor="healthInsurance" className="text-pelican-navy font-medium">Health Insurance ($/hr)</Label>
         <Input 
           id="healthInsurance" 
           type="number" 
@@ -76,11 +80,12 @@ const LaborBurdenForm = ({ inputs, onInputChange, onSubmit }: LaborBurdenFormPro
           min="0" 
           value={inputs.healthInsurance || ''}
           onChange={handleInputChange('healthInsurance')}
+          className="border-pelican-mediumGray focus:border-pelican-teal"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="retirement">Retirement Contributions ($/hr)</Label>
+        <Label htmlFor="retirement" className="text-pelican-navy font-medium">Retirement Contributions ($/hr)</Label>
         <Input 
           id="retirement" 
           type="number" 
@@ -88,11 +93,12 @@ const LaborBurdenForm = ({ inputs, onInputChange, onSubmit }: LaborBurdenFormPro
           min="0" 
           value={inputs.retirement || ''}
           onChange={handleInputChange('retirement')}
+          className="border-pelican-mediumGray focus:border-pelican-teal"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="training">Training Costs ($/hr)</Label>
+        <Label htmlFor="training" className="text-pelican-navy font-medium">Training Costs ($/hr)</Label>
         <Input 
           id="training" 
           type="number" 
@@ -100,11 +106,12 @@ const LaborBurdenForm = ({ inputs, onInputChange, onSubmit }: LaborBurdenFormPro
           min="0" 
           value={inputs.trainingCosts || ''}
           onChange={handleInputChange('trainingCosts')}
+          className="border-pelican-mediumGray focus:border-pelican-teal"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="otherBenefits">Other Benefits ($/hr)</Label>
+        <Label htmlFor="otherBenefits" className="text-pelican-navy font-medium">Other Benefits ($/hr)</Label>
         <Input 
           id="otherBenefits" 
           type="number" 
@@ -112,10 +119,16 @@ const LaborBurdenForm = ({ inputs, onInputChange, onSubmit }: LaborBurdenFormPro
           min="0" 
           value={inputs.otherBenefits || ''}
           onChange={handleInputChange('otherBenefits')}
+          className="border-pelican-mediumGray focus:border-pelican-teal"
         />
       </div>
 
-      <Button type="submit" className="w-full">Calculate Burden</Button>
+      <Button 
+        type="submit" 
+        className="w-full bg-pelican-navy hover:bg-pelican-navy/90 text-white font-medium mt-4 transition-colors"
+      >
+        Calculate Burden
+      </Button>
     </form>
   );
 };
