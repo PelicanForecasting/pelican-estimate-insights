@@ -1,18 +1,53 @@
 
 import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const InfoSection = () => {
   return (
-    <div className="mt-8 bg-blue-50 p-6 rounded-lg">
-      <h2 className="text-xl font-bold mb-4">Why This Matters</h2>
-      <p>Many contractors significantly underestimate true labor costs by only considering the base hourly rate. A proper burden calculation ensures:</p>
-      <ul className="list-disc ml-6 mt-2 space-y-1">
-        <li>More accurate project estimates</li>
-        <li>Proper recovery of indirect labor costs</li>
-        <li>Improved profitability tracking</li>
-        <li>Compliance with government contracting requirements</li>
-      </ul>
-    </div>
+    <Card className="shadow-lg border-pelican-teal/20 bg-white hover:shadow-xl transition-shadow">
+      <CardHeader className="bg-gradient-to-r from-pelican-orange/90 to-pelican-orange/70 text-white rounded-t-lg">
+        <CardTitle className="text-xl font-heading">What is Labor Burden?</CardTitle>
+      </CardHeader>
+      <CardContent className="p-5">
+        <p className="text-pelican-slate mb-4">
+          Labor burden includes all costs associated with employing workers beyond their base hourly rate. These additional costs can significantly impact your project budgets and bids.
+        </p>
+        
+        <h3 className="font-heading font-medium text-pelican-navy text-lg mb-2">Common burden components:</h3>
+        
+        <ul className="space-y-3 mb-4">
+          <li className="flex items-start gap-2">
+            <div className="mt-1 w-5 h-5 flex-shrink-0 rounded-full bg-pelican-teal/10 flex items-center justify-center">
+              <svg className="w-3 h-3 text-pelican-teal" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <span className="text-pelican-slate"><strong className="text-pelican-navy">Payroll taxes:</strong> FICA, FUTA, SUTA, Medicare</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <div className="mt-1 w-5 h-5 flex-shrink-0 rounded-full bg-pelican-teal/10 flex items-center justify-center">
+              <svg className="w-3 h-3 text-pelican-teal" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <span className="text-pelican-slate"><strong className="text-pelican-navy">Insurance:</strong> Workers' comp, liability, health, disability</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <div className="mt-1 w-5 h-5 flex-shrink-0 rounded-full bg-pelican-teal/10 flex items-center justify-center">
+              <svg className="w-3 h-3 text-pelican-teal" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <span className="text-pelican-slate"><strong className="text-pelican-navy">Benefits:</strong> Retirement, paid time off, training</span>
+          </li>
+        </ul>
+        
+        <div className="bg-pelican-lightGray/50 p-3 rounded-md text-sm text-pelican-slate">
+          <strong className="text-pelican-navy block mb-1">Pro Tip:</strong>
+          Review and update your burden calculations at least once a year to account for changes in tax rates, insurance premiums, and benefit costs.
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
