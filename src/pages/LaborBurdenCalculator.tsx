@@ -91,7 +91,7 @@ const LaborBurdenCalculator = () => {
           </div>
         </div>
         
-        <div className="mt-16 bg-white p-8 rounded-xl shadow-lg border border-pelican-teal/10">
+        <div className="mt-16 mb-12 bg-white p-8 rounded-xl shadow-lg border border-pelican-teal/10">
           <h2 className="text-2xl font-heading font-bold text-pelican-navy mb-6">Why Calculate Labor Burden?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center text-center">
