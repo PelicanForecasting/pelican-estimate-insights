@@ -21,7 +21,7 @@ const Hero = () => {
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
       {/* Enhanced background elements with more gradients */}
       <div className="absolute inset-0 bg-gradient-radial from-pelican-cream to-pelican-cream/60 z-0"></div>
-      <div className="absolute top-0 left-0 w-full h-full bg-[url('/lovable-uploads/a37be70b-5b36-4a3a-a3be-8d9bb25fbbb0.png')] bg-no-repeat bg-right-top bg-contain opacity-5"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-no-repeat bg-right-top bg-contain opacity-5"></div>
       
       {/* Animated decorative elements */}
       <div className="absolute top-1/3 right-0 w-96 h-96 bg-pelican-teal/10 rounded-full filter blur-3xl animate-pulse-slow"></div>
@@ -104,7 +104,7 @@ const Hero = () => {
               </div>
               <div className="glass rounded-2xl p-1 shadow-lg max-w-md bg-gradient-to-br from-white/90 via-white/70 to-pelican-cream/70">
                 <img 
-                  src="/lovable-uploads/a37be70b-5b36-4a3a-a3be-8d9bb25fbbb0.png" 
+                  src="/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png" 
                   alt="Pelican Forecasting Group logo" 
                   className="w-full h-auto rounded-xl"
                 />

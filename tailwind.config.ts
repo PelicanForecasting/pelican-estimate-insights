@@ -59,13 +59,21 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Custom color scheme for Pelican Forecasting
+				// Custom color scheme for Pelican Forecasting Group
 				pelican: {
-					navy: '#0F3460',
-					teal: '#00B8C8',
-					orange: '#FF8C42',
-					cream: '#F8F5EB',
-					grey: '#4A5568',
+					navy: '#1A3A5A',
+					teal: '#38A3B8',
+					orange: '#F39C35',
+					cream: '#E6DFD0',
+					slate: '#566778',
+					softTeal: '#5BBCCD',
+					success: '#3D9970',
+					warning: '#F4A835',
+					error: '#E05D5D',
+					black: '#1A1E23',
+					white: '#FFFFFF',
+					lightGray: '#F2F4F6',
+					mediumGray: '#DCE0E5',
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',

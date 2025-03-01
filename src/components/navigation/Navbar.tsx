@@ -37,14 +37,8 @@ const Navbar = () => {
     
     // If we're not on the home page, navigate to home first then scroll
     if (location.pathname !== '/') {
-      // We'll set a timeout to allow for the navigation to complete
-      // before trying to scroll to the section
-      setTimeout(() => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
+      // Navigate to home page with hash
+      window.location.href = `/#${sectionId}`;
     } else {
       // If we're already on the home page, just scroll to the section
       const element = document.getElementById(sectionId);
@@ -69,11 +63,11 @@ const Navbar = () => {
               onClick={closeMenu}
             >
               <img 
-                src="/lovable-uploads/a37be70b-5b36-4a3a-a3be-8d9bb25fbbb0.png" 
-                alt="Pelican Forecasting Logo" 
+                src="/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png" 
+                alt="Pelican Forecasting Group Logo" 
                 className="h-10 mr-2" 
               />
-              <span>Pelican Forecasting</span>
+              <span>Pelican Forecasting Group</span>
             </Link>
           </div>
           
@@ -118,21 +112,21 @@ const Navbar = () => {
                 <div className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-50">
                   <Link 
                     to="/estimating-maturity" 
-                    className="block px-4 py-2 text-pelican-navy hover:bg-gray-100"
+                    className="block px-4 py-2 text-pelican-navy hover:bg-pelican-lightGray"
                     onClick={closeMenu}
                   >
                     Estimating Maturity Assessment
                   </Link>
                   <Link 
                     to="/labor-burden-calculator" 
-                    className="block px-4 py-2 text-pelican-navy hover:bg-gray-100"
+                    className="block px-4 py-2 text-pelican-navy hover:bg-pelican-lightGray"
                     onClick={closeMenu}
                   >
                     Labor Burden Calculator
                   </Link>
                   <Link 
                     to="/quadrilateral-deck-calculator" 
-                    className="block px-4 py-2 text-pelican-navy hover:bg-gray-100"
+                    className="block px-4 py-2 text-pelican-navy hover:bg-pelican-lightGray"
                     onClick={closeMenu}
                   >
                     Quadrilateral Deck Calculator
@@ -149,6 +143,7 @@ const Navbar = () => {
             </button>
           </div>
           
+          {/* Mobile menu toggle */}
           <div className="md:hidden flex items-center">
             <button
               className="text-pelican-navy p-2"
@@ -174,25 +169,25 @@ const Navbar = () => {
           <div className="pt-2 pb-4 space-y-1 px-4">
             <button 
               onClick={() => handleSectionLink('services')} 
-              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100 w-full text-left"
+              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-pelican-lightGray w-full text-left"
             >
               Services
             </button>
             <button 
               onClick={() => handleSectionLink('customer-journey')} 
-              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100 w-full text-left"
+              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-pelican-lightGray w-full text-left"
             >
               Process
             </button>
             <button 
               onClick={() => handleSectionLink('about')} 
-              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-gray-100 w-full text-left"
+              className="block py-3 text-pelican-navy hover:text-pelican-teal border-b border-pelican-lightGray w-full text-left"
             >
               About Us
             </button>
             
             {/* Tools Section */}
-            <div className="border-b border-gray-100">
+            <div className="border-b border-pelican-lightGray">
               <button
                 className="w-full text-left py-3 text-pelican-navy hover:text-pelican-teal flex justify-between items-center"
                 onClick={() => setIsToolsDropdownOpen(!isToolsDropdownOpen)}

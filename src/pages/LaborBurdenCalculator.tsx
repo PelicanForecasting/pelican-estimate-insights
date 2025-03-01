@@ -53,19 +53,24 @@ const LaborBurdenCalculator = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-pelican-cream/30">
       <Navbar />
       <main className="flex-grow container mx-auto px-4 py-8 pt-24">
-        <h1 className="text-3xl font-bold mb-6">Labor Burden Calculator</h1>
-        <p className="mb-6">Calculate the true cost of labor by accounting for all indirect costs beyond base wages. Ensure accurate labor costing for your construction estimates.</p>
+        <div className="text-center mb-8 reveal" style={{ transform: 'translateY(20px)' }}>
+          <h1 className="text-3xl md:text-4xl font-bold text-pelican-navy mb-4 font-heading">Labor Burden Calculator</h1>
+          <p className="text-pelican-slate max-w-3xl mx-auto">
+            Calculate the true cost of labor by accounting for all indirect costs beyond base wages. 
+            Ensure accurate labor costing for your construction estimates.
+          </p>
+        </div>
         
-        <div className="grid md:grid-cols-2 gap-8">
-          <Card>
-            <CardHeader>
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <Card className="overflow-hidden border-pelican-lightGray shadow-lg bg-gradient-to-br from-white to-pelican-cream/20 reveal" style={{ transform: 'translateY(20px)' }}>
+            <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal/80 text-white">
               <CardTitle>Labor Burden Inputs</CardTitle>
-              <CardDescription>Enter your labor cost details below</CardDescription>
+              <CardDescription className="text-white/80">Enter your labor cost details below</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-6">
               <LaborBurdenForm 
                 inputs={inputs} 
                 onInputChange={handleInputChange} 
@@ -74,12 +79,12 @@ const LaborBurdenCalculator = () => {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
+          <Card className="overflow-hidden border-pelican-lightGray shadow-lg bg-gradient-to-br from-white to-pelican-cream/20 reveal" style={{ transform: 'translateY(20px)', animationDelay: '0.2s' }}>
+            <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal/80 text-white">
               <CardTitle>Results</CardTitle>
-              <CardDescription>Your labor burden calculation results</CardDescription>
+              <CardDescription className="text-white/80">Your labor burden calculation results</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-6">
               <LaborBurdenResults 
                 inputs={inputs} 
                 outputs={outputs} 
@@ -88,7 +93,9 @@ const LaborBurdenCalculator = () => {
           </Card>
         </div>
 
-        <InfoSection />
+        <div className="mt-12 reveal" style={{ transform: 'translateY(20px)', animationDelay: '0.3s' }}>
+          <InfoSection />
+        </div>
       </main>
       <Footer />
     </div>

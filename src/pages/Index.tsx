@@ -60,7 +60,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-pelican-cream/30 font-body">
-      <div className="fixed inset-0 bg-[url('/lovable-uploads/a37be70b-5b36-4a3a-a3be-8d9bb25fbbb0.png')] bg-center bg-no-repeat opacity-[0.01] pointer-events-none z-0"></div>
+      <div className="fixed inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.01] pointer-events-none z-0"></div>
       <Navbar />
       <Hero />
       <div id="services">

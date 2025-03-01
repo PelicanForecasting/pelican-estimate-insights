@@ -29,29 +29,29 @@ const About = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-pelican-navy mb-6">
                 Construction Estimating Experts with Data Science Expertise
               </h2>
-              <p className="text-pelican-grey text-lg mb-6">
+              <p className="text-pelican-slate text-lg mb-6">
                 Pelican Forecasting Group was founded by construction estimating professionals who recognized that the industry was sitting on a goldmine of unused historical data.
               </p>
-              <p className="text-pelican-grey text-lg mb-6">
+              <p className="text-pelican-slate text-lg mb-6">
                 Our team combines deep construction industry knowledge with advanced data analytics expertise to help companies transform their estimating processes and improve project outcomes.
               </p>
               
               <div className="grid grid-cols-2 gap-6 my-8">
                 <div className="flex flex-col">
-                  <span className="text-3xl font-bold text-pelican-teal">25+</span>
-                  <span className="text-pelican-grey">Years of Combined Experience</span>
+                  <span className="text-3xl font-bold text-pelican-teal font-display">25+</span>
+                  <span className="text-pelican-slate">Years of Combined Experience</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-3xl font-bold text-pelican-teal">50+</span>
-                  <span className="text-pelican-grey">Successful Client Projects</span>
+                  <span className="text-3xl font-bold text-pelican-teal font-display">50+</span>
+                  <span className="text-pelican-slate">Successful Client Projects</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-3xl font-bold text-pelican-teal">18%</span>
-                  <span className="text-pelican-grey">Average Bid Win Rate Increase</span>
+                  <span className="text-3xl font-bold text-pelican-teal font-display">18%</span>
+                  <span className="text-pelican-slate">Average Bid Win Rate Increase</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-3xl font-bold text-pelican-teal">$150M+</span>
-                  <span className="text-pelican-grey">Project Value Analyzed</span>
+                  <span className="text-3xl font-bold text-pelican-teal font-display">$150M+</span>
+                  <span className="text-pelican-slate">Project Value Analyzed</span>
                 </div>
               </div>
               
@@ -78,31 +78,31 @@ const About = () => {
                       <div className="h-8 w-8 rounded-full bg-pelican-teal/10 flex items-center justify-center">
                         <span className="text-pelican-teal font-bold">1</span>
                       </div>
-                      <p className="text-pelican-grey"><span className="font-medium text-pelican-navy">Analyze</span> your historical project data</p>
+                      <p className="text-pelican-slate"><span className="font-medium text-pelican-navy">Analyze</span> your historical project data</p>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="h-8 w-8 rounded-full bg-pelican-teal/10 flex items-center justify-center">
                         <span className="text-pelican-teal font-bold">2</span>
                       </div>
-                      <p className="text-pelican-grey"><span className="font-medium text-pelican-navy">Identify</span> patterns and cost drivers</p>
+                      <p className="text-pelican-slate"><span className="font-medium text-pelican-navy">Identify</span> patterns and cost drivers</p>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="h-8 w-8 rounded-full bg-pelican-teal/10 flex items-center justify-center">
                         <span className="text-pelican-teal font-bold">3</span>
                       </div>
-                      <p className="text-pelican-grey"><span className="font-medium text-pelican-navy">Develop</span> tailored forecasting models</p>
+                      <p className="text-pelican-slate"><span className="font-medium text-pelican-navy">Develop</span> tailored forecasting models</p>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="h-8 w-8 rounded-full bg-pelican-teal/10 flex items-center justify-center">
                         <span className="text-pelican-teal font-bold">4</span>
                       </div>
-                      <p className="text-pelican-grey"><span className="font-medium text-pelican-navy">Implement</span> optimized estimating processes</p>
+                      <p className="text-pelican-slate"><span className="font-medium text-pelican-navy">Implement</span> optimized estimating processes</p>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="h-8 w-8 rounded-full bg-pelican-teal/10 flex items-center justify-center">
                         <span className="text-pelican-teal font-bold">5</span>
                       </div>
-                      <p className="text-pelican-grey"><span className="font-medium text-pelican-navy">Measure</span> results and continuously improve</p>
+                      <p className="text-pelican-slate"><span className="font-medium text-pelican-navy">Measure</span> results and continuously improve</p>
                     </div>
                   </div>
                 </div>
