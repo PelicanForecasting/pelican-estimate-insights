@@ -1,8 +1,28 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 
+// Array of slideshow images
+const slideshowImages = [
+  '/lovable-uploads/7d7e9bc1-b414-48f1-864f-d0bc3c45e0bb.jpg',
+  '/lovable-uploads/f20b7968-02c4-4f80-aa24-00c1ec8fb0c7.jpg',
+  '/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png'
+];
+
 const Hero = () => {
+  // State for slideshow
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Handle slideshow transition
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % slideshowImages.length);
+    }, 5000); // Change image every 5 seconds
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Animation for sections
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -20,13 +40,21 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
-      {/* Enhanced background elements with more gradients */}
+      {/* Base gradient background */}
       <div className="absolute inset-0 bg-gradient-radial from-pelican-cream to-pelican-cream/60 z-0"></div>
+      
+      {/* Watermark logo in background */}
       <div className="absolute top-0 left-0 w-full h-full bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-no-repeat bg-right-top bg-contain opacity-5"></div>
       
-      {/* Background construction image with overlay - Fixed path format */}
+      {/* Slideshow background */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/7d7e9bc1-b414-48f1-864f-d0bc3c45e0bb.jpg')] bg-cover bg-center opacity-10"></div>
+        {slideshowImages.map((image, index) => (
+          <div 
+            key={index}
+            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${index === currentImageIndex ? 'opacity-10' : 'opacity-0'}`}
+            style={{ backgroundImage: `url('${image}')` }}
+          ></div>
+        ))}
         <div className="absolute inset-0 bg-gradient-to-r from-pelican-cream via-pelican-cream/90 to-pelican-cream/70"></div>
       </div>
       
@@ -122,19 +150,24 @@ const Hero = () => {
               </div>
               <div className="glass rounded-2xl p-1 shadow-lg max-w-md bg-gradient-to-br from-white/90 via-white/70 to-pelican-cream/70">
                 <div className="relative overflow-hidden rounded-xl">
-                  {/* Ensure image is properly referenced with appropriate fallback */}
-                  <img 
-                    src="/lovable-uploads/f20b7968-02c4-4f80-aa24-00c1ec8fb0c7.jpg" 
-                    alt="Construction data analysis" 
-                    className="w-full h-auto rounded-xl shadow-inner transform transition-all duration-500 hover:scale-105"
-                    onError={(e) => {
-                      // Fallback if image fails to load
-                      const target = e.target as HTMLImageElement;
-                      console.error(`Failed to load image: ${target.src}`);
-                      target.src = "/placeholder.svg"; // Fallback to placeholder
-                      target.onerror = null; // Prevent infinite fallback loop
-                    }}
-                  />
+                  {/* Carousel for the card image */}
+                  {slideshowImages.map((image, index) => (
+                    <img 
+                      key={`card-${index}`}
+                      src={image} 
+                      alt={`Construction data analysis ${index + 1}`} 
+                      className={`w-full h-auto rounded-xl shadow-inner transform transition-all duration-1000 ${
+                        (index === currentImageIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-95 absolute inset-0')
+                      }`}
+                      onError={(e) => {
+                        // Fallback if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        console.error(`Failed to load image: ${target.src}`);
+                        target.src = "/placeholder.svg"; // Fallback to placeholder
+                        target.onerror = null; // Prevent infinite fallback loop
+                      }}
+                    />
+                  ))}
                   <div className="absolute inset-0 bg-gradient-to-t from-pelican-navy/40 to-transparent"></div>
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <p className="text-xs md:text-sm font-medium bg-pelican-teal/80 inline-block px-2 py-1 rounded">Construction Analytics</p>
