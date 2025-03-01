@@ -32,82 +32,88 @@ const LaborBurdenForm = ({ inputs, onInputChange, onSubmit }: LaborBurdenFormPro
         />
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="federalTax" className="text-pelican-navy font-medium">Federal Payroll Taxes (%)</Label>
-        <Input 
-          id="federalTax" 
-          type="number" 
-          step="0.01" 
-          min="0" 
-          value={inputs.federalTaxRate || ''}
-          onChange={handleInputChange('federalTaxRate')}
-          className="border-pelican-mediumGray focus:border-pelican-teal"
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="federalTax" className="text-pelican-navy font-medium">Federal Payroll Taxes (%)</Label>
+          <Input 
+            id="federalTax" 
+            type="number" 
+            step="0.01" 
+            min="0" 
+            value={inputs.federalTaxRate || ''}
+            onChange={handleInputChange('federalTaxRate')}
+            className="border-pelican-mediumGray focus:border-pelican-teal"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="stateTax" className="text-pelican-navy font-medium">State Payroll Taxes (%)</Label>
+          <Input 
+            id="stateTax" 
+            type="number" 
+            step="0.01" 
+            min="0" 
+            value={inputs.stateTaxRate || ''}
+            onChange={handleInputChange('stateTaxRate')}
+            className="border-pelican-mediumGray focus:border-pelican-teal"
+          />
+        </div>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="stateTax" className="text-pelican-navy font-medium">State Payroll Taxes (%)</Label>
-        <Input 
-          id="stateTax" 
-          type="number" 
-          step="0.01" 
-          min="0" 
-          value={inputs.stateTaxRate || ''}
-          onChange={handleInputChange('stateTaxRate')}
-          className="border-pelican-mediumGray focus:border-pelican-teal"
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="workersComp" className="text-pelican-navy font-medium">Workers' Compensation (%)</Label>
+          <Input 
+            id="workersComp" 
+            type="number" 
+            step="0.01" 
+            min="0" 
+            value={inputs.workersCompRate || ''}
+            onChange={handleInputChange('workersCompRate')}
+            className="border-pelican-mediumGray focus:border-pelican-teal"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="healthInsurance" className="text-pelican-navy font-medium">Health Insurance ($/hr)</Label>
+          <Input 
+            id="healthInsurance" 
+            type="number" 
+            step="0.01" 
+            min="0" 
+            value={inputs.healthInsurance || ''}
+            onChange={handleInputChange('healthInsurance')}
+            className="border-pelican-mediumGray focus:border-pelican-teal"
+          />
+        </div>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="workersComp" className="text-pelican-navy font-medium">Workers' Compensation (%)</Label>
-        <Input 
-          id="workersComp" 
-          type="number" 
-          step="0.01" 
-          min="0" 
-          value={inputs.workersCompRate || ''}
-          onChange={handleInputChange('workersCompRate')}
-          className="border-pelican-mediumGray focus:border-pelican-teal"
-        />
-      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="retirement" className="text-pelican-navy font-medium">Retirement Contributions ($/hr)</Label>
+          <Input 
+            id="retirement" 
+            type="number" 
+            step="0.01" 
+            min="0" 
+            value={inputs.retirement || ''}
+            onChange={handleInputChange('retirement')}
+            className="border-pelican-mediumGray focus:border-pelican-teal"
+          />
+        </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="healthInsurance" className="text-pelican-navy font-medium">Health Insurance ($/hr)</Label>
-        <Input 
-          id="healthInsurance" 
-          type="number" 
-          step="0.01" 
-          min="0" 
-          value={inputs.healthInsurance || ''}
-          onChange={handleInputChange('healthInsurance')}
-          className="border-pelican-mediumGray focus:border-pelican-teal"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="retirement" className="text-pelican-navy font-medium">Retirement Contributions ($/hr)</Label>
-        <Input 
-          id="retirement" 
-          type="number" 
-          step="0.01" 
-          min="0" 
-          value={inputs.retirement || ''}
-          onChange={handleInputChange('retirement')}
-          className="border-pelican-mediumGray focus:border-pelican-teal"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="training" className="text-pelican-navy font-medium">Training Costs ($/hr)</Label>
-        <Input 
-          id="training" 
-          type="number" 
-          step="0.01" 
-          min="0" 
-          value={inputs.trainingCosts || ''}
-          onChange={handleInputChange('trainingCosts')}
-          className="border-pelican-mediumGray focus:border-pelican-teal"
-        />
+        <div className="space-y-2">
+          <Label htmlFor="training" className="text-pelican-navy font-medium">Training Costs ($/hr)</Label>
+          <Input 
+            id="training" 
+            type="number" 
+            step="0.01" 
+            min="0" 
+            value={inputs.trainingCosts || ''}
+            onChange={handleInputChange('trainingCosts')}
+            className="border-pelican-mediumGray focus:border-pelican-teal"
+          />
+        </div>
       </div>
 
       <div className="space-y-2">

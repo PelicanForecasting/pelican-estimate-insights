@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import LaborBurdenForm from '@/features/labor-burden-calculator/components/LaborBurdenForm';
 import LaborBurdenResults from '@/features/labor-burden-calculator/components/LaborBurdenResults';
-import InfoSection from '@/features/labor-burden-calculator/components/InfoSection';
 import { calculateLaborBurden } from '@/features/labor-burden-calculator/utils/calculationUtils';
 import { LaborBurdenInputs, LaborBurdenOutputs } from '@/features/labor-burden-calculator/types';
 import Navbar from '@/components/navigation/Navbar';
@@ -38,10 +37,11 @@ const LaborBurdenCalculator = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-pelican-cream/30 font-body">
       <div className="fixed inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.02] pointer-events-none z-0"></div>
+      <div className="fixed inset-0 bg-[url('/lovable-uploads/124a5830-3317-4386-9cc0-fa99268e814c.png')] bg-bottom bg-no-repeat opacity-[0.04] pointer-events-none z-0 bg-cover"></div>
       <Navbar />
       
-      <main className="container max-w-6xl mx-auto py-20 px-4 sm:px-6 lg:px-8 animate-fade-in">
-        <div className="text-center mb-12">
+      <main className="container max-w-6xl mx-auto py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 animate-fade-in relative z-10">
+        <div className="text-center mb-8 sm:mb-12">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-gradient bg-gradient-to-r from-pelican-navy to-pelican-teal mb-4">
             Labor Burden Calculator
           </h1>
@@ -50,16 +50,16 @@ const LaborBurdenCalculator = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
           <div className="lg:col-span-7">
             <Card className="shadow-xl border-pelican-teal/20 bg-white hover:shadow-2xl transition-all duration-500 h-full">
-              <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-navy/90 text-white rounded-t-lg p-6">
-                <CardTitle className="text-2xl font-heading">Input Labor Data</CardTitle>
-                <CardDescription className="text-white/90 text-lg">
+              <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-navy/90 text-white rounded-t-lg p-5 sm:p-6">
+                <CardTitle className="text-xl sm:text-2xl font-heading">Input Labor Data</CardTitle>
+                <CardDescription className="text-white/90 text-base sm:text-lg">
                   Enter hourly labor rates and associated costs
                 </CardDescription>
               </CardHeader>
-              <CardContent className="p-6 lg:p-8">
+              <CardContent className="p-5 sm:p-6 lg:p-8">
                 <LaborBurdenForm 
                   inputs={inputs}
                   onInputChange={handleInputChange}
@@ -71,29 +71,25 @@ const LaborBurdenCalculator = () => {
           
           <div className="lg:col-span-5">
             <Card className="shadow-xl border-pelican-teal/20 bg-white hover:shadow-2xl transition-all duration-500 h-full">
-              <CardHeader className="bg-gradient-to-r from-pelican-teal to-pelican-teal/90 text-white rounded-t-lg p-6">
-                <CardTitle className="text-2xl font-heading">Results</CardTitle>
-                <CardDescription className="text-white/90 text-lg">
+              <CardHeader className="bg-gradient-to-r from-pelican-teal to-pelican-teal/90 text-white rounded-t-lg p-5 sm:p-6">
+                <CardTitle className="text-xl sm:text-2xl font-heading">Results</CardTitle>
+                <CardDescription className="text-white/90 text-base sm:text-lg">
                   Your fully burdened labor rate
                 </CardDescription>
               </CardHeader>
-              <CardContent className="p-6 lg:p-8">
+              <CardContent className="p-5 sm:p-6 lg:p-8">
                 <LaborBurdenResults 
                   inputs={inputs}
                   outputs={outputs}
                 />
               </CardContent>
             </Card>
-            
-            <div className="mt-8">
-              <InfoSection />
-            </div>
           </div>
         </div>
         
-        <div className="mt-16 mb-12 bg-white p-8 rounded-xl shadow-lg border border-pelican-teal/10">
+        <div className="mt-10 sm:mt-16 mb-8 sm:mb-12 bg-white p-6 sm:p-8 rounded-xl shadow-lg border border-pelican-teal/10">
           <h2 className="text-2xl font-heading font-bold text-pelican-navy mb-6">Why Calculate Labor Burden?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             <div className="flex flex-col items-center text-center">
               <div className="w-16 h-16 rounded-full bg-pelican-lightGray flex items-center justify-center mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-pelican-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">

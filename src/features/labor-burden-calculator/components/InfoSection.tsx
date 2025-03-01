@@ -4,16 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const InfoSection = () => {
   return (
-    <Card className="shadow-lg border-pelican-teal/20 bg-white hover:shadow-xl transition-shadow">
-      <CardHeader className="bg-gradient-to-r from-pelican-orange/90 to-pelican-orange/70 text-white rounded-t-lg">
-        <CardTitle className="text-xl font-heading">What is Labor Burden?</CardTitle>
-      </CardHeader>
-      <CardContent className="p-5">
+    <div className="mt-6">
+      <div className="border-t border-pelican-teal/20 pt-6 mb-4">
+        <h3 className="font-heading font-medium text-pelican-navy text-xl mb-3">What is Labor Burden?</h3>
         <p className="text-pelican-slate mb-4">
           Labor burden includes all costs associated with employing workers beyond their base hourly rate. These additional costs can significantly impact your project budgets and bids.
         </p>
         
-        <h3 className="font-heading font-medium text-pelican-navy text-lg mb-2">Common burden components:</h3>
+        <h4 className="font-heading font-medium text-pelican-navy text-lg mb-2">Common burden components:</h4>
         
         <ul className="space-y-3 mb-4">
           <li className="flex items-start gap-2">
@@ -46,8 +44,8 @@ const InfoSection = () => {
           <strong className="text-pelican-navy block mb-1">Pro Tip:</strong>
           Review and update your burden calculations at least once a year to account for changes in tax rates, insurance premiums, and benefit costs.
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

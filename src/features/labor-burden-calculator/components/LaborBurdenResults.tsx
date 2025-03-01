@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { CardFooter } from "@/components/ui/card";
 import { LaborBurdenInputs, LaborBurdenOutputs } from '../types';
+import InfoSection from './InfoSection';
 
 interface LaborBurdenResultsProps {
   inputs: LaborBurdenInputs;
@@ -38,15 +39,17 @@ const LaborBurdenResults = ({ inputs, outputs }: LaborBurdenResultsProps) => {
 
   return (
     <div className="space-y-4">
-      <div className="bg-pelican-lightGray/50 p-4 rounded-lg">
-        <h3 className="font-medium text-lg font-heading text-pelican-navy mb-1">Base Hourly Rate</h3>
-        <p className="text-2xl font-bold font-display">${inputs.baseHourlyRate.toFixed(2)}</p>
-      </div>
-      
-      <div className="bg-pelican-lightGray/50 p-4 rounded-lg">
-        <h3 className="font-medium text-lg font-heading text-pelican-navy mb-1">Burden Amount</h3>
-        <p className="text-2xl font-bold font-display">${(outputs.burdenedRate - inputs.baseHourlyRate).toFixed(2)}</p>
-        <p className="text-sm text-pelican-slate mt-1">Additional cost per hour</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="bg-pelican-lightGray/50 p-4 rounded-lg">
+          <h3 className="font-medium text-lg font-heading text-pelican-navy mb-1">Base Hourly Rate</h3>
+          <p className="text-2xl font-bold font-display">${inputs.baseHourlyRate.toFixed(2)}</p>
+        </div>
+        
+        <div className="bg-pelican-lightGray/50 p-4 rounded-lg">
+          <h3 className="font-medium text-lg font-heading text-pelican-navy mb-1">Burden Amount</h3>
+          <p className="text-2xl font-bold font-display">${(outputs.burdenedRate - inputs.baseHourlyRate).toFixed(2)}</p>
+          <p className="text-sm text-pelican-slate mt-1">Additional cost per hour</p>
+        </div>
       </div>
 
       <div className="bg-pelican-lightGray/50 p-4 rounded-lg">
@@ -73,6 +76,8 @@ const LaborBurdenResults = ({ inputs, outputs }: LaborBurdenResultsProps) => {
           <p className="text-sm">Use this rate for accurate labor cost estimating in your bids.</p>
         </div>
       </CardFooter>
+      
+      <InfoSection />
     </div>
   );
 };
