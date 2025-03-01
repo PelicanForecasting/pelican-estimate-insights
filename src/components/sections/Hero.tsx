@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 const slideshowImages = [
   '/lovable-uploads/7d7e9bc1-b414-48f1-864f-d0bc3c45e0bb.jpg',
   '/lovable-uploads/f20b7968-02c4-4f80-aa24-00c1ec8fb0c7.jpg',
+  '/lovable-uploads/af6d144b-9c89-4514-ad4b-06982fe45170.png',
   '/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png'
 ];
 
@@ -40,22 +41,23 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
-      {/* Base gradient background */}
-      <div className="absolute inset-0 bg-gradient-radial from-pelican-cream to-pelican-cream/60 z-0"></div>
+      {/* Base gradient background - reducing opacity */}
+      <div className="absolute inset-0 bg-gradient-radial from-pelican-cream/70 to-pelican-cream/40 z-0"></div>
       
       {/* Watermark logo in background */}
       <div className="absolute top-0 left-0 w-full h-full bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-no-repeat bg-right-top bg-contain opacity-5"></div>
       
-      {/* Slideshow background */}
+      {/* Slideshow background - increasing image opacity and adjusting z-index */}
       <div className="absolute inset-0 z-0">
         {slideshowImages.map((image, index) => (
           <div 
             key={index}
-            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${index === currentImageIndex ? 'opacity-10' : 'opacity-0'}`}
+            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${index === currentImageIndex ? 'opacity-25' : 'opacity-0'}`}
             style={{ backgroundImage: `url('${image}')` }}
           ></div>
         ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-pelican-cream via-pelican-cream/90 to-pelican-cream/70"></div>
+        {/* Reducing the opacity of the overlay to let more of the image show through */}
+        <div className="absolute inset-0 bg-gradient-to-r from-pelican-cream/60 via-pelican-cream/50 to-pelican-cream/40"></div>
       </div>
       
       {/* Animated decorative elements */}
