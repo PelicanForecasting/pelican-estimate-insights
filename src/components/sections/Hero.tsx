@@ -24,6 +24,12 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-radial from-pelican-cream to-pelican-cream/60 z-0"></div>
       <div className="absolute top-0 left-0 w-full h-full bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-no-repeat bg-right-top bg-contain opacity-5"></div>
       
+      {/* Background construction image with overlay */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[url('/lovable-uploads/7d7e9bc1-b414-48f1-864f-d0bc3c45e0bb.jpg')] bg-cover bg-center opacity-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-pelican-cream via-pelican-cream/90 to-pelican-cream/70"></div>
+      </div>
+      
       {/* Animated decorative elements */}
       <div className="absolute top-1/3 right-0 w-96 h-96 bg-pelican-teal/10 rounded-full filter blur-3xl animate-pulse-slow"></div>
       <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-pelican-orange/10 rounded-full filter blur-3xl animate-pulse-slow" style={{ animationDelay: '1.5s' }}></div>
@@ -115,11 +121,17 @@ const Hero = () => {
                 </svg>
               </div>
               <div className="glass rounded-2xl p-1 shadow-lg max-w-md bg-gradient-to-br from-white/90 via-white/70 to-pelican-cream/70">
-                <img 
-                  src="/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png" 
-                  alt="Pelican Forecasting Group logo" 
-                  className="w-full h-auto rounded-xl"
-                />
+                <div className="relative overflow-hidden rounded-xl">
+                  <img 
+                    src="/lovable-uploads/f20b7968-02c4-4f80-aa24-00c1ec8fb0c7.jpg" 
+                    alt="Construction data analysis" 
+                    className="w-full h-auto rounded-xl shadow-inner transform transition-all duration-500 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-pelican-navy/40 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                    <p className="text-xs md:text-sm font-medium bg-pelican-teal/80 inline-block px-2 py-1 rounded">Construction Analytics</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
