@@ -1,6 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const ServiceCard = ({ 
   title, 
@@ -165,9 +166,13 @@ const Services = () => {
               </div>
             </div>
             <div className="md:w-1/3 flex justify-center">
-              <Link to="/estimating-maturity" className="pelican-button bg-pelican-navy text-white hover:bg-pelican-teal">
-                Try Our Free Tools
-              </Link>
+              <Button 
+                variant="secondary" 
+                rounded="full" 
+                asChild
+              >
+                <Link to="/estimating-maturity">Try Our Free Tools</Link>
+              </Button>
             </div>
           </div>
         </div>

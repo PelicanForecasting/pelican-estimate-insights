@@ -1,5 +1,6 @@
 
 import React, { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 
 const Hero = () => {
   useEffect(() => {
@@ -41,12 +42,23 @@ const Hero = () => {
               Pelican Forecasting Group helps construction companies leverage historic production data to predict future costs, saving time and money while converting unused data into valuable insights.
             </p>
             <div className="flex flex-wrap gap-4 pt-2 animate-fade-in" style={{ animationDelay: '0.9s' }}>
-              <a href="#services" className="pelican-button bg-gradient-to-r from-pelican-navy to-pelican-teal text-white hover:from-pelican-teal hover:to-pelican-navy">
-                Explore Services
-              </a>
-              <a href="#contact" className="pelican-button gradient-border bg-white/80 backdrop-blur-sm text-pelican-navy hover:bg-white">
-                Schedule Consultation
-              </a>
+              <Button 
+                variant="default" 
+                rounded="full" 
+                size="lg" 
+                asChild
+              >
+                <a href="#services">Explore Services</a>
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                rounded="full" 
+                size="lg" 
+                asChild
+              >
+                <a href="#contact">Schedule Consultation</a>
+              </Button>
             </div>
             <div className="flex items-center space-x-4 text-sm text-pelican-grey mt-8 animate-fade-in" style={{ animationDelay: '1.1s' }}>
               <div className="flex items-center">
