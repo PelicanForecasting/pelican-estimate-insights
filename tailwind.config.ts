@@ -20,8 +20,10 @@ export default {
 		},
 		extend: {
 			fontFamily: {
+				heading: ['Euclid Circular A', 'sans-serif'],
+				display: ['Bahnschrift', 'Arial', 'sans-serif'],
+				body: ['Inter', 'sans-serif'],
 				sans: ['Inter', 'sans-serif'],
-				display: ['DM Sans', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -114,6 +116,10 @@ export default {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' },
 				},
+				shimmer: {
+					'0%': { backgroundPosition: '-200% 0' },
+					'100%': { backgroundPosition: '200% 0' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -124,9 +130,11 @@ export default {
 				'slide-up': 'slide-up 0.5s ease-out',
 				'pulse-slow': 'pulse-slow 3s infinite',
 				'float': 'float 6s ease-in-out infinite',
+				'shimmer': 'shimmer 2s infinite linear',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+				'shimmer': 'linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%)',
 			}
 		}
 	},

@@ -1,5 +1,29 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap');
+/* Adding Euclid and Bahnschrift fonts */
+@font-face {
+  font-family: 'Euclid Circular A';
+  src: url('/fonts/Euclid-Circular-A-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Euclid Circular A';
+  src: url('/fonts/Euclid-Circular-A-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Euclid Circular A';
+  src: url('/fonts/Euclid-Circular-A-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -47,11 +71,11 @@
   }
   
   body {
-    @apply bg-pelican-cream text-pelican-navy font-sans antialiased;
+    @apply bg-pelican-cream text-pelican-navy font-body antialiased;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-medium tracking-tight;
+    @apply font-heading font-medium tracking-tight;
   }
 }
 
@@ -83,6 +107,18 @@
   .link-underline {
     @apply relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-pelican-teal after:transition-all after:duration-300 hover:after:w-full;
   }
+
+  .data-display {
+    @apply font-display text-lg font-medium;
+  }
+
+  .gradient-card {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-br before:from-pelican-cream/40 before:to-pelican-teal/10 before:opacity-80 before:-z-10;
+  }
+
+  .gradient-border {
+    @apply relative before:absolute before:inset-0 before:p-[2px] before:rounded-2xl before:bg-gradient-to-br before:from-pelican-teal before:to-pelican-navy before:-z-10 before:content-[''];
+  }
 }
 
 /* Custom utilities and animations */
@@ -94,6 +130,10 @@
   .bg-pelican-gradient {
     @apply bg-gradient-to-r from-pelican-navy to-pelican-teal;
   }
+
+  .bg-pelican-gradient-soft {
+    @apply bg-gradient-to-r from-pelican-teal/10 to-pelican-orange/5;
+  }
   
   .text-shadow {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -102,4 +142,40 @@
   .transition-smooth {
     @apply transition-all duration-300 ease-in-out;
   }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 3s infinite;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.5s ease-out;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.4s ease-out;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
