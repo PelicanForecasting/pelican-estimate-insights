@@ -2,20 +2,8 @@
 import React from 'react';
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/estimating-maturity/RadioGroup";
-
-interface Option {
-  label: string;
-  value: string;
-  points: number;
-}
-
-interface Question {
-  id: string;
-  text: string;
-  options: Option[];
-  selectedOption?: string;
-}
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Question } from './types';
 
 interface QuestionSectionProps {
   title: string;
