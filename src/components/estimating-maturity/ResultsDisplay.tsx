@@ -39,16 +39,16 @@ const ResultsDisplay = ({ score, onReset }: ResultsDisplayProps) => {
   };
 
   return (
-    <Card className="mb-8 border-pelican-teal/20 shadow-xl bg-white">
-      <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white rounded-t-lg">
-        <CardTitle className="text-2xl font-heading">Your Assessment Results</CardTitle>
+    <Card className="mb-8 border-pelican-teal/20 shadow-sm bg-white">
+      <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white rounded-t-md">
+        <CardTitle className="text-[20px] font-heading font-medium">Your Assessment Results</CardTitle>
         <CardDescription className="text-white/90">
           Your score: {score} points - {category}
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-6">
         <div className="mb-6">
-          <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
+          <div className="w-full bg-pelican-lightGray rounded-full h-4 mb-4">
             <div 
               className="h-4 rounded-full bg-gradient-to-r from-pelican-navy to-pelican-teal"
               style={{ width: `${(score / 48) * 100}%` }}
@@ -63,14 +63,14 @@ const ResultsDisplay = ({ score, onReset }: ResultsDisplayProps) => {
           </div>
         </div>
         
-        <div className="mb-8 p-4 bg-pelican-cream/40 rounded-lg">
-          <h3 className="text-xl font-heading font-bold text-pelican-navy mb-2">{category}</h3>
+        <div className="mb-8 p-4 bg-pelican-cream rounded-md">
+          <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-2">{category}</h3>
           <p className="text-pelican-slate">{description}</p>
         </div>
         
         {!emailSubmitted ? (
           <div className="mb-6">
-            <h4 className="text-lg font-heading font-semibold text-pelican-navy mb-3">Get Your Detailed Assessment Report</h4>
+            <h4 className="text-[18px] font-heading font-medium text-pelican-navy mb-3">Get Your Detailed Assessment Report</h4>
             <form onSubmit={handleSubmitEmail} className="space-y-4">
               <div>
                 <Label htmlFor="email">Email Address</Label>
@@ -81,10 +81,10 @@ const ResultsDisplay = ({ score, onReset }: ResultsDisplayProps) => {
                     placeholder="your@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1"
+                    className="flex-1 rounded-sm"
                     required
                   />
-                  <Button type="submit">
+                  <Button type="submit" variant="primary">
                     <MailIcon className="mr-2 h-4 w-4" />
                     Send Report
                   </Button>
@@ -93,7 +93,7 @@ const ResultsDisplay = ({ score, onReset }: ResultsDisplayProps) => {
             </form>
           </div>
         ) : (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start">
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md flex items-start">
             <CheckIcon className="text-green-500 mt-0.5 mr-2 h-5 w-5 flex-shrink-0" />
             <div>
               <h4 className="text-green-800 font-medium">Report Request Received</h4>
@@ -103,10 +103,10 @@ const ResultsDisplay = ({ score, onReset }: ResultsDisplayProps) => {
         )}
         
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button variant="outline" onClick={onReset} className="border-pelican-teal text-pelican-navy hover:bg-pelican-teal/10">
+          <Button variant="secondary-outline" onClick={onReset} className="border-secondary text-secondary hover:bg-secondary/5">
             Retake Assessment
           </Button>
-          <Button className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white hover:opacity-90">
+          <Button variant="primary">
             <CalendarIcon className="mr-2 h-4 w-4" />
             Schedule Consultation
           </Button>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navbar from '@/components/navigation/Navbar';
 import Footer from '@/components/sections/Footer';
@@ -8,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import QuestionSection from '@/components/estimating-maturity/QuestionSection';
 import ResultsDisplay from '@/components/estimating-maturity/ResultsDisplay';
+import { Award, FileText, Users } from 'lucide-react';
 
 interface Question {
   id: string;
@@ -23,7 +23,6 @@ interface Question {
 const EstimatingMaturity = () => {
   const [currentTab, setCurrentTab] = useState<string>("assessment");
   const [questions, setQuestions] = useState<Question[]>([
-    // Section 1: Process & Methodology
     {
       id: "q1",
       text: "How would you describe your current estimating process?",
@@ -54,7 +53,6 @@ const EstimatingMaturity = () => {
         { label: "Systematic analysis of all projects with database of learnings", value: "systematic", points: 4 },
       ]
     },
-    // Section 2: Data & Technology
     {
       id: "q4",
       text: "What tools do you currently use for estimating? (Select the most advanced option that applies)",
@@ -85,7 +83,6 @@ const EstimatingMaturity = () => {
         { label: "Full integration across platforms", value: "full", points: 4 },
       ]
     },
-    // Section 3: Analysis & Decision Making
     {
       id: "q7",
       text: "How do you analyze the accuracy of past estimates?",
@@ -116,7 +113,6 @@ const EstimatingMaturity = () => {
         { label: "Data-driven analysis with multiple factors", value: "data-driven", points: 4 },
       ]
     },
-    // Section 4: Team & Knowledge
     {
       id: "q10",
       text: "How is estimating knowledge transferred in your organization?",
@@ -167,7 +163,6 @@ const EstimatingMaturity = () => {
     
     setQuestions(updatedQuestions);
     
-    // Recalculate score
     const newScore = updatedQuestions.reduce((total, q) => {
       if (q.selectedOption) {
         const option = q.options.find(opt => opt.value === q.selectedOption);
@@ -178,7 +173,6 @@ const EstimatingMaturity = () => {
     
     setScore(newScore);
     
-    // Check if all questions are answered
     const allAnswered = updatedQuestions.every(q => q.selectedOption !== undefined);
     setAllQuestionsAnswered(allAnswered);
   };
@@ -200,12 +194,12 @@ const EstimatingMaturity = () => {
       <div className="fixed inset-0 bg-[url('/lovable-uploads/dcbc1815-252a-4087-a2de-8ce2ba0406ad.png')] bg-center bg-no-repeat opacity-[0.02] pointer-events-none z-0"></div>
       <Navbar />
       
-      <main className="container max-w-6xl mx-auto py-20 px-4 sm:px-6 lg:px-8 animate-fade-in">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-gradient bg-gradient-to-r from-pelican-navy to-pelican-teal mb-4">
+      <main className="container max-w-[1200px] mx-auto py-20 md:py-[80px] px-6 animate-fade-in">
+        <div className="text-center mb-12 lg:mb-[48px]">
+          <h1 className="text-3xl md:text-4xl lg:text-[32px] font-heading font-medium text-gradient bg-gradient-to-r from-pelican-navy to-pelican-teal mb-4">
             Estimating Maturity Assessment
           </h1>
-          <p className="text-pelican-slate text-center mb-8 max-w-3xl mx-auto text-lg">
+          <p className="text-pelican-slate text-center mb-8 max-w-3xl mx-auto text-base">
             Evaluate your construction estimating processes against industry best practices
           </p>
         </div>
@@ -219,9 +213,9 @@ const EstimatingMaturity = () => {
           <TabsContent value="assessment" className="space-y-6">
             {!showResults ? (
               <>
-                <Card className="border-pelican-teal/20 shadow-md bg-white">
-                  <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white rounded-t-lg">
-                    <CardTitle className="text-2xl font-heading">Estimating Maturity Self-Assessment</CardTitle>
+                <Card className="border-pelican-teal/20 shadow-sm bg-white">
+                  <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white rounded-t-md">
+                    <CardTitle className="text-[24px] font-heading font-medium">Estimating Maturity Self-Assessment</CardTitle>
                     <CardDescription className="text-white/90">
                       Answer all questions to receive your personalized assessment
                     </CardDescription>
@@ -238,7 +232,7 @@ const EstimatingMaturity = () => {
                       <div>Current score: {score} points</div>
                     </div>
                     
-                    <div className="w-full bg-gray-200 rounded-full h-2 mb-8">
+                    <div className="w-full bg-pelican-lightGray rounded-full h-2 mb-8">
                       <div 
                         className="h-2 rounded-full bg-gradient-to-r from-pelican-navy to-pelican-teal"
                         style={{ width: `${(questions.filter(q => q.selectedOption).length / questions.length) * 100}%` }}
@@ -247,29 +241,29 @@ const EstimatingMaturity = () => {
                   </CardContent>
                 </Card>
                 
-                <div>
-                  <h2 className="text-2xl font-heading font-bold text-pelican-navy mb-6">Section 1: Process & Methodology</h2>
+                <div className="space-y-6 lg:space-y-[24px]">
+                  <h2 className="text-2xl lg:text-[24px] font-heading font-medium text-pelican-navy mb-4">Section 1: Process & Methodology</h2>
                   <QuestionSection 
                     title="Process Structure and Documentation" 
                     questions={sectionQuestions.processMethodology}
                     onChange={handleOptionChange}
                   />
                   
-                  <h2 className="text-2xl font-heading font-bold text-pelican-navy mb-6">Section 2: Data & Technology</h2>
+                  <h2 className="text-2xl lg:text-[24px] font-heading font-medium text-pelican-navy mb-4">Section 2: Data & Technology</h2>
                   <QuestionSection 
                     title="Tools and Systems" 
                     questions={sectionQuestions.dataTechnology}
                     onChange={handleOptionChange}
                   />
                   
-                  <h2 className="text-2xl font-heading font-bold text-pelican-navy mb-6">Section 3: Analysis & Decision Making</h2>
+                  <h2 className="text-2xl lg:text-[24px] font-heading font-medium text-pelican-navy mb-4">Section 3: Analysis & Decision Making</h2>
                   <QuestionSection 
                     title="Analytical Approaches" 
                     questions={sectionQuestions.analysisDecision}
                     onChange={handleOptionChange}
                   />
                   
-                  <h2 className="text-2xl font-heading font-bold text-pelican-navy mb-6">Section 4: Team & Knowledge</h2>
+                  <h2 className="text-2xl lg:text-[24px] font-heading font-medium text-pelican-navy mb-4">Section 4: Team & Knowledge</h2>
                   <QuestionSection 
                     title="Knowledge Management" 
                     questions={sectionQuestions.teamKnowledge}
@@ -281,7 +275,8 @@ const EstimatingMaturity = () => {
                       size="lg"
                       onClick={handleSubmit} 
                       disabled={!allQuestionsAnswered}
-                      className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white hover:opacity-90 px-8"
+                      variant="primary"
+                      className="px-8 py-3"
                     >
                       View My Results
                     </Button>
@@ -300,53 +295,53 @@ const EstimatingMaturity = () => {
           </TabsContent>
           
           <TabsContent value="about">
-            <Card className="border-pelican-teal/20 shadow-md">
-              <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white rounded-t-lg">
-                <CardTitle className="text-2xl font-heading">About the Assessment Tool</CardTitle>
+            <Card className="border-pelican-teal/20 shadow-sm">
+              <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white rounded-t-md">
+                <CardTitle className="text-[24px] font-heading font-medium">About the Assessment Tool</CardTitle>
                 <CardDescription className="text-white/90">
                   Understanding the evaluation methodology
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-6">
-                <h3 className="text-xl font-heading font-bold text-pelican-navy mb-3">Purpose</h3>
+                <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Purpose</h3>
                 <p className="text-pelican-slate mb-6">
                   This assessment tool is designed to help construction companies evaluate their current estimating capabilities
                   against industry best practices. It provides a structured framework to identify strengths and areas for improvement
                   in your estimating processes.
                 </p>
                 
-                <h3 className="text-xl font-heading font-bold text-pelican-navy mb-3">Methodology</h3>
+                <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Methodology</h3>
                 <p className="text-pelican-slate mb-6">
                   The assessment is divided into four key areas that contribute to estimating excellence: 
                   Process & Methodology, Data & Technology, Analysis & Decision Making, and Team & Knowledge.
                   Each question evaluates a specific aspect of estimating maturity on a scale from foundational to optimized practices.
                 </p>
                 
-                <h3 className="text-xl font-heading font-bold text-pelican-navy mb-3">Scoring System</h3>
+                <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Scoring System</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-pelican-navy mb-2">Foundational Stage (12-19 points)</h4>
+                  <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
+                    <h4 className="text-[18px] font-heading font-medium text-pelican-navy mb-2">Foundational Stage (12-19 points)</h4>
                     <p className="text-sm text-pelican-slate">
                       Your estimating process has significant opportunity for improvement through systematization 
                       and data utilization. Focus on documenting processes and centralizing historical information.
                     </p>
                   </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-pelican-navy mb-2">Developing Stage (20-29 points)</h4>
+                  <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
+                    <h4 className="text-[18px] font-heading font-medium text-pelican-navy mb-2">Developing Stage (20-29 points)</h4>
                     <p className="text-sm text-pelican-slate">
                       You have established basics but could benefit from improved analytics and integration. 
                       Focus on connecting your existing data and developing more sophisticated analysis.
                     </p>
                   </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-pelican-navy mb-2">Advanced Stage (30-39 points)</h4>
+                  <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
+                    <h4 className="text-[18px] font-heading font-medium text-pelican-navy mb-2">Advanced Stage (30-39 points)</h4>
                     <p className="text-sm text-pelican-slate">
                       Your estimating capabilities are strong but could be enhanced with predictive analytics 
                       and deeper integration. Focus on statistical analysis and strategic intelligence.
                     </p>
                   </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-pelican-navy mb-2">Optimized Stage (40-48 points)</h4>
+                  <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
+                    <h4 className="text-[18px] font-heading font-medium text-pelican-navy mb-2">Optimized Stage (40-48 points)</h4>
                     <p className="text-sm text-pelican-slate">
                       Your estimating function is highly mature. Focus on continuous refinement and 
                       cutting-edge analytics to maintain your competitive advantage.
@@ -358,7 +353,7 @@ const EstimatingMaturity = () => {
                 
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="md:w-1/2">
-                    <h3 className="text-xl font-heading font-bold text-pelican-navy mb-3">Benefits</h3>
+                    <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Benefits</h3>
                     <ul className="space-y-2 text-pelican-slate list-disc pl-5">
                       <li>Identify strengths and weaknesses in your estimating processes</li>
                       <li>Benchmark your capabilities against industry best practices</li>
@@ -368,7 +363,7 @@ const EstimatingMaturity = () => {
                     </ul>
                   </div>
                   <div className="md:w-1/2">
-                    <h3 className="text-xl font-heading font-bold text-pelican-navy mb-3">Next Steps</h3>
+                    <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Next Steps</h3>
                     <ul className="space-y-2 text-pelican-slate list-disc pl-5">
                       <li>Complete the assessment to receive your score and recommendations</li>
                       <li>Request a detailed report with personalized improvement strategies</li>
@@ -379,14 +374,14 @@ const EstimatingMaturity = () => {
                   </div>
                 </div>
                 
-                <div className="mt-8 bg-pelican-lightGray/30 p-6 rounded-lg border border-pelican-cream">
-                  <h3 className="text-xl font-heading font-bold text-pelican-navy mb-3">Ready to Assess Your Estimating Maturity?</h3>
+                <div className="mt-8 bg-pelican-lightGray/30 p-6 rounded-md border border-pelican-cream">
+                  <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Ready to Assess Your Estimating Maturity?</h3>
                   <p className="text-pelican-slate mb-4">
                     Switch to the Self-Assessment tab to evaluate your current estimating processes and identify opportunities for improvement.
                   </p>
                   <Button 
                     onClick={() => setCurrentTab("assessment")}
-                    className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white hover:opacity-90"
+                    variant="primary"
                   >
                     Start Assessment
                   </Button>
@@ -397,33 +392,27 @@ const EstimatingMaturity = () => {
         </Tabs>
         
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-pelican-cream">
+          <div className="bg-white p-6 rounded-md shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
             <div className="w-12 h-12 rounded-full bg-pelican-lightGray flex items-center justify-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-pelican-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>
+              <FileText className="h-6 w-6 text-pelican-navy" />
             </div>
-            <h3 className="text-xl font-heading font-medium text-pelican-navy mb-2">Self-Assessment</h3>
+            <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-2">Self-Assessment</h3>
             <p className="text-pelican-slate">Complete the questionnaire to evaluate your current estimating capabilities</p>
           </div>
           
-          <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-pelican-cream">
+          <div className="bg-white p-6 rounded-md shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
             <div className="w-12 h-12 rounded-full bg-pelican-lightGray flex items-center justify-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-pelican-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
+              <Award className="h-6 w-6 text-pelican-navy" />
             </div>
-            <h3 className="text-xl font-heading font-medium text-pelican-navy mb-2">Detailed Report</h3>
+            <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-2">Detailed Report</h3>
             <p className="text-pelican-slate">Receive personalized recommendations based on your assessment results</p>
           </div>
           
-          <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-pelican-cream">
+          <div className="bg-white p-6 rounded-md shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
             <div className="w-12 h-12 rounded-full bg-pelican-lightGray flex items-center justify-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-pelican-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-              </svg>
+              <Users className="h-6 w-6 text-pelican-navy" />
             </div>
-            <h3 className="text-xl font-heading font-medium text-pelican-navy mb-2">Expert Consultation</h3>
+            <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-2">Expert Consultation</h3>
             <p className="text-pelican-slate">Schedule a session with an estimating expert to discuss improvement strategies</p>
           </div>
         </div>
