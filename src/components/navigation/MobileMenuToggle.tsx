@@ -9,7 +9,7 @@ interface MobileMenuToggleProps {
 const MobileMenuToggle: React.FC<MobileMenuToggleProps> = ({ isOpen, onClick }) => {
   return (
     <button
-      className="text-gray-800 p-2"
+      className="text-gray-800 p-2 focus:outline-none"
       onClick={onClick}
       aria-label={isOpen ? "Close menu" : "Open menu"}
     >
