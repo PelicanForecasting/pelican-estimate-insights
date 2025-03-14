@@ -1,11 +1,14 @@
+
 import React, { useEffect, useState } from 'react';
 import { CardFooter } from "@/components/ui/card";
 import { LaborBurdenInputs, LaborBurdenOutputs } from '../types';
 import InfoSection from './InfoSection';
+
 interface LaborBurdenResultsProps {
   inputs: LaborBurdenInputs;
   outputs: LaborBurdenOutputs;
 }
+
 const LaborBurdenResults = ({
   inputs,
   outputs
@@ -14,6 +17,7 @@ const LaborBurdenResults = ({
     x: 0,
     y: 0
   });
+  
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       const {
@@ -39,28 +43,29 @@ const LaborBurdenResults = ({
     WebkitBackgroundClip: 'text',
     color: 'transparent'
   };
+  
   return <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="bg-pelican-lightGray/50 p-4 rounded-lg">
-          <h3 className="font-medium text-lg font-heading text-pelican-navy mb-1">Base Hourly Rate</h3>
+          <h3 className="font-medium text-lg font-heading text-white mb-1">Base Hourly Rate</h3>
           <p className="text-2xl font-bold font-display">${inputs.baseHourlyRate.toFixed(2)}</p>
         </div>
         
         <div className="bg-pelican-lightGray/50 p-4 rounded-lg">
-          <h3 className="font-medium text-lg font-heading text-pelican-navy mb-1">Burden Amount</h3>
+          <h3 className="font-medium text-lg font-heading text-white mb-1">Burden Amount</h3>
           <p className="text-2xl font-bold font-display">${(outputs.burdenedRate - inputs.baseHourlyRate).toFixed(2)}</p>
           <p className="text-sm text-pelican-slate mt-1">Additional cost per hour</p>
         </div>
       </div>
 
       <div className="bg-pelican-lightGray/50 p-4 rounded-lg">
-        <h3 className="font-medium text-lg font-heading text-pelican-navy mb-1">Burden Percentage</h3>
+        <h3 className="font-medium text-lg font-heading text-white mb-1">Burden Percentage</h3>
         <p className="text-2xl font-bold font-display">{outputs.burdenPercentage.toFixed(1)}%</p>
         <p className="text-sm text-pelican-slate mt-1">Percentage increase over base rate</p>
       </div>
 
       <div className="pt-5 border-t-2 border-pelican-teal/20">
-        <h3 className="font-medium text-lg font-heading text-pelican-navy mb-2">Fully Burdened Hourly Rate</h3>
+        <h3 className="font-medium text-lg font-heading text-white mb-2">Fully Burdened Hourly Rate</h3>
         <div className="flex items-end gap-2">
           <p className="text-4xl font-bold font-display" style={gradientStyle}>
             ${outputs.burdenedRate.toFixed(2)}
@@ -81,4 +86,5 @@ const LaborBurdenResults = ({
       <InfoSection />
     </div>;
 };
+
 export default LaborBurdenResults;
