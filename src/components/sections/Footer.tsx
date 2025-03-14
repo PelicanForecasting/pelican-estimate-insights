@@ -1,101 +1,94 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { MapPin, Phone, Mail, Facebook, Linkedin, Youtube } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-gradient-to-r from-pelican-navy to-pelican-navy/90 text-white py-12">
-      <div className="section-container">
+    <footer className="bg-gradient-to-r from-primary to-primary/90 text-white py-12">
+      <div className="content-container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
             <Link to="/" className="text-white flex items-center mb-6">
-              <span className="text-white font-display text-2xl font-bold">
-                Pelican<span className="text-pelican-teal">Forecasting</span>
+              <img 
+                src="/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png" 
+                alt="Pelican Forecasting Group Logo" 
+                className="h-10 mr-2" 
+              />
+              <span className="text-white font-heading text-2xl font-bold">
+                Pelican<span className="text-secondary">Forecasting</span>
               </span>
             </Link>
             <p className="text-white/70 mb-6">
               Transforming construction estimating through data-driven insights and analytics.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-white/70 hover:text-pelican-teal transition-colors">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
-                </svg>
+              <a href="#" className="text-white/70 hover:text-secondary transition-colors" aria-label="Facebook">
+                <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="text-white/70 hover:text-pelican-teal transition-colors">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
-                </svg>
+              <a href="#" className="text-white/70 hover:text-secondary transition-colors" aria-label="LinkedIn">
+                <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="text-white/70 hover:text-pelican-teal transition-colors">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
-                </svg>
+              <a href="#" className="text-white/70 hover:text-secondary transition-colors" aria-label="YouTube">
+                <Youtube className="w-5 h-5" />
               </a>
             </div>
           </div>
           
           <div>
-            <h4 className="text-white font-bold text-lg mb-5">Quick Links</h4>
+            <h4 className="text-white font-heading font-medium text-[18px] mb-5">Quick Links</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/#services" className="text-white/70 hover:text-pelican-teal transition-colors">Services</Link>
+                <Link to="/#services" className="text-white/70 hover:text-secondary transition-colors">Services</Link>
               </li>
               <li>
-                <Link to="/#customer-journey" className="text-white/70 hover:text-pelican-teal transition-colors">Process</Link>
+                <Link to="/#customer-journey" className="text-white/70 hover:text-secondary transition-colors">Process</Link>
               </li>
               <li>
-                <Link to="/#testimonials" className="text-white/70 hover:text-pelican-teal transition-colors">Testimonials</Link>
+                <Link to="/#testimonials" className="text-white/70 hover:text-secondary transition-colors">Testimonials</Link>
               </li>
               <li>
-                <Link to="/#about" className="text-white/70 hover:text-pelican-teal transition-colors">About Us</Link>
+                <Link to="/#about" className="text-white/70 hover:text-secondary transition-colors">About Us</Link>
               </li>
               <li>
-                <Link to="/#contact" className="text-white/70 hover:text-pelican-teal transition-colors">Contact</Link>
+                <Link to="/#contact" className="text-white/70 hover:text-secondary transition-colors">Contact</Link>
               </li>
             </ul>
           </div>
           
           <div>
-            <h4 className="text-white font-bold text-lg mb-5">Our Tools</h4>
+            <h4 className="text-white font-heading font-medium text-[18px] mb-5">Our Tools</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/estimating-maturity" className="text-white/70 hover:text-pelican-teal transition-colors">Estimating Maturity Assessment</Link>
+                <Link to="/estimating-maturity" className="text-white/70 hover:text-secondary transition-colors">Estimating Maturity Assessment</Link>
               </li>
               <li>
-                <Link to="/labor-burden-calculator" className="text-white/70 hover:text-pelican-teal transition-colors">Labor Burden Calculator</Link>
+                <Link to="/labor-burden-calculator" className="text-white/70 hover:text-secondary transition-colors">Labor Burden Calculator</Link>
               </li>
               <li>
-                <Link to="/quadrilateral-deck-calculator" className="text-white/70 hover:text-pelican-teal transition-colors">Quadrilateral Deck Calculator</Link>
+                <Link to="/quadrilateral-deck-calculator" className="text-white/70 hover:text-secondary transition-colors">Quadrilateral Deck Calculator</Link>
               </li>
             </ul>
           </div>
           
           <div>
-            <h4 className="text-white font-bold text-lg mb-5">Contact</h4>
+            <h4 className="text-white font-heading font-medium text-[18px] mb-5">Contact</h4>
             <ul className="space-y-4">
               <li className="flex items-start space-x-3">
-                <svg className="w-5 h-5 text-pelican-teal mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                </svg>
+                <MapPin className="w-5 h-5 text-secondary mt-0.5" />
                 <span className="text-white/70">
                   1234 Construction Way<br />
                   Portland, OR 97201
                 </span>
               </li>
               <li className="flex items-center space-x-3">
-                <svg className="w-5 h-5 text-pelican-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                </svg>
+                <Phone className="w-5 h-5 text-secondary" />
                 <span className="text-white/70">(555) 123-4567</span>
               </li>
               <li className="flex items-center space-x-3">
-                <svg className="w-5 h-5 text-pelican-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
+                <Mail className="w-5 h-5 text-secondary" />
                 <span className="text-white/70">info@pelicanforecasting.com</span>
               </li>
             </ul>
@@ -107,8 +100,8 @@ const Footer = () => {
             &copy; {currentYear} Pelican Forecasting Group. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="text-white/70 hover:text-pelican-teal transition-colors text-sm">Privacy Policy</a>
-            <a href="#" className="text-white/70 hover:text-pelican-teal transition-colors text-sm">Terms of Service</a>
+            <a href="#" className="text-white/70 hover:text-secondary transition-colors text-sm">Privacy Policy</a>
+            <a href="#" className="text-white/70 hover:text-secondary transition-colors text-sm">Terms of Service</a>
           </div>
         </div>
       </div>
