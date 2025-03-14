@@ -12,7 +12,7 @@ const AssessmentHeader = ({ questions, score }: AssessmentHeaderProps) => {
   return (
     <Card className="border-pelican-teal/20 shadow-sm bg-white">
       <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white rounded-t-md">
-        <CardTitle className="text-[24px] font-heading font-medium">Estimating Maturity Self-Assessment</CardTitle>
+        <CardTitle className="text-[24px] font-heading font-medium text-white">Estimating Maturity Self-Assessment</CardTitle>
         <CardDescription className="text-white/90">
           Answer all questions to receive your personalized assessment
         </CardDescription>
