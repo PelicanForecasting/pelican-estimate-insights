@@ -1,10 +1,31 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { MapPin, Phone, Mail, Facebook, Linkedin, Youtube } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+  
+  // Helper function to determine whether to use anchor tags or links
+  const HomeLink = ({ to, children, className }: { to: string; children: React.ReactNode; className?: string }) => {
+    if (isHomePage && to.startsWith('/#')) {
+      // Use anchor tag for same-page navigation when on home page
+      return (
+        <a href={to} className={className}>
+          {children}
+        </a>
+      );
+    } else {
+      // Use Link component for navigation to other pages or home page with hash
+      return (
+        <Link to={to} className={className}>
+          {children}
+        </Link>
+      );
+    }
+  };
   
   return (
     <footer className="bg-gradient-to-r from-primary to-primary/90 text-white py-12">
@@ -41,19 +62,19 @@ const Footer = () => {
             <h4 className="text-white font-heading font-medium text-[18px] mb-5">Quick Links</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/#services" className="text-white/70 hover:text-secondary transition-colors">Services</Link>
+                <HomeLink to="/#services" className="text-white/70 hover:text-secondary transition-colors">Services</HomeLink>
               </li>
               <li>
-                <Link to="/#customer-journey" className="text-white/70 hover:text-secondary transition-colors">Process</Link>
+                <HomeLink to="/#customer-journey" className="text-white/70 hover:text-secondary transition-colors">Process</HomeLink>
               </li>
               <li>
-                <Link to="/#testimonials" className="text-white/70 hover:text-secondary transition-colors">Testimonials</Link>
+                <HomeLink to="/#testimonials" className="text-white/70 hover:text-secondary transition-colors">Testimonials</HomeLink>
               </li>
               <li>
-                <Link to="/#about" className="text-white/70 hover:text-secondary transition-colors">About Us</Link>
+                <HomeLink to="/#about" className="text-white/70 hover:text-secondary transition-colors">About Us</HomeLink>
               </li>
               <li>
-                <Link to="/#contact" className="text-white/70 hover:text-secondary transition-colors">Contact</Link>
+                <HomeLink to="/#contact" className="text-white/70 hover:text-secondary transition-colors">Contact</HomeLink>
               </li>
             </ul>
           </div>

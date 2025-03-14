@@ -19,6 +19,20 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   handleSectionLink,
   isNavItemActive
 }) => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+  
+  // Helper function to handle section links
+  const handleSectionClick = (sectionId: string) => {
+    if (isHomePage) {
+      // If on home page, use the provided function to scroll to section
+      handleSectionLink(sectionId);
+    } else {
+      // If not on home page, navigate to home page with hash
+      closeMenu();
+    }
+  };
+  
   return (
     <div 
       className={`md:hidden bg-white shadow-lg overflow-hidden transition-all duration-300 ${
@@ -26,24 +40,59 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       }`}
     >
       <div className="pt-2 pb-4 space-y-1 px-4">
-        <button 
-          onClick={() => handleSectionLink('services')} 
-          className={`block py-3 text-gray-800 hover:text-secondary border-b border-pelican-lightGray w-full text-left ${isNavItemActive('#services') ? 'border-l-4 border-secondary pl-3' : ''}`}
-        >
-          Services
-        </button>
-        <button 
-          onClick={() => handleSectionLink('customer-journey')} 
-          className={`block py-3 text-gray-800 hover:text-secondary border-b border-pelican-lightGray w-full text-left ${isNavItemActive('#customer-journey') ? 'border-l-4 border-secondary pl-3' : ''}`}
-        >
-          Process
-        </button>
-        <button 
-          onClick={() => handleSectionLink('about')} 
-          className={`block py-3 text-gray-800 hover:text-secondary border-b border-pelican-lightGray w-full text-left ${isNavItemActive('#about') ? 'border-l-4 border-secondary pl-3' : ''}`}
-        >
-          About Us
-        </button>
+        {/* Services link */}
+        {isHomePage ? (
+          <button 
+            onClick={() => handleSectionClick('services')} 
+            className={`block py-3 text-gray-800 hover:text-secondary border-b border-pelican-lightGray w-full text-left ${isNavItemActive('#services') ? 'border-l-4 border-secondary pl-3' : ''}`}
+          >
+            Services
+          </button>
+        ) : (
+          <Link 
+            to="/#services" 
+            className={`block py-3 text-gray-800 hover:text-secondary border-b border-pelican-lightGray w-full text-left ${isNavItemActive('#services') ? 'border-l-4 border-secondary pl-3' : ''}`}
+            onClick={closeMenu}
+          >
+            Services
+          </Link>
+        )}
+        
+        {/* Process link */}
+        {isHomePage ? (
+          <button 
+            onClick={() => handleSectionClick('customer-journey')} 
+            className={`block py-3 text-gray-800 hover:text-secondary border-b border-pelican-lightGray w-full text-left ${isNavItemActive('#customer-journey') ? 'border-l-4 border-secondary pl-3' : ''}`}
+          >
+            Process
+          </button>
+        ) : (
+          <Link 
+            to="/#customer-journey" 
+            className={`block py-3 text-gray-800 hover:text-secondary border-b border-pelican-lightGray w-full text-left ${isNavItemActive('#customer-journey') ? 'border-l-4 border-secondary pl-3' : ''}`}
+            onClick={closeMenu}
+          >
+            Process
+          </Link>
+        )}
+        
+        {/* About Us link */}
+        {isHomePage ? (
+          <button 
+            onClick={() => handleSectionClick('about')} 
+            className={`block py-3 text-gray-800 hover:text-secondary border-b border-pelican-lightGray w-full text-left ${isNavItemActive('#about') ? 'border-l-4 border-secondary pl-3' : ''}`}
+          >
+            About Us
+          </button>
+        ) : (
+          <Link 
+            to="/#about" 
+            className={`block py-3 text-gray-800 hover:text-secondary border-b border-pelican-lightGray w-full text-left ${isNavItemActive('#about') ? 'border-l-4 border-secondary pl-3' : ''}`}
+            onClick={closeMenu}
+          >
+            About Us
+          </Link>
+        )}
         
         {/* Tools Section */}
         <div className="border-b border-pelican-lightGray">
@@ -87,12 +136,23 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           </div>
         </div>
         
-        <button 
-          onClick={() => handleSectionLink('contact')} 
-          className="block py-3 mt-2 text-center btn-primary w-full"
-        >
-          Contact Us
-        </button>
+        {/* Contact Us link */}
+        {isHomePage ? (
+          <button 
+            onClick={() => handleSectionClick('contact')} 
+            className="block py-3 mt-2 text-center btn-primary w-full"
+          >
+            Contact Us
+          </button>
+        ) : (
+          <Link 
+            to="/#contact" 
+            className="block py-3 mt-2 text-center btn-primary w-full"
+            onClick={closeMenu}
+          >
+            Contact Us
+          </Link>
+        )}
       </div>
     </div>
   );
