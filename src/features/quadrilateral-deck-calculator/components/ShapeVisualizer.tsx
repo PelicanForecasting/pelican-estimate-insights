@@ -29,41 +29,50 @@ const ShapeVisualizer: React.FC<ShapeVisualizerProps> = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     // Draw the quadrilateral
-    ctx.beginPath();
-    coordinates.forEach((coord, index) => {
-      const canvasX = coord.x * canvasParams.scale + canvasParams.offsetX;
-      const canvasY = coord.y * canvasParams.scale + canvasParams.offsetY;
+    if (coordinates.length === 4) {
+      ctx.beginPath();
       
-      if (index === 0) {
-        ctx.moveTo(canvasX, canvasY);
-      } else {
+      // Move to the first point
+      const firstX = coordinates[0].x * canvasParams.scale + canvasParams.offsetX;
+      const firstY = coordinates[0].y * canvasParams.scale + canvasParams.offsetY;
+      ctx.moveTo(firstX, firstY);
+      
+      // Draw lines to each subsequent point
+      for (let i = 1; i < coordinates.length; i++) {
+        const canvasX = coordinates[i].x * canvasParams.scale + canvasParams.offsetX;
+        const canvasY = coordinates[i].y * canvasParams.scale + canvasParams.offsetY;
         ctx.lineTo(canvasX, canvasY);
       }
       
-      // Draw and label points
-      ctx.fillStyle = '#2D4654'; // pelican-navy
-      ctx.beginPath();
-      ctx.arc(canvasX, canvasY, 5, 0, Math.PI * 2);
+      // Close the path back to the first point
+      ctx.lineTo(firstX, firstY);
+      
+      // Style and stroke the shape
+      ctx.strokeStyle = '#26809D'; // pelican-teal
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      
+      // Fill with semi-transparent color
+      ctx.fillStyle = 'rgba(38, 128, 157, 0.2)'; // pelican-teal with transparency
       ctx.fill();
       
-      ctx.fillStyle = '#2D4654';
-      ctx.font = '12px sans-serif';
-      ctx.fillText(`P${index+1} (${coord.x.toFixed(1)}, ${coord.y.toFixed(1)})`, canvasX + 10, canvasY - 10);
-    });
-    
-    // Close the path back to the first point
-    const firstX = coordinates[0].x * canvasParams.scale + canvasParams.offsetX;
-    const firstY = coordinates[0].y * canvasParams.scale + canvasParams.offsetY;
-    ctx.lineTo(firstX, firstY);
-    
-    // Style and stroke the shape
-    ctx.strokeStyle = '#26809D'; // pelican-teal
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    
-    // Fill with semi-transparent color
-    ctx.fillStyle = 'rgba(38, 128, 157, 0.2)'; // pelican-teal with transparency
-    ctx.fill();
+      // Draw and label points
+      coordinates.forEach((coord, index) => {
+        const canvasX = coord.x * canvasParams.scale + canvasParams.offsetX;
+        const canvasY = coord.y * canvasParams.scale + canvasParams.offsetY;
+        
+        // Draw point
+        ctx.fillStyle = '#2D4654'; // pelican-navy
+        ctx.beginPath();
+        ctx.arc(canvasX, canvasY, 5, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Label point
+        ctx.fillStyle = '#2D4654';
+        ctx.font = '12px sans-serif';
+        ctx.fillText(`P${index+1} (${coord.x.toFixed(1)}, ${coord.y.toFixed(1)})`, canvasX + 10, canvasY - 10);
+      });
+    }
   };
 
   return (
