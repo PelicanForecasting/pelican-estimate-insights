@@ -54,7 +54,7 @@ const LaborBurdenCalculator = () => {
           <div className="lg:col-span-7">
             <Card className="shadow-xl border-pelican-teal/20 bg-white hover:shadow-2xl transition-all duration-500 h-full">
               <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-navy/90 text-white rounded-t-lg p-5 sm:p-6">
-                <CardTitle className="text-xl sm:text-2xl font-heading">Input Labor Data</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl font-heading text-white">Input Labor Data</CardTitle>
                 <CardDescription className="text-white/90 text-base sm:text-lg">
                   Enter hourly labor rates and associated costs
                 </CardDescription>
@@ -72,7 +72,7 @@ const LaborBurdenCalculator = () => {
           <div className="lg:col-span-5">
             <Card className="shadow-xl border-pelican-teal/20 bg-white hover:shadow-2xl transition-all duration-500 h-full">
               <CardHeader className="bg-gradient-to-r from-pelican-teal to-pelican-teal/90 text-white rounded-t-lg p-5 sm:p-6">
-                <CardTitle className="text-xl sm:text-2xl font-heading">Results</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl font-heading text-white">Results</CardTitle>
                 <CardDescription className="text-white/90 text-base sm:text-lg">
                   Your fully burdened labor rate
                 </CardDescription>
