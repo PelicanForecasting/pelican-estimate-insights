@@ -34,6 +34,8 @@ const buttonVariants = cva(
       rounded: {
         default: "rounded-md",
         full: "rounded-full",
+        // Add medium radius option to fix error
+        md: "rounded-md",
       }
     },
     defaultVariants: {
