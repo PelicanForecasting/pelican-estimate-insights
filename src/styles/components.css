@@ -1,0 +1,62 @@
+
+@tailwind components;
+
+@layer components {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm;
+  }
+  
+  .pelican-card {
+    @apply rounded-lg border border-border bg-card shadow-sm hover:shadow-md transition-all duration-300;
+  }
+  
+  .pelican-button {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-3 font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50;
+  }
+  
+  .section-container {
+    @apply max-w-7xl mx-auto px-6 py-10 md:px-6 md:py-20 lg:py-[80px];
+  }
+  
+  .reveal {
+    @apply opacity-0 transition-all duration-700 ease-out;
+  }
+  
+  .reveal.active {
+    @apply opacity-100 transform translate-y-0;
+  }
+  
+  .link-underline {
+    @apply relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:after:w-full;
+  }
+
+  .data-display {
+    @apply font-heading text-lg font-medium;
+  }
+
+  .gradient-card {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-br before:from-background/40 before:to-secondary/10 before:opacity-80 before:-z-10;
+  }
+
+  .gradient-border {
+    @apply relative before:absolute before:inset-0 before:p-[2px] before:rounded-lg before:bg-gradient-to-br before:from-secondary before:to-primary before:-z-10 before:content-[''];
+  }
+
+  /* Button variants per style guide */
+  .btn-primary {
+    @apply bg-secondary text-white rounded-md px-4 py-3 hover:bg-secondary/90 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-secondary border border-secondary rounded-md px-4 py-3 hover:bg-secondary/5 transition-colors;
+  }
+
+  .btn-accent {
+    @apply bg-accent text-white rounded-md px-4 py-3 hover:bg-accent/90 transition-colors;
+  }
+
+  /* Form inputs per style guide */
+  .form-input {
+    @apply rounded-sm border-gray-300 focus:border-secondary focus:ring-secondary;
+  }
+}

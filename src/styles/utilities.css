@@ -1,0 +1,58 @@
+
+@tailwind utilities;
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+  
+  .bg-pelican-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary;
+  }
+
+  .bg-pelican-gradient-soft {
+    @apply bg-gradient-to-r from-secondary/10 to-accent/5;
+  }
+  
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .transition-smooth {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 3s infinite;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.5s ease-out;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.4s ease-out;
+  }
+
+  /* Spacing utilities */
+  .section-padding {
+    @apply py-10 md:py-20 lg:py-[80px];
+  }
+
+  .component-spacing {
+    @apply mb-6 lg:mb-[24px];
+  }
+
+  .section-spacing {
+    @apply mb-12 lg:mb-[48px];
+  }
+
+  /* Container utility */
+  .content-container {
+    @apply max-w-[1200px] mx-auto px-6;
+  }
+}
