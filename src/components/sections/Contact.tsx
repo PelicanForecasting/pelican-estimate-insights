@@ -1,17 +1,40 @@
 
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/components/ui/use-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+
+// Form validation schema
+const formSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  company: z.string().optional(),
+  phone: z.string().optional(),
+  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    phone: '',
-    message: '',
-  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  
+  // Initialize form with react-hook-form and zod validation
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      company: "",
+      phone: "",
+      message: "",
+    },
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -28,30 +51,38 @@ const Contact = () => {
     return () => elements.forEach(el => observer.unobserve(el));
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // Replace with your own Formspree form ID
+      const response = await fetch("https://formspree.io/f/FORM_ID", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (response.ok) {
+        toast({
+          title: "Message sent successfully!",
+          description: "We'll get back to you as soon as possible.",
+        });
+        form.reset();
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
       toast({
-        title: "Message sent successfully!",
-        description: "We'll get back to you as soon as possible.",
+        title: "Error sending message",
+        description: "Please try again or contact us directly.",
+        variant: "destructive",
       });
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        phone: '',
-        message: '',
-      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -141,97 +172,124 @@ const Contact = () => {
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <h3 className="text-xl font-bold text-pelican-navy mb-6">Send Us a Message</h3>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-pelican-navy font-medium mb-2">Name</label>
-                    <input
-                      type="text"
-                      id="name"
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
                       name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-pelican-navy/10 focus:outline-none focus:ring-2 focus:ring-pelican-teal"
-                      placeholder="Your name"
-                      required
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-pelican-navy font-medium">Name</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="Your name" 
+                              className="w-full px-4 py-3 rounded-lg border border-pelican-navy/10 focus:outline-none focus:ring-2 focus:ring-pelican-teal" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-pelican-navy font-medium mb-2">Email</label>
-                    <input
-                      type="email"
-                      id="email"
+                    
+                    <FormField
+                      control={form.control}
                       name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-pelican-navy/10 focus:outline-none focus:ring-2 focus:ring-pelican-teal"
-                      placeholder="Your email address"
-                      required
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-pelican-navy font-medium">Email</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="Your email address" 
+                              className="w-full px-4 py-3 rounded-lg border border-pelican-navy/10 focus:outline-none focus:ring-2 focus:ring-pelican-teal" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
                   </div>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="company" className="block text-pelican-navy font-medium mb-2">Company</label>
-                    <input
-                      type="text"
-                      id="company"
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
                       name="company"
-                      value={formData.company}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-pelican-navy/10 focus:outline-none focus:ring-2 focus:ring-pelican-teal"
-                      placeholder="Your company name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-pelican-navy font-medium">Company</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="Your company name" 
+                              className="w-full px-4 py-3 rounded-lg border border-pelican-navy/10 focus:outline-none focus:ring-2 focus:ring-pelican-teal" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
-                  <div>
-                    <label htmlFor="phone" className="block text-pelican-navy font-medium mb-2">Phone</label>
-                    <input
-                      type="tel"
-                      id="phone"
+                    
+                    <FormField
+                      control={form.control}
                       name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-pelican-navy/10 focus:outline-none focus:ring-2 focus:ring-pelican-teal"
-                      placeholder="Your phone number"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-pelican-navy font-medium">Phone</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="Your phone number" 
+                              className="w-full px-4 py-3 rounded-lg border border-pelican-navy/10 focus:outline-none focus:ring-2 focus:ring-pelican-teal" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
                   </div>
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-pelican-navy font-medium mb-2">Message</label>
-                  <textarea
-                    id="message"
+                  
+                  <FormField
+                    control={form.control}
                     name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={5}
-                    className="w-full px-4 py-3 rounded-lg border border-pelican-navy/10 focus:outline-none focus:ring-2 focus:ring-pelican-teal"
-                    placeholder="Tell us about your project and needs"
-                    required
-                  ></textarea>
-                </div>
-                
-                <div className="flex justify-end">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={`pelican-button bg-pelican-navy text-white hover:bg-pelican-teal flex items-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Sending...
-                      </>
-                    ) : (
-                      'Send Message'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-pelican-navy font-medium">Message</FormLabel>
+                        <FormControl>
+                          <Textarea 
+                            placeholder="Tell us about your project and needs" 
+                            className="w-full px-4 py-3 rounded-lg border border-pelican-navy/10 focus:outline-none focus:ring-2 focus:ring-pelican-teal" 
+                            rows={5}
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
                     )}
-                  </button>
-                </div>
-              </form>
+                  />
+                  
+                  <div className="flex justify-end">
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="pelican-button bg-pelican-navy text-white hover:bg-pelican-teal"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Sending...
+                        </>
+                      ) : (
+                        'Send Message'
+                      )}
+                    </Button>
+                  </div>
+                </form>
+              </Form>
             </div>
           </div>
         </div>
