@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { MapPin, Phone, Mail, Facebook, Linkedin, Youtube } from 'lucide-react';
@@ -28,7 +27,7 @@ const Footer = () => {
   };
   
   return (
-    <footer className="bg-gradient-to-r from-primary to-primary/90 text-white py-12">
+    <footer className="bg-pelican-navy text-white py-12">
       <div className="content-container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
@@ -100,13 +99,13 @@ const Footer = () => {
               <li className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-secondary mt-0.5" />
                 <span className="text-white/70">
-                  1234 Construction Way<br />
-                  Portland, OR 97201
+                  201 Rue Beauregard STE 202<br />
+                  Lafayette, LA 70508
                 </span>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-secondary" />
-                <span className="text-white/70">(555) 123-4567</span>
+                <span className="text-white/70">(318) 308-4826</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-secondary" />

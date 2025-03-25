@@ -40,7 +40,7 @@ const ContactInfo = () => {
           </div>
           <div>
             <h4 className="font-medium text-pelican-navy">Location</h4>
-            <p className="text-pelican-grey">1234 Construction Way<br />Building Suite 500<br />Portland, OR 97201</p>
+            <p className="text-pelican-grey">201 Rue Beauregard STE 202<br />Lafayette, LA 70508</p>
           </div>
         </div>
       </div>
