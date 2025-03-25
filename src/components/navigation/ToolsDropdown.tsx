@@ -44,7 +44,10 @@ const ToolsDropdown: React.FC<ToolsDropdownProps> = ({
             className={`block px-4 py-2 text-gray-800 hover:bg-pelican-lightGray ${isNavItemActive('/estimating-maturity') ? 'border-l-4 border-secondary pl-3' : ''}`}
             onClick={closeMenu}
           >
-            Estimating Maturity Assessment
+            <div className="flex justify-between items-center">
+              <span>Estimating Maturity Assessment</span>
+              <span className="bg-accent text-white text-xs px-2 py-0.5 rounded-full">Featured</span>
+            </div>
           </Link>
           <Link 
             to="/labor-burden-calculator" 

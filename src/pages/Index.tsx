@@ -9,6 +9,7 @@ import Testimonials from '../components/sections/Testimonials';
 import About from '../components/sections/About';
 import Contact from '../components/sections/Contact';
 import Footer from '../components/sections/Footer';
+import AssessmentHighlight from '../components/sections/AssessmentHighlight';
 
 const Index = () => {
   // Intersection Observer for scroll animations
@@ -63,6 +64,7 @@ const Index = () => {
       <div className="fixed inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.02] pointer-events-none z-0"></div>
       <Navbar />
       <Hero />
+      <AssessmentHighlight />
       <div id="services">
         <Services />
       </div>

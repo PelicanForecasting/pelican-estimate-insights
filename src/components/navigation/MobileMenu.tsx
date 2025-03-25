@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -40,6 +41,15 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       }`}
     >
       <div className="pt-2 pb-4 space-y-1 px-4">
+        {/* Featured Assessment CTA */}
+        <div className="py-3 mb-2">
+          <Button variant="accent" size="default" className="w-full" asChild>
+            <Link to="/estimating-maturity" onClick={closeMenu}>
+              Take Free Assessment
+            </Link>
+          </Button>
+        </div>
+      
         {/* Services link */}
         {isHomePage ? (
           <button 
@@ -117,7 +127,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
               className={`block py-2 text-gray-800 hover:text-secondary ${isNavItemActive('/estimating-maturity') ? 'border-l-4 border-secondary pl-3' : ''}`}
               onClick={closeMenu}
             >
-              Estimating Maturity Assessment
+              <div className="flex justify-between items-center">
+                <span>Estimating Maturity Assessment</span>
+                <span className="bg-accent text-white text-xs px-2 py-0.5 rounded-full">Featured</span>
+              </div>
             </Link>
             <Link 
               to="/labor-burden-calculator" 
@@ -140,14 +153,14 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         {isHomePage ? (
           <button 
             onClick={() => handleSectionClick('contact')} 
-            className="block py-3 mt-2 text-center btn-primary w-full"
+            className="block py-3 mt-2 text-center bg-secondary/10 text-secondary hover:bg-secondary/20 transition-colors w-full"
           >
             Contact Us
           </button>
         ) : (
           <Link 
             to="/#contact" 
-            className="block py-3 mt-2 text-center btn-primary w-full"
+            className="block py-3 mt-2 text-center bg-secondary/10 text-secondary hover:bg-secondary/20 transition-colors w-full"
             onClick={closeMenu}
           >
             Contact Us

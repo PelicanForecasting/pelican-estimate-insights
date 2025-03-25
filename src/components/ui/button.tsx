@@ -19,7 +19,7 @@ const buttonVariants = cva(
           "bg-secondary text-white hover:bg-secondary/90 hover:translate-y-[-2px] hover:shadow-md",
         ghost: "hover:bg-accent/5 hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        accent: "bg-accent text-white hover:bg-accent/90 hover:translate-y-[-2px] hover:shadow-md",
+        accent: "bg-[#FF9F1C] text-white hover:bg-[#FF9F1C]/90 hover:translate-y-[-2px] hover:shadow-md",
         // Adding new style guide button variants
         primary: "bg-secondary text-white hover:bg-secondary/90 hover:translate-y-[-2px] hover:shadow-md",
         "secondary-outline": "bg-white text-secondary border border-secondary hover:bg-secondary/5",

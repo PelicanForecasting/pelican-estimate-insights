@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ToolsDropdown from './ToolsDropdown';
+import { Button } from '@/components/ui/button';
 
 interface DesktopNavProps {
   handleSectionLink: (sectionId: string) => void;
@@ -46,12 +47,14 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
         closeMenu={closeMenu}
       />
       
-      <button 
-        onClick={() => handleSectionLink('contact')} 
-        className="btn-primary px-4 py-3 rounded-md"
+      <Button 
+        variant="accent"
+        size="default"
+        rounded="md"
+        asChild
       >
-        Contact Us
-      </button>
+        <Link to="/estimating-maturity">Take Assessment</Link>
+      </Button>
     </div>
   );
 };
