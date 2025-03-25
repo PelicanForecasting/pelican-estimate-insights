@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/navigation/Navbar';
 import Footer from '@/components/sections/Footer';
@@ -6,42 +5,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
-import { 
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Import types
-import { 
-  Coordinates,
-  DeckResults,
-  MaterialCost,
-  CanvasParams,
-  DEFAULT_COORDINATES,
-  DEFAULT_MATERIALS,
-  DEFAULT_CANVAS_PARAMS,
-  CalculationMethod,
-  SideLengthsDiagonalsData,
-  SideLengthsAngleData,
-  DEFAULT_SIDE_LENGTHS_DIAGONALS,
-  DEFAULT_SIDE_LENGTHS_ANGLE
-} from '@/features/quadrilateral-deck-calculator/types';
+import { Coordinates, DeckResults, MaterialCost, CanvasParams, DEFAULT_COORDINATES, DEFAULT_MATERIALS, DEFAULT_CANVAS_PARAMS, CalculationMethod, SideLengthsDiagonalsData, SideLengthsAngleData, DEFAULT_SIDE_LENGTHS_DIAGONALS, DEFAULT_SIDE_LENGTHS_ANGLE } from '@/features/quadrilateral-deck-calculator/types';
 
 // Import calculation utilities
-import {
-  calculateAreaFromCoordinates,
-  calculatePerimeterFromCoordinates,
-  calculateAreaFromSideLengthsDiagonals,
-  calculatePerimeterFromSideLengths,
-  calculateAreaFromSideLengthsAngle,
-  generateCoordinatesFromSideLengthsAngle,
-  generateCoordinatesFromSideLengthsDiagonals,
-  calculateDeckMetrics,
-  validateShape
-} from '@/features/quadrilateral-deck-calculator/utils/calculations';
+import { calculateAreaFromCoordinates, calculatePerimeterFromCoordinates, calculateAreaFromSideLengthsDiagonals, calculatePerimeterFromSideLengths, calculateAreaFromSideLengthsAngle, generateCoordinatesFromSideLengthsAngle, generateCoordinatesFromSideLengthsDiagonals, calculateDeckMetrics, validateShape } from '@/features/quadrilateral-deck-calculator/utils/calculations';
 
 // Import components
 import CoordinatesInput from '@/features/quadrilateral-deck-calculator/components/CoordinatesInput';
@@ -52,37 +22,34 @@ import CalculationGuide from '@/features/quadrilateral-deck-calculator/component
 import ResultsDisplay from '@/features/quadrilateral-deck-calculator/components/ResultsDisplay';
 import ShapeVisualizer from '@/features/quadrilateral-deck-calculator/components/ShapeVisualizer';
 import MethodSelector from '@/features/quadrilateral-deck-calculator/components/MethodSelector';
-
 const QuadrilateralDeckCalculator: React.FC = () => {
-  const { toast } = useToast();
-  
+  const {
+    toast
+  } = useToast();
+
   // State for the calculation method
   const [calculationMethod, setCalculationMethod] = useState<CalculationMethod>("coordinates");
-  
+
   // State for coordinates method
   const [coordinates, setCoordinates] = useState<Coordinates[]>(DEFAULT_COORDINATES);
-  
+
   // State for side lengths + diagonals method
-  const [sideLengthsDiagonals, setSideLengthsDiagonals] = useState<SideLengthsDiagonalsData>(
-    DEFAULT_SIDE_LENGTHS_DIAGONALS
-  );
-  
+  const [sideLengthsDiagonals, setSideLengthsDiagonals] = useState<SideLengthsDiagonalsData>(DEFAULT_SIDE_LENGTHS_DIAGONALS);
+
   // State for side lengths + angle method
-  const [sideLengthsAngle, setSideLengthsAngle] = useState<SideLengthsAngleData>(
-    DEFAULT_SIDE_LENGTHS_ANGLE
-  );
-  
+  const [sideLengthsAngle, setSideLengthsAngle] = useState<SideLengthsAngleData>(DEFAULT_SIDE_LENGTHS_ANGLE);
+
   // Common states
   const [materials, setMaterials] = useState<MaterialCost>(DEFAULT_MATERIALS);
   const [results, setResults] = useState<DeckResults | null>(null);
   const [activeTab, setActiveTab] = useState<string>("input");
-  
+
   // Canvas parameters
   const [canvasParams, setCanvasParams] = useState<CanvasParams>(DEFAULT_CANVAS_PARAMS);
-  
+
   // For visualization - we need to generate coordinates for all methods
   const [visualCoordinates, setVisualCoordinates] = useState<Coordinates[]>(coordinates);
-  
+
   // Effect to update visualization coordinates when input method changes
   useEffect(() => {
     if (calculationMethod === "coordinates") {
@@ -93,26 +60,23 @@ const QuadrilateralDeckCalculator: React.FC = () => {
       setVisualCoordinates(generateCoordinatesFromSideLengthsAngle(sideLengthsAngle));
     }
   }, [calculationMethod, coordinates, sideLengthsDiagonals, sideLengthsAngle]);
-  
+
   // Effect to recalculate canvas parameters when coordinates change
   useEffect(() => {
     if (visualCoordinates.length === 4) {
       const xValues = visualCoordinates.map(coord => coord.x);
       const yValues = visualCoordinates.map(coord => coord.y);
-      
       const minX = Math.min(...xValues);
       const maxX = Math.max(...xValues);
       const minY = Math.min(...yValues);
       const maxY = Math.max(...yValues);
-      
       const width = maxX - minX;
       const height = maxY - minY;
-      
+
       // Determine appropriate scale
       const scaleX = width > 0 ? (canvasParams.canvasWidth - 100) / width : 15;
       const scaleY = height > 0 ? (canvasParams.canvasHeight - 100) / height : 15;
       const scale = Math.min(scaleX, scaleY);
-      
       setCanvasParams({
         ...canvasParams,
         scale: scale,
@@ -121,81 +85,67 @@ const QuadrilateralDeckCalculator: React.FC = () => {
       });
     }
   }, [visualCoordinates]);
-  
+
   // Update a specific coordinate for coordinates method
   const handleCoordinateChange = (index: number, axis: 'x' | 'y', value: string) => {
     const numValue = parseFloat(value);
     if (isNaN(numValue)) return;
-    
     const newCoordinates = [...coordinates];
     newCoordinates[index][axis] = numValue;
     setCoordinates(newCoordinates);
   };
-  
+
   // Update a field for side lengths + diagonals method
   const handleSideLengthsDiagonalsChange = (field: keyof SideLengthsDiagonalsData, value: string) => {
     const numValue = parseFloat(value);
     if (isNaN(numValue) || numValue <= 0) return;
-    
     setSideLengthsDiagonals({
       ...sideLengthsDiagonals,
       [field]: numValue
     });
   };
-  
+
   // Update a field for side lengths + angle method
   const handleSideLengthsAngleChange = (field: keyof SideLengthsAngleData, value: string) => {
     const numValue = parseFloat(value);
     if (isNaN(numValue) || numValue <= 0) return;
-    
+
     // For angle, ensure it's between 1 and 179 degrees
     if (field === 'angle' && (numValue < 1 || numValue > 179)) return;
-    
     setSideLengthsAngle({
       ...sideLengthsAngle,
       [field]: numValue
     });
   };
-  
+
   // Update material costs
   const handleMaterialChange = (key: keyof MaterialCost, value: string) => {
     const numValue = parseFloat(value);
     if (isNaN(numValue)) return;
-    
     setMaterials({
       ...materials,
       [key]: numValue
     });
   };
-  
+
   // Calculate all deck metrics based on selected method
   const calculateDeckMetricsForSelectedMethod = () => {
     try {
       let area = 0;
       let perimeter = 0;
-      
+
       // Calculate area and perimeter based on selected method
       if (calculationMethod === "coordinates") {
         area = calculateAreaFromCoordinates(coordinates);
         perimeter = calculatePerimeterFromCoordinates(coordinates);
       } else if (calculationMethod === "sideLengthsDiagonals") {
         area = calculateAreaFromSideLengthsDiagonals(sideLengthsDiagonals);
-        perimeter = calculatePerimeterFromSideLengths(
-          sideLengthsDiagonals.sideA,
-          sideLengthsDiagonals.sideB,
-          sideLengthsDiagonals.sideC,
-          sideLengthsDiagonals.sideD
-        );
+        perimeter = calculatePerimeterFromSideLengths(sideLengthsDiagonals.sideA, sideLengthsDiagonals.sideB, sideLengthsDiagonals.sideC, sideLengthsDiagonals.sideD);
       } else if (calculationMethod === "sideLengthsAngle") {
         area = calculateAreaFromSideLengthsAngle(sideLengthsAngle);
-        perimeter = calculatePerimeterFromSideLengths(
-          sideLengthsAngle.sideA,
-          sideLengthsAngle.sideB,
-          sideLengthsAngle.sideC,
-          sideLengthsAngle.sideD
-        );
+        perimeter = calculatePerimeterFromSideLengths(sideLengthsAngle.sideA, sideLengthsAngle.sideB, sideLengthsAngle.sideC, sideLengthsAngle.sideD);
       }
-      
+
       // Validate the shape
       if (!validateShape(area)) {
         toast({
@@ -205,17 +155,16 @@ const QuadrilateralDeckCalculator: React.FC = () => {
         });
         return;
       }
-      
+
       // Calculate materials and set results
       const deckResults = calculateDeckMetrics(area, perimeter);
       setResults(deckResults);
-      
+
       // Move to results tab
       setActiveTab("results");
-      
       toast({
         title: "Calculations Complete",
-        description: "Your deck measurements have been calculated successfully.",
+        description: "Your deck measurements have been calculated successfully."
       });
     } catch (error) {
       toast({
@@ -226,7 +175,7 @@ const QuadrilateralDeckCalculator: React.FC = () => {
       console.error("Calculation error:", error);
     }
   };
-  
+
   // Reset to default values
   const handleReset = () => {
     setCoordinates(DEFAULT_COORDINATES);
@@ -235,44 +184,26 @@ const QuadrilateralDeckCalculator: React.FC = () => {
     setMaterials(DEFAULT_MATERIALS);
     setResults(null);
     setActiveTab("input");
-    
     toast({
       title: "Calculator Reset",
-      description: "All values have been reset to defaults.",
+      description: "All values have been reset to defaults."
     });
   };
-  
+
   // Render the appropriate input method
   const renderInputMethod = () => {
     switch (calculationMethod) {
       case "coordinates":
-        return (
-          <CoordinatesInput 
-            coordinates={coordinates} 
-            onCoordinateChange={handleCoordinateChange} 
-          />
-        );
+        return <CoordinatesInput coordinates={coordinates} onCoordinateChange={handleCoordinateChange} />;
       case "sideLengthsDiagonals":
-        return (
-          <SideLengthsDiagonalsInput 
-            data={sideLengthsDiagonals} 
-            onDataChange={handleSideLengthsDiagonalsChange} 
-          />
-        );
+        return <SideLengthsDiagonalsInput data={sideLengthsDiagonals} onDataChange={handleSideLengthsDiagonalsChange} />;
       case "sideLengthsAngle":
-        return (
-          <SideLengthsAngleInput 
-            data={sideLengthsAngle} 
-            onDataChange={handleSideLengthsAngleChange} 
-          />
-        );
+        return <SideLengthsAngleInput data={sideLengthsAngle} onDataChange={handleSideLengthsAngleChange} />;
       default:
         return null;
     }
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-pelican-cream/30 font-body">
+  return <div className="min-h-screen bg-gradient-to-b from-white to-pelican-cream/30 font-body">
       <div className="fixed inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.02] pointer-events-none z-0"></div>
       <Navbar />
       
@@ -288,7 +219,7 @@ const QuadrilateralDeckCalculator: React.FC = () => {
         
         <Card className="shadow-xl border-pelican-teal/20 bg-white hover:shadow-2xl transition-all duration-500 overflow-hidden">
           <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white rounded-t-lg p-6">
-            <CardTitle className="text-2xl font-heading">Quadrilateral Deck Calculator</CardTitle>
+            <CardTitle className="text-2xl font-heading text-slate-50">Quadrilateral Deck Calculator</CardTitle>
             <CardDescription className="text-white/90 text-lg">
               Calculate materials and cost for four-sided deck shapes
             </CardDescription>
@@ -320,35 +251,21 @@ const QuadrilateralDeckCalculator: React.FC = () => {
                   </div>
                   
                   <div className="w-full md:w-1/2">
-                    <ShapeVisualizer 
-                      coordinates={visualCoordinates}
-                      canvasParams={canvasParams}
-                      canvasId="deckCanvas"
-                    />
+                    <ShapeVisualizer coordinates={visualCoordinates} canvasParams={canvasParams} canvasId="deckCanvas" />
                   </div>
                 </div>
                 
                 <div className="border-t border-pelican-lightGray/20 pt-6 mt-6">
                   <h3 className="text-xl font-medium text-pelican-navy mb-4">Material Costs</h3>
                   <div className="flex flex-col md:flex-row gap-8">
-                    <MaterialCostInput 
-                      materials={materials}
-                      onMaterialChange={handleMaterialChange}
-                    />
+                    <MaterialCostInput materials={materials} onMaterialChange={handleMaterialChange} />
                     <CalculationGuide />
                   </div>
                 </div>
               </TabsContent>
               
               <TabsContent value="results" className="space-y-6">
-                {results && (
-                  <ResultsDisplay 
-                    results={results}
-                    materials={materials}
-                    canvasWidth={canvasParams.canvasWidth}
-                    canvasHeight={canvasParams.canvasHeight}
-                  />
-                )}
+                {results && <ResultsDisplay results={results} materials={materials} canvasWidth={canvasParams.canvasWidth} canvasHeight={canvasParams.canvasHeight} />}
                 
                 <div className="flex justify-between mt-6">
                   <Button variant="outline" onClick={() => setActiveTab("input")}>
@@ -397,8 +314,6 @@ const QuadrilateralDeckCalculator: React.FC = () => {
       </main>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default QuadrilateralDeckCalculator;
