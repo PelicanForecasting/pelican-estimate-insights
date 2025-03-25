@@ -45,7 +45,7 @@ const Hero = () => {
               
               <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
                 <img 
-                  src="/lovable-uploads/76943e31-cad5-458c-9154-29d5b44c13f9.png" 
+                  src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" 
                   alt="Construction Estimating Data Analysis" 
                   className="w-full h-auto"
                 />

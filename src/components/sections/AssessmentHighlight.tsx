@@ -139,7 +139,7 @@ const AssessmentHighlight = () => {
                 </div>
                 <div className="aspect-[16/9] bg-white rounded-md shadow-sm overflow-hidden flex items-center justify-center">
                   <img 
-                    src="/lovable-uploads/76943e31-cad5-458c-9154-29d5b44c13f9.png" 
+                    src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" 
                     alt="Sample Assessment Report" 
                     className="w-full object-cover"
                   />
