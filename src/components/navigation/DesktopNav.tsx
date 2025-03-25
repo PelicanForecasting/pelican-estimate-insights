@@ -52,7 +52,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
         variant="accent"
         size="default"
         asChild
-        className="flex items-center gap-1.5"
+        className="flex items-center gap-1.5 shadow-md hover:shadow-lg"
       >
         <Link to="/estimating-maturity">
           <ClipboardCheck className="h-4 w-4" />

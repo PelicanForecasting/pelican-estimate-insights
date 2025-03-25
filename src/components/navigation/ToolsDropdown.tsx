@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Sparkles } from 'lucide-react';
 
 interface ToolsDropdownProps {
   isOpen: boolean;
@@ -41,28 +41,36 @@ const ToolsDropdown: React.FC<ToolsDropdownProps> = ({
         <div className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-50">
           <Link 
             to="/estimating-maturity" 
-            className={`block px-4 py-2 text-gray-800 hover:bg-pelican-lightGray ${isNavItemActive('/estimating-maturity') ? 'border-l-4 border-secondary pl-3' : ''}`}
+            className={`block px-4 py-3 text-gray-800 hover:bg-pelican-lightGray transition-colors ${isNavItemActive('/estimating-maturity') ? 'border-l-4 border-secondary pl-3 bg-pelican-lightGray/50' : ''}`}
             onClick={closeMenu}
           >
             <div className="flex justify-between items-center">
-              <span>Estimating Maturity Assessment</span>
-              <span className="bg-accent text-white text-xs px-2 py-0.5 rounded-full">Featured</span>
+              <div className="flex items-center gap-1.5">
+                <Sparkles className="h-4 w-4 text-accent" />
+                <span className="font-medium">Estimating Maturity Assessment</span>
+              </div>
+              <span className="bg-accent text-white text-xs px-2 py-0.5 rounded-full font-medium">Featured</span>
             </div>
-            <p className="text-xs text-pelican-slate mt-1">Benchmark your estimating capabilities</p>
+            <p className="text-xs text-pelican-slate mt-1">Benchmark your estimating capabilities in 5 minutes</p>
           </Link>
+          
+          <div className="my-1 border-t border-pelican-lightGray mx-4"></div>
+          
           <Link 
             to="/labor-burden-calculator" 
-            className={`block px-4 py-2 text-gray-800 hover:bg-pelican-lightGray ${isNavItemActive('/labor-burden-calculator') ? 'border-l-4 border-secondary pl-3' : ''}`}
+            className={`block px-4 py-2 text-gray-800 hover:bg-pelican-lightGray transition-colors ${isNavItemActive('/labor-burden-calculator') ? 'border-l-4 border-secondary pl-3' : ''}`}
             onClick={closeMenu}
           >
-            Labor Burden Calculator
+            <span>Labor Burden Calculator</span>
+            <p className="text-xs text-pelican-slate mt-0.5">Calculate true labor costs</p>
           </Link>
           <Link 
             to="/quadrilateral-deck-calculator" 
-            className={`block px-4 py-2 text-gray-800 hover:bg-pelican-lightGray ${isNavItemActive('/quadrilateral-deck-calculator') ? 'border-l-4 border-secondary pl-3' : ''}`}
+            className={`block px-4 py-2 text-gray-800 hover:bg-pelican-lightGray transition-colors ${isNavItemActive('/quadrilateral-deck-calculator') ? 'border-l-4 border-secondary pl-3' : ''}`}
             onClick={closeMenu}
           >
-            Quadrilateral Deck Calculator
+            <span>Quadrilateral Deck Calculator</span>
+            <p className="text-xs text-pelican-slate mt-0.5">Measure complex deck areas</p>
           </Link>
         </div>
       )}

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ClipboardCheck } from 'lucide-react';
+import { ClipboardCheck, Sparkles } from 'lucide-react';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -38,18 +38,26 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   return (
     <div 
       className={`md:hidden bg-white shadow-lg overflow-hidden transition-all duration-300 ${
-        isOpen ? 'max-h-[500px]' : 'max-h-0'
+        isOpen ? 'max-h-[600px]' : 'max-h-0'
       }`}
     >
       <div className="pt-2 pb-4 space-y-1 px-4">
-        {/* Featured Assessment CTA */}
-        <div className="py-3 mb-2">
-          <Button variant="accent" size="default" className="w-full flex items-center justify-center gap-1.5" asChild>
-            <Link to="/estimating-maturity" onClick={closeMenu}>
-              <ClipboardCheck className="h-4 w-4" />
-              <span>Take Free Assessment</span>
-            </Link>
-          </Button>
+        {/* Enhanced Assessment CTA */}
+        <div className="py-3 mb-3">
+          <div className="bg-pelican-lightGray/30 rounded-lg p-3 mb-3">
+            <div className="flex items-center gap-1.5 mb-1">
+              <Sparkles className="h-4 w-4 text-accent" />
+              <span className="text-sm text-pelican-slate">5-minute assessment</span>
+            </div>
+            <h4 className="font-medium text-base mb-1">Discover your estimating maturity score</h4>
+            <p className="text-xs text-pelican-slate mb-3">Get your personalized report with actionable insights</p>
+            <Button variant="accent" size="default" className="w-full flex items-center justify-center gap-1.5" asChild>
+              <Link to="/estimating-maturity" onClick={closeMenu}>
+                <ClipboardCheck className="h-4 w-4" />
+                <span>Take Free Assessment</span>
+              </Link>
+            </Button>
+          </div>
         </div>
       
         {/* Services link */}
@@ -130,7 +138,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
               onClick={closeMenu}
             >
               <div className="flex justify-between items-center">
-                <span>Estimating Maturity Assessment</span>
+                <div className="flex items-center gap-1.5">
+                  <Sparkles className="h-4 w-4 text-accent" />
+                  <span>Estimating Maturity Assessment</span>
+                </div>
                 <span className="bg-accent text-white text-xs px-2 py-0.5 rounded-full">Featured</span>
               </div>
               <p className="text-xs text-pelican-slate mt-1">Benchmark your estimating capabilities</p>

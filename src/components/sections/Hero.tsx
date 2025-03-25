@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ClipboardCheck } from 'lucide-react';
 
 const Hero = () => {
   return (
@@ -25,8 +25,9 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button asChild size="lg" variant="accent" className="font-medium text-base px-6 py-6">
+              <Button asChild size="lg" variant="accent" className="font-medium text-base px-6 py-6 shadow-md hover:shadow-lg">
                 <Link to="/estimating-maturity" className="flex items-center">
+                  <ClipboardCheck className="ml-1 h-5 w-5 mr-2" />
                   Take Free Assessment
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
