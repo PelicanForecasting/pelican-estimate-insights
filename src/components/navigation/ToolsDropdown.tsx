@@ -48,6 +48,7 @@ const ToolsDropdown: React.FC<ToolsDropdownProps> = ({
               <span>Estimating Maturity Assessment</span>
               <span className="bg-accent text-white text-xs px-2 py-0.5 rounded-full">Featured</span>
             </div>
+            <p className="text-xs text-pelican-slate mt-1">Benchmark your estimating capabilities</p>
           </Link>
           <Link 
             to="/labor-burden-calculator" 

@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ToolsDropdown from './ToolsDropdown';
 import { Button } from '@/components/ui/button';
+import { ClipboardCheck } from 'lucide-react';
 
 interface DesktopNavProps {
   handleSectionLink: (sectionId: string) => void;
@@ -50,10 +51,13 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
       <Button 
         variant="accent"
         size="default"
-        rounded="md"
         asChild
+        className="flex items-center gap-1.5"
       >
-        <Link to="/estimating-maturity">Take Assessment</Link>
+        <Link to="/estimating-maturity">
+          <ClipboardCheck className="h-4 w-4" />
+          <span>Take Assessment</span>
+        </Link>
       </Button>
     </div>
   );

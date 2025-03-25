@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { ClipboardCheck } from 'lucide-react';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -43,9 +44,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       <div className="pt-2 pb-4 space-y-1 px-4">
         {/* Featured Assessment CTA */}
         <div className="py-3 mb-2">
-          <Button variant="accent" size="default" className="w-full" asChild>
+          <Button variant="accent" size="default" className="w-full flex items-center justify-center gap-1.5" asChild>
             <Link to="/estimating-maturity" onClick={closeMenu}>
-              Take Free Assessment
+              <ClipboardCheck className="h-4 w-4" />
+              <span>Take Free Assessment</span>
             </Link>
           </Button>
         </div>
@@ -131,6 +133,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                 <span>Estimating Maturity Assessment</span>
                 <span className="bg-accent text-white text-xs px-2 py-0.5 rounded-full">Featured</span>
               </div>
+              <p className="text-xs text-pelican-slate mt-1">Benchmark your estimating capabilities</p>
             </Link>
             <Link 
               to="/labor-burden-calculator" 
