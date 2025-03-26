@@ -49,6 +49,18 @@ const AssessmentContent = ({
   const answeredQuestions = questions.filter(q => q.selectedOption !== undefined).length;
   const completionPercentage = totalQuestions > 0 ? Math.round((answeredQuestions / totalQuestions) * 100) : 0;
   
+  // Calculate visible questions based on conditional logic
+  const visibleQuestions = questions.filter(question => {
+    if (!question.conditionalDisplay) return true;
+    
+    const { dependsOn, showIfValue } = question.conditionalDisplay;
+    const dependentQuestion = questions.find(q => q.id === dependsOn);
+    
+    if (!dependentQuestion || !dependentQuestion.selectedOption) return false;
+    
+    return showIfValue.includes(dependentQuestion.selectedOption);
+  });
+  
   const handleSaveForLater = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
@@ -103,7 +115,7 @@ const AssessmentContent = ({
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
           <span className="text-sm text-pelican-slate font-medium">Assessment Progress</span>
-          <span className="text-sm text-pelican-slate">{answeredQuestions}/{totalQuestions} questions answered</span>
+          <span className="text-sm text-pelican-slate">{answeredQuestions}/{visibleQuestions.length} questions answered</span>
         </div>
         <Progress value={completionPercentage} className="h-2" />
       </div>
@@ -121,6 +133,7 @@ const AssessmentContent = ({
         assessmentType={assessmentType}
         onAdditionalInfo={onAdditionalInfo}
         onConfidenceLevel={onConfidenceLevel}
+        allQuestions={questions}
       />
       
       <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4">

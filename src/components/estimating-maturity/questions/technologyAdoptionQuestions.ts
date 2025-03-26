@@ -48,5 +48,51 @@ export const comprehensiveTechnologyAdoptionQuestions: Question[] = [
       { label: 'Integrated BIM-based takeoff process', value: 'integrated', points: 3 },
       { label: 'Full 5D BIM integration with cost and schedule', value: 'full', points: 4 }
     ]
+  },
+  {
+    id: 'tech_hcss',
+    text: 'How do you utilize HCSS HeavyBid\'s advanced capabilities?',
+    category: 'technologyAdoption',
+    options: [
+      { label: 'Basic item entry and bidding only', value: 'basic', points: 1 },
+      { label: 'Some crew and equipment analysis', value: 'moderate', points: 2 },
+      { label: 'Regular use of historical data and templates', value: 'advanced', points: 3 },
+      { label: 'Full integration with HeavyJob and analytics', value: 'full', points: 4 }
+    ],
+    conditionalDisplay: {
+      dependsOn: 'q13',
+      showIfValue: ['advanced-software', 'enterprise']
+    },
+    documentUpload: true
+  },
+  {
+    id: 'tech_excel',
+    text: 'How do you manage version control and data integrity in your spreadsheets?',
+    category: 'technologyAdoption',
+    options: [
+      { label: 'No formal version control', value: 'none', points: 1 },
+      { label: 'Basic file naming conventions', value: 'basic', points: 2 },
+      { label: 'Cloud storage with change history', value: 'cloud', points: 3 },
+      { label: 'Formula validations and structured templates', value: 'structured', points: 4 }
+    ],
+    conditionalDisplay: {
+      dependsOn: 'q13',
+      showIfValue: ['spreadsheets']
+    }
+  },
+  {
+    id: 'tech_analytics',
+    text: 'What advanced analytics capabilities do you employ?',
+    category: 'technologyAdoption',
+    options: [
+      { label: 'Basic reporting and summaries', value: 'basic', points: 1 },
+      { label: 'Trend analysis and visualization', value: 'trends', points: 2 },
+      { label: 'Statistical modeling and forecasting', value: 'statistical', points: 3 },
+      { label: 'Machine learning and predictive analytics', value: 'ml', points: 4 }
+    ],
+    conditionalDisplay: {
+      dependsOn: 'q14',
+      showIfValue: ['advanced', 'expert']
+    }
   }
 ];

@@ -17,7 +17,8 @@ interface QuestionSectionProps {
   assessmentType?: 'quick' | 'comprehensive';
   onAdditionalInfo?: (questionId: string, info: string) => void;
   onConfidenceLevel?: (questionId: string, level: number) => void;
-  onSectionInView?: () => void; // Add the missing prop definition
+  onSectionInView?: () => void;
+  allQuestions?: Question[]; // All questions for conditional logic
 }
 
 const QuestionSection = ({ 
@@ -27,7 +28,8 @@ const QuestionSection = ({
   assessmentType = 'quick',
   onAdditionalInfo,
   onConfidenceLevel,
-  onSectionInView
+  onSectionInView,
+  allQuestions = []
 }: QuestionSectionProps) => {
   const [expandedQuestions, setExpandedQuestions] = useState<Record<string, boolean>>({});
   const [additionalInfo, setAdditionalInfo] = useState<Record<string, string>>({});
@@ -68,13 +70,28 @@ const QuestionSection = ({
       onConfidenceLevel(questionId, level);
     }
   };
+
+  // Check if a conditional question should be displayed
+  const shouldDisplayQuestion = (question: Question): boolean => {
+    if (!question.conditionalDisplay) return true;
+    
+    const { dependsOn, showIfValue } = question.conditionalDisplay;
+    const dependentQuestion = allQuestions.find(q => q.id === dependsOn);
+    
+    if (!dependentQuestion || !dependentQuestion.selectedOption) return false;
+    
+    return showIfValue.includes(dependentQuestion.selectedOption);
+  };
+  
+  // Filter questions based on conditional logic
+  const visibleQuestions = questions.filter(shouldDisplayQuestion);
   
   return (
     <Card className="mb-6 lg:mb-[24px] border-pelican-teal/20 shadow-sm">
       <CardContent className="pt-6">
         <h3 className="text-xl font-heading font-medium text-pelican-navy mb-4">{title}</h3>
         <div className="space-y-6">
-          {questions.map((question) => (
+          {visibleQuestions.map((question) => (
             <div key={question.id} className="bg-white rounded-md p-4 border border-gray-100">
               <div className="mb-3 font-medium text-pelican-slate">{question.text}</div>
               <RadioGroup
