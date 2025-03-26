@@ -85,10 +85,10 @@ const NewServices = () => {
   ];
 
   return (
-    <section className="py-16 relative">
+    <section className="py-20 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-pelican-cream to-white z-0"></div>
       <div className="section-container relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-12 reveal">
+        <div className="text-center max-w-3xl mx-auto mb-16 reveal">
           <div className="inline-block px-4 py-1 rounded-full bg-pelican-navy/10 text-pelican-navy font-medium text-sm mb-4">
             Our Services
           </div>

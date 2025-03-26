@@ -6,7 +6,7 @@ import { Check, ArrowRight, BarChart3, Database, Workflow, Trophy } from 'lucide
 
 const CallToAction = () => {
   return (
-    <section className="py-16 relative overflow-hidden" id="call-to-action">
+    <section className="py-20 relative overflow-hidden" id="call-to-action">
       <div className="absolute inset-0 bg-pelican-navy/95"></div>
       <div className="absolute inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.05] pointer-events-none"></div>
       
