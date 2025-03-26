@@ -4,7 +4,7 @@ import { BarChart3, Database, Brain, Filter, TrendingUp } from 'lucide-react';
 
 const Benefits = () => {
   return (
-    <section id="features" className="py-16 bg-white">
+    <section id="features" className="py-10 bg-white">
       <div className="content-container">
         <div className="text-center mb-12 reveal fade-in">
           <h2 className="text-3xl md:text-4xl font-bold text-pelican-navy mb-4">Turn Data Challenges into Competitive Advantages</h2>
