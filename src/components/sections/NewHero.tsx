@@ -13,7 +13,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" className="pt-28 pb-20 relative overflow-hidden bg-white">
+    <section id="hero" className="pt-24 pb-16 relative overflow-hidden bg-white">
       <div className="absolute inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.03] pointer-events-none"></div>
       
       {/* Enhanced decorative elements with animations */}
@@ -48,7 +48,7 @@ const Hero = () => {
               </Button>
             </div>
 
-            <div className="pt-8 hidden md:block">
+            <div className="pt-6 hidden md:block">
               <button 
                 onClick={scrollToFeatures}
                 className="flex items-center text-pelican-slate hover:text-pelican-teal transition-colors group"
