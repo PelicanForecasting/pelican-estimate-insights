@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,8 +21,13 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Legend
+  Legend,
+  BarChart,
+  Bar,
+  ReferenceLine,
+  LabelList
 } from 'recharts';
+import { ChartContainer, ChartTooltipContent, ChartTooltip } from "@/components/ui/chart";
 
 interface ResultsDisplayProps {
   score: number;
@@ -48,6 +52,7 @@ const ResultsDisplay = ({
 }: ResultsDisplayProps) => {
   const [email, setEmail] = React.useState('');
   const [emailSubmitted, setEmailSubmitted] = React.useState(false);
+  const [selectedChartType, setSelectedChartType] = React.useState<'radar' | 'bar' | 'line'>('radar');
   
   let description = '';
   let nextSteps = '';
@@ -66,7 +71,6 @@ const ResultsDisplay = ({
     nextSteps = 'Explore advanced analytics, machine learning applications, and continuous optimization.';
   }
 
-  // Prepare radar chart data
   const radarData = Object.entries(categoryScores).map(([category, { score, maxPossible }]) => {
     const categoryName = category === 'processMethodology' ? 'Process' :
                         category === 'dataTechnology' ? 'Data' :
@@ -81,7 +85,6 @@ const ResultsDisplay = ({
     };
   });
   
-  // Industry benchmark comparison data (fictional for demonstration)
   const benchmarkData = [
     { category: 'Process', yourScore: (categoryScores.processMethodology.score / categoryScores.processMethodology.maxPossible) * 100, industryAvg: 65 },
     { category: 'Data', yourScore: (categoryScores.dataTechnology.score / categoryScores.dataTechnology.maxPossible) * 100, industryAvg: 58 },
@@ -89,6 +92,17 @@ const ResultsDisplay = ({
     { category: 'Knowledge', yourScore: (categoryScores.teamKnowledge.score / categoryScores.teamKnowledge.maxPossible) * 100, industryAvg: 70 },
     { category: 'Technology', yourScore: (categoryScores.technologyAdoption.score / categoryScores.technologyAdoption.maxPossible) * 100, industryAvg: 55 }
   ];
+
+  const chartConfig = {
+    yourScore: {
+      label: "Your Score",
+      color: "#2EC4B6"
+    },
+    industryAvg: {
+      label: "Industry Average",
+      color: "#0F3460"
+    }
+  };
 
   const handleSubmitEmail = (e: React.FormEvent) => {
     e.preventDefault();
@@ -110,6 +124,106 @@ const ResultsDisplay = ({
     if (effort === 'low') return 'bg-green-50 border-green-200 text-green-800';
     if (effort === 'medium') return 'bg-yellow-50 border-yellow-200 text-yellow-800';
     return 'bg-red-50 border-red-200 text-red-800';
+  };
+
+  const renderBenchmarkChart = () => {
+    switch (selectedChartType) {
+      case 'radar':
+        return (
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <RadarChart outerRadius={90} data={radarData}>
+                <PolarGrid />
+                <PolarAngleAxis dataKey="subject" />
+                <PolarRadiusAxis domain={[0, 100]} />
+                <Radar
+                  name="Your Score"
+                  dataKey="A"
+                  stroke="#2EC4B6"
+                  fill="#2EC4B6"
+                  fillOpacity={0.6}
+                />
+                <Tooltip content={<CustomTooltip />} />
+              </RadarChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      case 'bar':
+        return (
+          <div className="h-[300px]">
+            <ChartContainer
+              config={chartConfig}
+              className="h-full"
+            >
+              <BarChart
+                data={benchmarkData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="category" />
+                <YAxis domain={[0, 100]} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Legend />
+                <Bar dataKey="yourScore" name="Your Score" fill="#2EC4B6" radius={[4, 4, 0, 0]}>
+                  <LabelList dataKey="yourScore" position="top" formatter={(value: number) => `${value.toFixed(0)}%`} />
+                </Bar>
+                <Bar dataKey="industryAvg" name="Industry Average" fill="#0F3460" radius={[4, 4, 0, 0]} fillOpacity={0.7}>
+                  <LabelList dataKey="industryAvg" position="top" formatter={(value: number) => `${value.toFixed(0)}%`} />
+                </Bar>
+              </BarChart>
+            </ChartContainer>
+          </div>
+        );
+      case 'line':
+        return (
+          <div className="h-[300px]">
+            <ChartContainer
+              config={chartConfig}
+              className="h-full"
+            >
+              <LineChart
+                data={benchmarkData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="category" />
+                <YAxis domain={[0, 100]} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Legend />
+                <Line 
+                  type="monotone" 
+                  dataKey="yourScore" 
+                  name="Your Score" 
+                  stroke="#2EC4B6" 
+                  activeDot={{ r: 8 }} 
+                  strokeWidth={2}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="industryAvg" 
+                  name="Industry Average" 
+                  stroke="#0F3460" 
+                  strokeDasharray="5 5" 
+                  strokeWidth={2}
+                />
+              </LineChart>
+            </ChartContainer>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-2 border border-gray-200 rounded-md shadow-sm">
+          <p className="font-medium">{`${payload[0].payload.subject}: ${payload[0].value.toFixed(0)}%`}</p>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -168,56 +282,44 @@ const ResultsDisplay = ({
                     fill="#2EC4B6"
                     fillOpacity={0.6}
                   />
-                  <Tooltip />
+                  <Tooltip content={<CustomTooltip />} />
                 </RadarChart>
               </ResponsiveContainer>
             </div>
           </div>
         </div>
         
-        {isComprehensiveCompleted && (
-          <div className="mb-8">
-            <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-4">Industry Benchmark Comparison</h3>
-            <div className="p-4 bg-white rounded-md border border-gray-100">
-              <div className="h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
-                    data={benchmarkData}
-                    margin={{
-                      top: 5,
-                      right: 30,
-                      left: 20,
-                      bottom: 5,
-                    }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="category" />
-                    <YAxis domain={[0, 100]} />
-                    <Tooltip />
-                    <Legend />
-                    <Line 
-                      type="monotone" 
-                      dataKey="yourScore" 
-                      name="Your Score" 
-                      stroke="#2EC4B6" 
-                      activeDot={{ r: 8 }} 
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="industryAvg" 
-                      name="Industry Average" 
-                      stroke="#0F3460" 
-                      strokeDasharray="5 5" 
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-              <p className="text-sm text-center text-pelican-slate mt-4">
-                Comparison against average scores from similar companies in your industry
-              </p>
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-[20px] font-heading font-medium text-pelican-navy">Industry Benchmark Comparison</h3>
+            <div className="flex items-center space-x-2 bg-gray-50 p-1 rounded-md border border-gray-100">
+              <button 
+                onClick={() => setSelectedChartType('radar')} 
+                className={`px-3 py-1 rounded text-sm ${selectedChartType === 'radar' ? 'bg-white shadow-sm border border-gray-200' : 'text-gray-600'}`}
+              >
+                Radar
+              </button>
+              <button 
+                onClick={() => setSelectedChartType('bar')} 
+                className={`px-3 py-1 rounded text-sm ${selectedChartType === 'bar' ? 'bg-white shadow-sm border border-gray-200' : 'text-gray-600'}`}
+              >
+                Bar
+              </button>
+              <button 
+                onClick={() => setSelectedChartType('line')} 
+                className={`px-3 py-1 rounded text-sm ${selectedChartType === 'line' ? 'bg-white shadow-sm border border-gray-200' : 'text-gray-600'}`}
+              >
+                Line
+              </button>
             </div>
           </div>
-        )}
+          <div className="p-4 bg-white rounded-md border border-gray-100">
+            {renderBenchmarkChart()}
+            <p className="text-sm text-center text-pelican-slate mt-4">
+              Comparison against average scores from similar companies in your industry
+            </p>
+          </div>
+        </div>
         
         <div className="mb-8">
           <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-4">Prioritized Recommendations</h3>
