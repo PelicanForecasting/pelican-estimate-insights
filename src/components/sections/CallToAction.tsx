@@ -1,12 +1,9 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Check, ArrowRight, BarChart3, Database, Workflow, Trophy } from 'lucide-react';
-
 const CallToAction = () => {
-  return (
-    <section className="py-20 relative overflow-hidden">
+  return <section className="py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-pelican-navy/95"></div>
       <div className="absolute inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.05] pointer-events-none"></div>
       
@@ -17,7 +14,7 @@ const CallToAction = () => {
       <div className="content-container relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6 text-white">
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight text-pelican-cream">
               Ready to Transform Your Estimating Process?
             </h2>
             <p className="text-white/80 text-lg">
@@ -57,7 +54,7 @@ const CallToAction = () => {
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 p-6 text-white">
-            <h3 className="text-2xl font-bold mb-6 flex items-center">
+            <h3 className="text-2xl font-bold mb-6 flex items-center text-pelican-cream">
               <Trophy className="h-6 w-6 text-accent mr-2" />
               What You'll Discover
             </h3>
@@ -68,7 +65,7 @@ const CallToAction = () => {
                   <div className="bg-accent/20 p-2 rounded-lg">
                     <BarChart3 className="h-5 w-5 text-accent" />
                   </div>
-                  <h4 className="font-bold">Process Maturity Score</h4>
+                  <h4 className="font-bold text-pelican-cream">Process Maturity Score</h4>
                 </div>
                 <p className="text-white/80 text-sm">
                   Learn where your estimating process stands compared to industry benchmarks.
@@ -80,7 +77,7 @@ const CallToAction = () => {
                   <div className="bg-accent/20 p-2 rounded-lg">
                     <Workflow className="h-5 w-5 text-accent" />
                   </div>
-                  <h4 className="font-bold">Improvement Roadmap</h4>
+                  <h4 className="font-bold text-pelican-cream">Improvement Roadmap</h4>
                 </div>
                 <p className="text-white/80 text-sm">
                   Receive actionable steps to enhance your estimating capabilities.
@@ -92,7 +89,7 @@ const CallToAction = () => {
                   <div className="bg-accent/20 p-2 rounded-lg">
                     <Database className="h-5 w-5 text-accent" />
                   </div>
-                  <h4 className="font-bold">Technology Assessment</h4>
+                  <h4 className="font-bold text-pelican-cream">Technology Assessment</h4>
                 </div>
                 <p className="text-white/80 text-sm">
                   Identify gaps and opportunities in your technology utilization.
@@ -107,8 +104,6 @@ const CallToAction = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CallToAction;
