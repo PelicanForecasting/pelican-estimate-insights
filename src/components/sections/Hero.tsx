@@ -1,12 +1,9 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ClipboardCheck } from 'lucide-react';
-
 const Hero = () => {
-  return (
-    <section id="hero" className="relative z-10 pt-28 pb-20 overflow-hidden bg-white">
+  return <section id="hero" className="relative z-10 pt-28 pb-20 overflow-hidden bg-white">
       <div className="absolute inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.03] pointer-events-none"></div>
       
       {/* Decorative elements */}
@@ -49,7 +46,7 @@ const Hero = () => {
                     <span className="bg-accent text-white text-xs px-2 py-1 rounded-full">Free Assessment</span>
                     <span className="text-white/80 text-sm">5-minute completion</span>
                   </div>
-                  <h3 className="text-xl font-bold">Estimating Maturity Assessment</h3>
+                  <h3 className="text-xl font-bold text-pelican-white">Estimating Maturity Assessment</h3>
                   <p className="text-white/90 text-sm mt-1">Get your personalized report with actionable insights</p>
                 </div>
               </div>
@@ -57,8 +54,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
