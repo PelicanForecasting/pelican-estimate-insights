@@ -19,9 +19,9 @@ const buttonVariants = cva(
           "bg-secondary text-white hover:bg-secondary/90 hover:translate-y-[-2px] hover:shadow-md",
         ghost: "hover:bg-accent/5 hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        accent: "bg-[#FF9F1C] text-white hover:bg-[#FF9F1C]/90 hover:translate-y-[-2px] hover:shadow-md",
+        accent: "bg-[#FF9F1C] text-white hover:bg-[#FF9F1C]/90 hover:translate-y-[-2px] hover:shadow-md animate-button-pulse",
         // Adding new style system button variants
-        primary: "primary-button",
+        primary: "primary-button animate-button-pulse",
         "secondary-outline": "secondary-button",
       },
       size: {
@@ -35,12 +35,19 @@ const buttonVariants = cva(
         default: "rounded-md",
         full: "rounded-full",
         md: "rounded-md",
+      },
+      animation: {
+        none: "",
+        pulse: "animate-button-pulse",
+        bounce: "animate-bounce-in",
+        fadeIn: "animate-fade-in",
       }
     },
     defaultVariants: {
       variant: "default",
       size: "default",
       rounded: "default",
+      animation: "none",
     },
   }
 )
@@ -52,11 +59,11 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, rounded, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, rounded, animation, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, rounded, className }))}
+        className={cn(buttonVariants({ variant, size, rounded, animation, className }))}
         ref={ref}
         {...props}
       />

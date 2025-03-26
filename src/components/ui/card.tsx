@@ -6,13 +6,22 @@ import { cn } from "@/lib/utils"
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { 
-    variant?: "default" | "glass" | "gradient" 
+    variant?: "default" | "glass" | "gradient",
+    animation?: "none" | "fade" | "slide-right" | "slide-left" | "scale"
   }
->(({ className, variant = "default", ...props }, ref) => {
+>(({ className, variant = "default", animation = "none", ...props }, ref) => {
   const variantClasses = {
     default: "rounded-lg border bg-card text-card-foreground shadow-sm",
     glass: "glass-card",
     gradient: "gradient-card rounded-lg shadow-sm"
+  }
+
+  const animationClasses = {
+    none: "",
+    fade: "animate-fade-in",
+    "slide-right": "animate-slide-in-right",
+    "slide-left": "animate-slide-in-left",
+    scale: "animate-bounce-in"
   }
 
   return (
@@ -20,6 +29,7 @@ const Card = React.forwardRef<
       ref={ref}
       className={cn(
         variantClasses[variant],
+        animationClasses[animation],
         className
       )}
       {...props}
@@ -43,31 +53,56 @@ CardHeader.displayName = "CardHeader"
 const CardTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement> & {
-    gradient?: boolean
+    gradient?: boolean,
+    animation?: "none" | "fade" | "slide-right" | "slide-left"
   }
->(({ className, gradient = false, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn(
-      "text-[20px] font-heading font-medium text-primary leading-none tracking-tight",
-      gradient && "text-gradient bg-gradient-to-r from-pelican-navy to-pelican-teal",
-      className
-    )}
-    {...props}
-  />
-))
+>(({ className, gradient = false, animation = "none", ...props }, ref) => {
+  const animationClasses = {
+    none: "",
+    fade: "animate-fade-in",
+    "slide-right": "animate-slide-in-right",
+    "slide-left": "animate-slide-in-left"
+  }
+
+  return (
+    <h3
+      ref={ref}
+      className={cn(
+        "text-[20px] font-heading font-medium text-primary leading-none tracking-tight",
+        gradient && "text-gradient bg-gradient-to-r from-pelican-navy to-pelican-teal",
+        animationClasses[animation],
+        className
+      )}
+      {...props}
+    />
+  )
+})
 CardTitle.displayName = "CardTitle"
 
 const CardDescription = React.forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn("text-base text-muted-foreground", className)}
-    {...props}
-  />
-))
+  React.HTMLAttributes<HTMLParagraphElement> & {
+    animation?: "none" | "fade" | "delay"
+  }
+>(({ className, animation = "none", ...props }, ref) => {
+  const animationClasses = {
+    none: "",
+    fade: "animate-fade-in",
+    delay: "animate-fade-in animate-delay-200"
+  }
+
+  return (
+    <p
+      ref={ref}
+      className={cn(
+        "text-base text-muted-foreground", 
+        animationClasses[animation],
+        className
+      )}
+      {...props}
+    />
+  )
+})
 CardDescription.displayName = "CardDescription"
 
 const CardContent = React.forwardRef<

@@ -66,6 +66,28 @@ const Index = () => {
       window.removeEventListener('hashchange', handleHashNavigation);
     };
   }, []);
+  
+  // Performance optimization for animations on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      // If on mobile, reduce animation complexity
+      if (window.innerWidth < 768) {
+        document.documentElement.classList.add('reduce-motion');
+      } else {
+        document.documentElement.classList.remove('reduce-motion');
+      }
+    };
+    
+    // Initial check
+    handleResize();
+    
+    // Set up listener
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-pelican-cream/30 font-body">
