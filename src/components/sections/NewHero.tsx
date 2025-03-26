@@ -20,11 +20,11 @@ const Hero = () => {
               Construction Data Intelligence
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-pelican-navy leading-tight">
-              Transform Your Historical <span className="text-pelican-teal">Data</span> Into Forecasting Power
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight">
+              Transform Your Historical <span className="text-gradient">Data</span> Into Forecasting Power
             </h1>
             
-            <p className="text-lg md:text-xl text-pelican-slate max-w-2xl">
+            <p className="text-lg md:text-xl text-black max-w-2xl">
               Meet your construction company where it is today. Build the systems for tomorrow's success.
             </p>
             
@@ -36,7 +36,7 @@ const Hero = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="outline" className="border-pelican-navy text-pelican-navy" asChild size="lg">
+              <Button variant="outline" className="border-black text-black" asChild size="lg">
                 <Link to="/contact">Schedule Consultation</Link>
               </Button>
             </div>

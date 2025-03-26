@@ -3,7 +3,12 @@
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, var(--tw-gradient-stops));
+    --tw-gradient-from: #17A2B8 var(--tw-gradient-from-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    --tw-gradient-to: #FF8C42 var(--tw-gradient-to-position);
+    background-clip: text;
+    color: transparent;
   }
   
   .bg-pelican-gradient {
