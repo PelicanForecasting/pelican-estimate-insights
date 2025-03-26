@@ -5,29 +5,59 @@ import { Card, CardContent } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
 import { ChevronDown, ChevronUp, Upload } from "lucide-react";
 import { Question } from './types';
+import { submitAdditionalInfo } from './utils/formSubmission';
 
 interface QuestionSectionProps {
   title: string;
   questions: Question[];
   onChange: (questionId: string, value: string, points: number) => void;
   assessmentType?: 'quick' | 'comprehensive';
+  onAdditionalInfo?: (questionId: string, info: string) => void;
+  onConfidenceLevel?: (questionId: string, level: number) => void;
 }
 
 const QuestionSection = ({ 
   title, 
   questions, 
   onChange,
-  assessmentType = 'quick'
+  assessmentType = 'quick',
+  onAdditionalInfo,
+  onConfidenceLevel
 }: QuestionSectionProps) => {
   const [expandedQuestions, setExpandedQuestions] = useState<Record<string, boolean>>({});
+  const [additionalInfo, setAdditionalInfo] = useState<Record<string, string>>({});
+  const [confidenceLevels, setConfidenceLevels] = useState<Record<string, number>>({});
   
   const toggleExpand = (questionId: string) => {
     setExpandedQuestions(prev => ({
       ...prev,
       [questionId]: !prev[questionId]
     }));
+  };
+  
+  const handleAdditionalInfoChange = (questionId: string, info: string) => {
+    setAdditionalInfo(prev => ({
+      ...prev,
+      [questionId]: info
+    }));
+    
+    if (onAdditionalInfo) {
+      onAdditionalInfo(questionId, info);
+    }
+  };
+  
+  const handleConfidenceLevelChange = (questionId: string, level: number) => {
+    setConfidenceLevels(prev => ({
+      ...prev,
+      [questionId]: level
+    }));
+    
+    if (onConfidenceLevel) {
+      onConfidenceLevel(questionId, level);
+    }
   };
   
   return (
@@ -96,7 +126,28 @@ const QuestionSection = ({
                           id={`${question.id}-additionalInfo`}
                           placeholder="Provide any additional details about your current practices..."
                           className="min-h-[100px]"
+                          value={additionalInfo[question.id] || ''}
+                          onChange={(e) => handleAdditionalInfoChange(question.id, e.target.value)}
                         />
+                      </div>
+                      
+                      <div>
+                        <Label className="text-sm text-pelican-slate mb-1 block">
+                          Confidence in this answer (1 = Low, 5 = High)
+                        </Label>
+                        <div className="py-4">
+                          <Slider
+                            value={[confidenceLevels[question.id] || 3]}
+                            min={1}
+                            max={5}
+                            step={1}
+                            onValueChange={(value) => handleConfidenceLevelChange(question.id, value[0])}
+                          />
+                        </div>
+                        <div className="flex justify-between text-xs text-pelican-slate">
+                          <span>Low confidence</span>
+                          <span>High confidence</span>
+                        </div>
                       </div>
                       
                       {question.documentUpload && (

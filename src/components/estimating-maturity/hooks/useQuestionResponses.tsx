@@ -1,5 +1,6 @@
 
 import { AssessmentCategory } from '../types';
+import { submitQuestionResponse } from '../utils/formSubmission';
 
 // Separate utility function for calculating category scores
 const calculateCategoryScores = (
@@ -45,7 +46,7 @@ export const useQuestionResponses = (
   updateAssessmentState: (updates: any) => void
 ) => {
   // Handle question responses
-  const handleOptionChange = (questionId: string, value: string, points: number) => {
+  const handleOptionChange = async (questionId: string, value: string, points: number) => {
     // Determine if we're in quick or comprehensive assessment mode
     const currentQuestions = assessmentStage === 'comprehensiveAssessment' 
       ? [...questions, ...comprehensiveQuestions]
@@ -54,6 +55,21 @@ export const useQuestionResponses = (
     const updatedQuestions = currentQuestions.map(q => 
       q.id === questionId ? { ...q, selectedOption: value } : q
     );
+    
+    // Find the question that was changed
+    const question = currentQuestions.find(q => q.id === questionId);
+    
+    if (question) {
+      // Submit the individual question response to Formspree
+      submitQuestionResponse({
+        assessmentType: assessmentStage,
+        questionId,
+        questionText: question.text,
+        selectedOption: value,
+        points,
+        category: question.category
+      }).catch(err => console.error('Failed to submit question response:', err));
+    }
     
     // Update the appropriate question set
     if (assessmentStage === 'comprehensiveAssessment') {
@@ -92,7 +108,14 @@ export const useQuestionResponses = (
   };
 
   // Add additional information to a question response
-  const handleAdditionalInfo = (questionId: string, info: string) => {
+  const handleAdditionalInfo = async (questionId: string, info: string) => {
+    // Submit the additional info to Formspree
+    await submitQuestionResponse({
+      formType: 'additionalInfo',
+      questionId,
+      additionalInfo: info
+    }).catch(err => console.error('Failed to submit additional info:', err));
+    
     // Determine which question set to update
     if (assessmentStage === 'comprehensiveAssessment') {
       const isInQuickAssessment = questions.some(q => q.id === questionId);
@@ -111,7 +134,14 @@ export const useQuestionResponses = (
   };
   
   // Set confidence level for a question
-  const handleConfidenceLevel = (questionId: string, level: number) => {
+  const handleConfidenceLevel = async (questionId: string, level: number) => {
+    // Submit the confidence level to Formspree
+    await submitQuestionResponse({
+      formType: 'confidenceLevel',
+      questionId,
+      confidenceLevel: level
+    }).catch(err => console.error('Failed to submit confidence level:', err));
+    
     // Similar implementation to handleAdditionalInfo
     if (assessmentStage === 'comprehensiveAssessment') {
       const isInQuickAssessment = questions.some(q => q.id === questionId);

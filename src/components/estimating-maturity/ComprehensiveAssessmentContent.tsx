@@ -36,28 +36,6 @@ const ComprehensiveAssessmentContent = ({
   const [additionalInfo, setAdditionalInfo] = useState<Record<string, string>>({});
   const [confidenceLevels, setConfidenceLevels] = useState<Record<string, number>>({});
   
-  const handleAdditionalInfoChange = (questionId: string, info: string) => {
-    setAdditionalInfo(prev => ({
-      ...prev,
-      [questionId]: info
-    }));
-    
-    if (onAdditionalInfo) {
-      onAdditionalInfo(questionId, info);
-    }
-  };
-  
-  const handleConfidenceLevelChange = (questionId: string, level: number) => {
-    setConfidenceLevels(prev => ({
-      ...prev,
-      [questionId]: level
-    }));
-    
-    if (onConfidenceLevel) {
-      onConfidenceLevel(questionId, level);
-    }
-  };
-  
   return (
     <>
       <InfoBanner 
@@ -76,14 +54,34 @@ const ComprehensiveAssessmentContent = ({
         sectionQuestions={sectionQuestions} 
         onOptionChange={onOptionChange} 
         assessmentType="comprehensive"
+        onAdditionalInfo={onAdditionalInfo}
+        onConfidenceLevel={onConfidenceLevel}
       />
       
       <AdditionalContextAccordion 
         sectionQuestions={sectionQuestions}
         additionalInfo={additionalInfo}
         confidenceLevels={confidenceLevels}
-        onAdditionalInfoChange={handleAdditionalInfoChange}
-        onConfidenceLevelChange={handleConfidenceLevelChange}
+        onAdditionalInfoChange={(questionId, info) => {
+          setAdditionalInfo(prev => ({
+            ...prev,
+            [questionId]: info
+          }));
+          
+          if (onAdditionalInfo) {
+            onAdditionalInfo(questionId, info);
+          }
+        }}
+        onConfidenceLevelChange={(questionId, level) => {
+          setConfidenceLevels(prev => ({
+            ...prev,
+            [questionId]: level
+          }));
+          
+          if (onConfidenceLevel) {
+            onConfidenceLevel(questionId, level);
+          }
+        }}
       />
       
       <ActionButtons 

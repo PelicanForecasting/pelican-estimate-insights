@@ -7,12 +7,16 @@ interface QuestionSectionsProps {
   sectionQuestions: SectionQuestions;
   onOptionChange: (questionId: string, value: string, points: number) => void;
   assessmentType?: 'quick' | 'comprehensive';
+  onAdditionalInfo?: (questionId: string, info: string) => void;
+  onConfidenceLevel?: (questionId: string, level: number) => void;
 }
 
 const QuestionSections = ({ 
   sectionQuestions, 
   onOptionChange,
-  assessmentType = 'quick'
+  assessmentType = 'quick',
+  onAdditionalInfo,
+  onConfidenceLevel
 }: QuestionSectionsProps) => {
   return (
     <div className="space-y-6 lg:space-y-[24px]">
@@ -22,6 +26,8 @@ const QuestionSections = ({
         questions={sectionQuestions.processMethodology}
         onChange={onOptionChange}
         assessmentType={assessmentType}
+        onAdditionalInfo={onAdditionalInfo}
+        onConfidenceLevel={onConfidenceLevel}
       />
       
       <h2 className="text-2xl lg:text-[24px] font-heading font-medium text-pelican-navy mb-4">Section 2: Data & Technology</h2>
@@ -30,6 +36,8 @@ const QuestionSections = ({
         questions={sectionQuestions.dataTechnology}
         onChange={onOptionChange}
         assessmentType={assessmentType}
+        onAdditionalInfo={onAdditionalInfo}
+        onConfidenceLevel={onConfidenceLevel}
       />
       
       <h2 className="text-2xl lg:text-[24px] font-heading font-medium text-pelican-navy mb-4">Section 3: Analysis & Decision Making</h2>
@@ -38,6 +46,8 @@ const QuestionSections = ({
         questions={sectionQuestions.analysisDecision}
         onChange={onOptionChange}
         assessmentType={assessmentType}
+        onAdditionalInfo={onAdditionalInfo}
+        onConfidenceLevel={onConfidenceLevel}
       />
       
       <h2 className="text-2xl lg:text-[24px] font-heading font-medium text-pelican-navy mb-4">Section 4: Team & Knowledge</h2>
@@ -46,6 +56,8 @@ const QuestionSections = ({
         questions={sectionQuestions.teamKnowledge}
         onChange={onOptionChange}
         assessmentType={assessmentType}
+        onAdditionalInfo={onAdditionalInfo}
+        onConfidenceLevel={onConfidenceLevel}
       />
 
       {assessmentType === 'comprehensive' && sectionQuestions.technologyAdoption && (
@@ -56,6 +68,8 @@ const QuestionSections = ({
             questions={sectionQuestions.technologyAdoption}
             onChange={onOptionChange}
             assessmentType={assessmentType}
+            onAdditionalInfo={onAdditionalInfo}
+            onConfidenceLevel={onConfidenceLevel}
           />
         </>
       )}
