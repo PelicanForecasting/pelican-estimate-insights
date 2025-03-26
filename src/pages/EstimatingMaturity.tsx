@@ -34,7 +34,8 @@ const EstimatingMaturity = () => {
       processMethodology: { score: 0, maxPossible: 12 },
       dataTechnology: { score: 0, maxPossible: 12 },
       analysisDecision: { score: 0, maxPossible: 12 },
-      teamKnowledge: { score: 0, maxPossible: 12 }
+      teamKnowledge: { score: 0, maxPossible: 12 },
+      technologyAdoption: { score: 0, maxPossible: 12 }
     }
   });
 
@@ -132,7 +133,8 @@ const EstimatingMaturity = () => {
         processMethodology: { score: 0, maxPossible: 12 },
         dataTechnology: { score: 0, maxPossible: 12 },
         analysisDecision: { score: 0, maxPossible: 12 },
-        teamKnowledge: { score: 0, maxPossible: 12 }
+        teamKnowledge: { score: 0, maxPossible: 12 },
+        technologyAdoption: { score: 0, maxPossible: 12 }
       }
     });
   };
