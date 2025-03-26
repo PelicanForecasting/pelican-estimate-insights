@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navigation = () => {
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -38,6 +39,10 @@ const Navigation = () => {
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
+
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'}`}>
@@ -73,7 +78,7 @@ const Navigation = () => {
                 <>
                   <button
                     onClick={() => toggleDropdown(link.name)}
-                    className={`flex items-center space-x-1 text-pelican-navy hover:text-pelican-teal transition-colors`}
+                    className={`flex items-center space-x-1 text-pelican-navy hover:text-pelican-teal transition-colors ${isActive(link.path) ? 'border-b-2 border-pelican-teal' : ''}`}
                   >
                     <span>{link.name}</span>
                     <ChevronDown size={16} className={`transition-transform ${activeDropdown === link.name ? 'rotate-180' : ''}`} />
@@ -84,7 +89,7 @@ const Navigation = () => {
                         <Link
                           key={idx}
                           to={item.path}
-                          className="block px-4 py-2 text-pelican-navy hover:bg-pelican-cream transition-colors"
+                          className={`block px-4 py-2 text-pelican-navy hover:bg-pelican-cream transition-colors ${isActive(item.path) ? 'bg-pelican-cream/50 border-l-4 border-pelican-teal pl-3' : ''}`}
                           onClick={() => setActiveDropdown(null)}
                         >
                           {item.name}
@@ -96,7 +101,7 @@ const Navigation = () => {
               ) : (
                 <Link
                   to={link.path}
-                  className="text-pelican-navy hover:text-pelican-teal transition-colors"
+                  className={`text-pelican-navy hover:text-pelican-teal transition-colors ${isActive(link.path) ? 'border-b-2 border-pelican-teal' : ''}`}
                 >
                   {link.name}
                 </Link>
@@ -128,7 +133,7 @@ const Navigation = () => {
                           <Link
                             key={idx}
                             to={item.path}
-                            className="block py-1 text-pelican-navy hover:text-pelican-teal transition-colors"
+                            className={`block py-1 text-pelican-navy hover:text-pelican-teal transition-colors ${isActive(item.path) ? 'text-pelican-teal font-medium' : ''}`}
                             onClick={() => {
                               setActiveDropdown(null);
                               setIsOpen(false);
@@ -143,7 +148,7 @@ const Navigation = () => {
                 ) : (
                   <Link
                     to={link.path}
-                    className="block text-pelican-navy hover:text-pelican-teal transition-colors"
+                    className={`block text-pelican-navy hover:text-pelican-teal transition-colors ${isActive(link.path) ? 'text-pelican-teal font-medium' : ''}`}
                     onClick={() => setIsOpen(false)}
                   >
                     {link.name}
