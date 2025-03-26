@@ -38,6 +38,22 @@
     animation: fade-in 0.4s ease-out;
   }
 
+  .animate-reveal-right {
+    animation: reveal-right 0.6s ease-out;
+  }
+
+  .animate-expand-width {
+    animation: expand-width 0.8s ease-out;
+  }
+
+  .animate-rotate-in {
+    animation: rotate-in 0.6s ease-out;
+  }
+
+  .animate-bounce-in {
+    animation: bounce-in 0.6s ease-out;
+  }
+
   /* Spacing utilities */
   .section-padding {
     @apply py-10 md:py-20 lg:py-[80px];

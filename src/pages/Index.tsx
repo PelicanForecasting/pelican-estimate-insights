@@ -1,13 +1,10 @@
 
 import React, { useEffect } from 'react';
-import Navbar from '../components/navigation/Navbar';
-import Hero from '../components/sections/Hero';
-import Services from '../components/sections/Services';
-import Benefits from '../components/sections/Benefits';
-import CustomerJourney from '../components/sections/CustomerJourney';
-import Testimonials from '../components/sections/Testimonials';
-import About from '../components/sections/About';
-import Contact from '../components/sections/Contact';
+import Navigation from '../components/navigation/Navigation';
+import Hero from '../components/sections/NewHero';
+import Features from '../components/sections/Features';
+import NewServices from '../components/sections/NewServices';
+import CallToAction from '../components/sections/CallToAction';
 import Footer from '../components/sections/Footer';
 import AssessmentHighlight from '../components/sections/AssessmentHighlight';
 
@@ -62,23 +59,12 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-pelican-cream/30 font-body">
       <div className="fixed inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.02] pointer-events-none z-0"></div>
-      <Navbar />
+      <Navigation />
       <Hero />
       <AssessmentHighlight />
-      <div id="services">
-        <Services />
-      </div>
-      <Benefits />
-      <div id="customer-journey">
-        <CustomerJourney />
-      </div>
-      <Testimonials />
-      <div id="about">
-        <About />
-      </div>
-      <div id="contact">
-        <Contact />
-      </div>
+      <Features />
+      <NewServices />
+      <CallToAction />
       <Footer />
     </div>
   );
