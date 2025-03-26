@@ -18,6 +18,8 @@ interface AssessmentContentProps {
   companyProfile?: CompanyProfile;
   assessmentType: 'quick' | 'comprehensive';
   onSaveForLater: (email: string) => void;
+  onAdditionalInfo?: (questionId: string, info: string) => void;
+  onConfidenceLevel?: (questionId: string, level: number) => void;
 }
 
 const AssessmentContent = ({ 
@@ -29,7 +31,9 @@ const AssessmentContent = ({
   onSubmit,
   companyProfile,
   assessmentType,
-  onSaveForLater
+  onSaveForLater,
+  onAdditionalInfo,
+  onConfidenceLevel
 }: AssessmentContentProps) => {
   const [email, setEmail] = React.useState('');
   const [showSaveForm, setShowSaveForm] = React.useState(false);

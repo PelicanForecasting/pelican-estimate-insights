@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckIcon, MailIcon, CalendarIcon, FileText, ChevronRight, ArrowRight } from "lucide-react";
+import { CheckIcon, MailIcon, CalendarIcon, FileText, ChevronRight, ArrowRight, Award, BarChart2 } from "lucide-react";
 import { AssessmentCategory, AssessmentRecommendation, CompanyProfile } from './types';
 import { 
   PieChart, 
@@ -16,7 +16,13 @@ import {
   PolarGrid, 
   PolarAngleAxis, 
   PolarRadiusAxis, 
-  Tooltip 
+  Tooltip,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend
 } from 'recharts';
 
 interface ResultsDisplayProps {
@@ -27,6 +33,7 @@ interface ResultsDisplayProps {
   categoryScores: Record<AssessmentCategory, { score: number, maxPossible: number }>;
   recommendations: AssessmentRecommendation[];
   onContinueToComprehensive: () => void;
+  isComprehensiveCompleted?: boolean;
 }
 
 const ResultsDisplay = ({ 
@@ -36,7 +43,8 @@ const ResultsDisplay = ({
   companyProfile,
   categoryScores,
   recommendations,
-  onContinueToComprehensive
+  onContinueToComprehensive,
+  isComprehensiveCompleted = false
 }: ResultsDisplayProps) => {
   const [email, setEmail] = React.useState('');
   const [emailSubmitted, setEmailSubmitted] = React.useState(false);
@@ -72,6 +80,15 @@ const ResultsDisplay = ({
       fullMark: 100
     };
   });
+  
+  // Industry benchmark comparison data (fictional for demonstration)
+  const benchmarkData = [
+    { category: 'Process', yourScore: (categoryScores.processMethodology.score / categoryScores.processMethodology.maxPossible) * 100, industryAvg: 65 },
+    { category: 'Data', yourScore: (categoryScores.dataTechnology.score / categoryScores.dataTechnology.maxPossible) * 100, industryAvg: 58 },
+    { category: 'Analysis', yourScore: (categoryScores.analysisDecision.score / categoryScores.analysisDecision.maxPossible) * 100, industryAvg: 62 },
+    { category: 'Knowledge', yourScore: (categoryScores.teamKnowledge.score / categoryScores.teamKnowledge.maxPossible) * 100, industryAvg: 70 },
+    { category: 'Technology', yourScore: (categoryScores.technologyAdoption.score / categoryScores.technologyAdoption.maxPossible) * 100, industryAvg: 55 }
+  ];
 
   const handleSubmitEmail = (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,10 +116,12 @@ const ResultsDisplay = ({
     <Card className="mb-8 border-pelican-teal/20 shadow-sm bg-white">
       <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white rounded-t-md">
         <CardTitle className="text-[20px] font-heading font-medium">
-          Assessment Results{companyProfile?.companyName ? ` for ${companyProfile.companyName}` : ''}
+          {isComprehensiveCompleted ? 'Comprehensive Assessment Results' : 'Assessment Results'}
+          {companyProfile?.companyName ? ` for ${companyProfile.companyName}` : ''}
         </CardTitle>
         <CardDescription className="text-white/90">
           Your score: {score} points - {maturityLevel && maturityLevel.charAt(0).toUpperCase() + maturityLevel.slice(1)} Stage
+          {isComprehensiveCompleted && ' (Comprehensive Assessment)'}
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-6">
@@ -110,15 +129,15 @@ const ResultsDisplay = ({
           <div className="w-full bg-pelican-lightGray rounded-full h-4 mb-4">
             <div 
               className="h-4 rounded-full bg-gradient-to-r from-pelican-navy to-pelican-teal"
-              style={{ width: `${(score / 48) * 100}%` }}
+              style={{ width: `${(score / (isComprehensiveCompleted ? 80 : 48)) * 100}%` }}
             ></div>
           </div>
           
           <div className="grid grid-cols-4 text-xs text-center text-pelican-slate">
-            <div>Foundational<br/>(12-19)</div>
-            <div>Developing<br/>(20-29)</div>
-            <div>Advanced<br/>(30-39)</div>
-            <div>Optimized<br/>(40-48)</div>
+            <div>Foundational<br/>{isComprehensiveCompleted ? '(20-35)' : '(12-19)'}</div>
+            <div>Developing<br/>{isComprehensiveCompleted ? '(36-50)' : '(20-29)'}</div>
+            <div>Advanced<br/>{isComprehensiveCompleted ? '(51-65)' : '(30-39)'}</div>
+            <div>Optimized<br/>{isComprehensiveCompleted ? '(66-80)' : '(40-48)'}</div>
           </div>
         </div>
         
@@ -155,6 +174,50 @@ const ResultsDisplay = ({
             </div>
           </div>
         </div>
+        
+        {isComprehensiveCompleted && (
+          <div className="mb-8">
+            <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-4">Industry Benchmark Comparison</h3>
+            <div className="p-4 bg-white rounded-md border border-gray-100">
+              <div className="h-[300px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart
+                    data={benchmarkData}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="category" />
+                    <YAxis domain={[0, 100]} />
+                    <Tooltip />
+                    <Legend />
+                    <Line 
+                      type="monotone" 
+                      dataKey="yourScore" 
+                      name="Your Score" 
+                      stroke="#2EC4B6" 
+                      activeDot={{ r: 8 }} 
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="industryAvg" 
+                      name="Industry Average" 
+                      stroke="#0F3460" 
+                      strokeDasharray="5 5" 
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+              <p className="text-sm text-center text-pelican-slate mt-4">
+                Comparison against average scores from similar companies in your industry
+              </p>
+            </div>
+          </div>
+        )}
         
         <div className="mb-8">
           <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-4">Prioritized Recommendations</h3>
@@ -266,22 +329,42 @@ const ResultsDisplay = ({
           </div>
         )}
         
-        <div className="p-4 bg-accent/10 rounded-md border border-accent/20 mb-6">
-          <div className="flex items-start">
-            <FileText className="h-5 w-5 text-accent mt-1 mr-3 flex-shrink-0" />
-            <div>
-              <h4 className="text-[16px] font-heading font-medium text-pelican-navy mb-1">Continue Your Assessment Journey</h4>
-              <p className="text-sm text-pelican-slate mb-3">
-                This initial assessment gives you a foundational understanding of your estimating maturity. 
-                For a more comprehensive analysis with tailored recommendations, continue to our detailed assessment.
-              </p>
-              <Button variant="accent" className="group" onClick={onContinueToComprehensive}>
-                Continue to Comprehensive Assessment
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
+        {!isComprehensiveCompleted && (
+          <div className="p-4 bg-accent/10 rounded-md border border-accent/20 mb-6">
+            <div className="flex items-start">
+              <FileText className="h-5 w-5 text-accent mt-1 mr-3 flex-shrink-0" />
+              <div>
+                <h4 className="text-[16px] font-heading font-medium text-pelican-navy mb-1">Continue Your Assessment Journey</h4>
+                <p className="text-sm text-pelican-slate mb-3">
+                  This initial assessment gives you a foundational understanding of your estimating maturity. 
+                  For a more comprehensive analysis with tailored recommendations, continue to our detailed assessment.
+                </p>
+                <Button variant="accent" className="group" onClick={onContinueToComprehensive}>
+                  Continue to Comprehensive Assessment
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+        
+        {isComprehensiveCompleted && (
+          <div className="p-4 bg-blue-50 rounded-md border border-blue-200 mb-6">
+            <div className="flex items-start">
+              <Award className="h-5 w-5 text-blue-500 mt-1 mr-3 flex-shrink-0" />
+              <div>
+                <h4 className="text-[16px] font-heading font-medium text-blue-800 mb-1">Your Next Steps</h4>
+                <p className="text-sm text-blue-700 mb-3">
+                  Congratulations on completing the comprehensive assessment! Based on your results, we've prepared a custom implementation roadmap for your organization.
+                </p>
+                <Button variant="primary" className="group">
+                  Schedule Implementation Consultation
+                  <CalendarIcon className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
         
         <div className="flex flex-col sm:flex-row gap-4">
           <Button variant="secondary-outline" onClick={onReset} className="border-secondary text-secondary hover:bg-secondary/5">

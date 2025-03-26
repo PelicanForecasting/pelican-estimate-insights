@@ -7,7 +7,7 @@ import ResultsDisplay from '@/components/estimating-maturity/ResultsDisplay';
 import AboutTab from '@/components/estimating-maturity/AboutTab';
 import AssessmentContent from '@/components/estimating-maturity/AssessmentContent';
 import FeatureCards from '@/components/estimating-maturity/FeatureCards';
-import { assessmentQuestions } from '@/components/estimating-maturity/assessmentQuestions';
+import { assessmentQuestions, comprehensiveAssessmentQuestions } from '@/components/estimating-maturity/assessmentQuestions';
 import { 
   Question, 
   SectionQuestions, 
@@ -17,10 +17,12 @@ import {
 import CompanyProfileForm from '@/components/estimating-maturity/CompanyProfileForm';
 import WelcomeScreen from '@/components/estimating-maturity/WelcomeScreen';
 import { calculateMaturityLevel, getRecommendationsForScore } from '@/components/estimating-maturity/assessmentUtils';
+import ComprehensiveAssessmentContent from '@/components/estimating-maturity/ComprehensiveAssessmentContent';
 
 const EstimatingMaturity = () => {
   const [currentTab, setCurrentTab] = useState<string>("assessment");
   const [questions, setQuestions] = useState<Question[]>(assessmentQuestions);
+  const [comprehensiveQuestions, setComprehensiveQuestions] = useState<Question[]>(comprehensiveAssessmentQuestions);
   
   // Initialize assessment state
   const [assessmentState, setAssessmentState] = useState<AssessmentState>({
@@ -41,19 +43,49 @@ const EstimatingMaturity = () => {
 
   // Structure questions by section
   const sectionQuestions: SectionQuestions = {
-    processMethodology: questions.slice(0, 3),
-    dataTechnology: questions.slice(3, 6),
-    analysisDecision: questions.slice(6, 9),
-    teamKnowledge: questions.slice(9, 12)
+    processMethodology: questions.filter(q => q.category === 'processMethodology'),
+    dataTechnology: questions.filter(q => q.category === 'dataTechnology'),
+    analysisDecision: questions.filter(q => q.category === 'analysisDecision'),
+    teamKnowledge: questions.filter(q => q.category === 'teamKnowledge'),
+    technologyAdoption: questions.filter(q => q.category === 'technologyAdoption')
+  };
+
+  // Structure comprehensive questions by section
+  const comprehensiveSectionQuestions: SectionQuestions = {
+    processMethodology: [...sectionQuestions.processMethodology, ...comprehensiveQuestions.filter(q => q.category === 'processMethodology')],
+    dataTechnology: [...sectionQuestions.dataTechnology, ...comprehensiveQuestions.filter(q => q.category === 'dataTechnology')],
+    analysisDecision: [...sectionQuestions.analysisDecision, ...comprehensiveQuestions.filter(q => q.category === 'analysisDecision')],
+    teamKnowledge: [...sectionQuestions.teamKnowledge, ...comprehensiveQuestions.filter(q => q.category === 'teamKnowledge')],
+    technologyAdoption: [...sectionQuestions.technologyAdoption, ...comprehensiveQuestions.filter(q => q.category === 'technologyAdoption')],
   };
 
   // Handle question responses
   const handleOptionChange = (questionId: string, value: string, points: number) => {
-    const updatedQuestions = questions.map(q => 
+    // Determine if we're in quick or comprehensive assessment mode
+    const currentQuestions = assessmentState.stage === 'comprehensiveAssessment' 
+      ? [...questions, ...comprehensiveQuestions]
+      : questions;
+    
+    const updatedQuestions = currentQuestions.map(q => 
       q.id === questionId ? { ...q, selectedOption: value } : q
     );
     
-    setQuestions(updatedQuestions);
+    // Update the appropriate question set
+    if (assessmentState.stage === 'comprehensiveAssessment') {
+      // Find where the question belongs
+      const isInQuickAssessment = questions.some(q => q.id === questionId);
+      const isInComprehensive = comprehensiveQuestions.some(q => q.id === questionId);
+      
+      if (isInQuickAssessment) {
+        setQuestions(questions.map(q => q.id === questionId ? { ...q, selectedOption: value } : q));
+      }
+      
+      if (isInComprehensive) {
+        setComprehensiveQuestions(comprehensiveQuestions.map(q => q.id === questionId ? { ...q, selectedOption: value } : q));
+      }
+    } else {
+      setQuestions(questions.map(q => q.id === questionId ? { ...q, selectedOption: value } : q));
+    }
     
     // Calculate new scores
     const newScore = updatedQuestions.reduce((total, q) => {
@@ -66,7 +98,7 @@ const EstimatingMaturity = () => {
     
     // Update category scores
     const updatedCategoryScores = { ...assessmentState.categoryScores };
-    const question = questions.find(q => q.id === questionId);
+    const question = currentQuestions.find(q => q.id === questionId);
     
     if (question?.category) {
       const category = question.category;
@@ -79,9 +111,11 @@ const EstimatingMaturity = () => {
         return total;
       }, 0);
       
+      const maxPossible = categoryQuestions.length * 4; // Assuming 4 points max per question
+      
       updatedCategoryScores[category] = {
-        ...updatedCategoryScores[category],
-        score: categoryScore
+        score: categoryScore,
+        maxPossible
       };
     }
     
@@ -93,8 +127,51 @@ const EstimatingMaturity = () => {
     }));
   };
 
+  // Add additional information to a question response
+  const handleAdditionalInfo = (questionId: string, info: string) => {
+    // Determine which question set to update
+    if (assessmentState.stage === 'comprehensiveAssessment') {
+      const isInQuickAssessment = questions.some(q => q.id === questionId);
+      const isInComprehensive = comprehensiveQuestions.some(q => q.id === questionId);
+      
+      if (isInQuickAssessment) {
+        setQuestions(questions.map(q => q.id === questionId ? { ...q, additionalInfo: info } : q));
+      }
+      
+      if (isInComprehensive) {
+        setComprehensiveQuestions(comprehensiveQuestions.map(q => q.id === questionId ? { ...q, additionalInfo: info } : q));
+      }
+    } else {
+      setQuestions(questions.map(q => q.id === questionId ? { ...q, additionalInfo: info } : q));
+    }
+  };
+  
+  // Set confidence level for a question
+  const handleConfidenceLevel = (questionId: string, level: number) => {
+    // Similar implementation to handleAdditionalInfo
+    if (assessmentState.stage === 'comprehensiveAssessment') {
+      const isInQuickAssessment = questions.some(q => q.id === questionId);
+      const isInComprehensive = comprehensiveQuestions.some(q => q.id === questionId);
+      
+      if (isInQuickAssessment) {
+        setQuestions(questions.map(q => q.id === questionId ? { ...q, confidenceLevel: level } : q));
+      }
+      
+      if (isInComprehensive) {
+        setComprehensiveQuestions(comprehensiveQuestions.map(q => q.id === questionId ? { ...q, confidenceLevel: level } : q));
+      }
+    } else {
+      setQuestions(questions.map(q => q.id === questionId ? { ...q, confidenceLevel: level } : q));
+    }
+  };
+
   // Check if all questions for quick assessment are answered
   const allQuestionsAnswered = questions.every(q => q.selectedOption !== undefined);
+  
+  // Check if all comprehensive questions are answered
+  const allComprehensiveQuestionsAnswered = 
+    questions.every(q => q.selectedOption !== undefined) &&
+    comprehensiveQuestions.every(q => q.selectedOption !== undefined);
 
   // Handle form submission
   const handleSubmit = () => {
@@ -104,6 +181,26 @@ const EstimatingMaturity = () => {
       ...prev,
       stage: 'results',
       quickAssessmentCompleted: true,
+      maturityLevel
+    }));
+  };
+  
+  // Handle comprehensive assessment submission
+  const handleComprehensiveSubmit = () => {
+    // Calculate full score including comprehensive questions
+    const allAnsweredQuestions = [...questions, ...comprehensiveQuestions].filter(q => q.selectedOption);
+    const totalScore = allAnsweredQuestions.reduce((total, q) => {
+      const option = q.options.find(opt => opt.value === q.selectedOption);
+      return total + (option ? option.points : 0);
+    }, 0);
+    
+    const maturityLevel = calculateMaturityLevel(totalScore);
+    
+    setAssessmentState(prev => ({
+      ...prev,
+      stage: 'results',
+      comprehensiveAssessmentCompleted: true,
+      score: totalScore,
       maturityLevel
     }));
   };
@@ -119,8 +216,11 @@ const EstimatingMaturity = () => {
 
   // Reset assessment
   const handleReset = () => {
-    const resetQuestions = questions.map(q => ({ ...q, selectedOption: undefined, additionalInfo: undefined }));
+    const resetQuestions = questions.map(q => ({ ...q, selectedOption: undefined, additionalInfo: undefined, confidenceLevel: undefined, impactLevel: undefined }));
     setQuestions(resetQuestions);
+    
+    const resetComprehensiveQuestions = comprehensiveQuestions.map(q => ({ ...q, selectedOption: undefined, additionalInfo: undefined, confidenceLevel: undefined, impactLevel: undefined }));
+    setComprehensiveQuestions(resetComprehensiveQuestions);
     
     setAssessmentState({
       stage: 'welcome',
@@ -206,6 +306,23 @@ const EstimatingMaturity = () => {
                 companyProfile={assessmentState.companyProfile}
                 assessmentType="quick"
                 onSaveForLater={saveForLater}
+                onAdditionalInfo={handleAdditionalInfo}
+                onConfidenceLevel={handleConfidenceLevel}
+              />
+            )}
+            
+            {assessmentState.stage === 'comprehensiveAssessment' && (
+              <ComprehensiveAssessmentContent
+                questions={comprehensiveQuestions}
+                sectionQuestions={comprehensiveSectionQuestions}
+                score={assessmentState.score}
+                allQuestionsAnswered={allComprehensiveQuestionsAnswered}
+                onOptionChange={handleOptionChange}
+                onSubmit={handleComprehensiveSubmit}
+                companyProfile={assessmentState.companyProfile}
+                onSaveForLater={saveForLater}
+                onAdditionalInfo={handleAdditionalInfo}
+                onConfidenceLevel={handleConfidenceLevel}
               />
             )}
             
@@ -218,6 +335,7 @@ const EstimatingMaturity = () => {
                 categoryScores={assessmentState.categoryScores}
                 recommendations={getRecommendationsForScore(assessmentState.score)}
                 onContinueToComprehensive={continueToComprehensive}
+                isComprehensiveCompleted={assessmentState.comprehensiveAssessmentCompleted}
               />
             )}
           </TabsContent>

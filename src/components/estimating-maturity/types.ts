@@ -26,7 +26,7 @@ export interface SectionQuestions {
   dataTechnology: Question[];
   analysisDecision: Question[];
   teamKnowledge: Question[];
-  technologyAdoption?: Question[]; // New section
+  technologyAdoption: Question[]; // Now required, not optional
 }
 
 export type AssessmentCategory = 
