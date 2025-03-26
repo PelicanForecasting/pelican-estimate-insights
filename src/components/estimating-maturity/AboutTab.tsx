@@ -1,18 +1,16 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-
 interface AboutTabProps {
   onStartAssessment: () => void;
 }
-
-const AboutTab = ({ onStartAssessment }: AboutTabProps) => {
-  return (
-    <Card className="border-pelican-teal/20 shadow-sm">
+const AboutTab = ({
+  onStartAssessment
+}: AboutTabProps) => {
+  return <Card className="border-pelican-teal/20 shadow-sm">
       <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white rounded-t-md">
-        <CardTitle className="text-[24px] font-heading font-medium">About the Assessment Tool</CardTitle>
+        <CardTitle className="text-[24px] font-heading font-medium text-slate-50">About the Assessment Tool</CardTitle>
         <CardDescription className="text-white/90">
           Understanding the evaluation methodology
         </CardDescription>
@@ -94,16 +92,11 @@ const AboutTab = ({ onStartAssessment }: AboutTabProps) => {
           <p className="text-pelican-slate mb-4">
             Switch to the Self-Assessment tab to evaluate your current estimating processes and identify opportunities for improvement.
           </p>
-          <Button 
-            onClick={onStartAssessment}
-            variant="primary"
-          >
+          <Button onClick={onStartAssessment} variant="primary">
             Start Assessment
           </Button>
         </div>
       </CardContent>
-    </Card>
-  );
+    </Card>;
 };
-
 export default AboutTab;
