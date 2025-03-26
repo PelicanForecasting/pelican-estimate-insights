@@ -132,8 +132,8 @@ const About = () => {
             <h2 className="text-3xl font-bold text-pelican-navy mb-8 text-center">Our Team</h2>
             <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md border border-gray-100">
               <div className="flex flex-col sm:flex-row gap-8 items-center">
-                <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-pelican-teal/20">
-                  <img alt="Mason Hennings" src="/lovable-uploads/bb6df2e4-5c08-47ce-86c9-f8801514e861.png" className="w-full h-full object-cover" />
+                <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-4 border-pelican-teal/20 flex-shrink-0">
+                  <img alt="Mason Hennings" src="/lovable-uploads/bb6df2e4-5c08-47ce-86c9-f8801514e861.png" className="w-full h-full object-cover object-center" />
                 </div>
                 <div>
                   <h4 className="text-2xl font-bold text-pelican-navy mb-1">Mason Hennings</h4>
