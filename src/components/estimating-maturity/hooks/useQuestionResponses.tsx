@@ -1,6 +1,41 @@
 
 import { AssessmentCategory } from '../types';
 
+// Separate utility function for calculating category scores
+const calculateCategoryScores = (
+  questions: any[]
+): Record<AssessmentCategory, { score: number; maxPossible: number }> => {
+  const categoryScores: Record<AssessmentCategory, { score: number; maxPossible: number }> = {
+    processMethodology: { score: 0, maxPossible: 0 },
+    dataTechnology: { score: 0, maxPossible: 0 },
+    analysisDecision: { score: 0, maxPossible: 0 },
+    teamKnowledge: { score: 0, maxPossible: 0 },
+    technologyAdoption: { score: 0, maxPossible: 0 }
+  };
+
+  // Calculate score for each category
+  Object.keys(categoryScores).forEach(categoryKey => {
+    const category = categoryKey as AssessmentCategory;
+    const categoryQuestions = questions.filter(q => q.category === category);
+    const categoryScore = categoryQuestions.reduce((total, q) => {
+      if (q.selectedOption) {
+        const option = q.options.find((opt: any) => opt.value === q.selectedOption);
+        return total + (option ? option.points : 0);
+      }
+      return total;
+    }, 0);
+    
+    const maxPossible = categoryQuestions.length * 4; // Assuming 4 points max per question
+    
+    categoryScores[category] = {
+      score: categoryScore,
+      maxPossible
+    };
+  });
+
+  return categoryScores;
+};
+
 export const useQuestionResponses = (
   questions: any[],
   comprehensiveQuestions: any[],
@@ -46,34 +81,8 @@ export const useQuestionResponses = (
       return total;
     }, 0);
     
-    // Update category scores
-    const updatedCategoryScores: Record<AssessmentCategory, { score: number, maxPossible: number }> = {
-      processMethodology: { score: 0, maxPossible: 0 },
-      dataTechnology: { score: 0, maxPossible: 0 },
-      analysisDecision: { score: 0, maxPossible: 0 },
-      teamKnowledge: { score: 0, maxPossible: 0 },
-      technologyAdoption: { score: 0, maxPossible: 0 }
-    };
-    
-    // Calculate score for each category
-    Object.keys(updatedCategoryScores).forEach(categoryKey => {
-      const category = categoryKey as AssessmentCategory;
-      const categoryQuestions = updatedQuestions.filter(q => q.category === category);
-      const categoryScore = categoryQuestions.reduce((total, q) => {
-        if (q.selectedOption) {
-          const option = q.options.find((opt: any) => opt.value === q.selectedOption);
-          return total + (option ? option.points : 0);
-        }
-        return total;
-      }, 0);
-      
-      const maxPossible = categoryQuestions.length * 4; // Assuming 4 points max per question
-      
-      updatedCategoryScores[category] = {
-        score: categoryScore,
-        maxPossible
-      };
-    });
+    // Calculate category scores using the separated function
+    const updatedCategoryScores = calculateCategoryScores(updatedQuestions);
     
     // Update assessment state
     updateAssessmentState({
