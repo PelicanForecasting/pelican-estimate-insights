@@ -1,5 +1,5 @@
-
 import React from 'react';
+import PageLayout from '@/components/layout/PageLayout';
 import Navbar from '../components/navigation/Navbar';
 import Footer from '../components/sections/Footer';
 import { Database, LineChart, ArrowRight, Workflow, Lightbulb } from 'lucide-react';
@@ -8,10 +8,7 @@ import { Link } from 'react-router-dom';
 
 const Services = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-pelican-cream/30 font-body">
-      <div className="fixed inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.02] pointer-events-none z-0"></div>
-      <Navbar />
-      
+    <PageLayout>
       {/* Hero Section */}
       <section className="pt-28 pb-16 relative">
         <div className="content-container relative z-10">
@@ -218,9 +215,7 @@ const Services = () => {
           </div>
         </div>
       </section>
-      
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 

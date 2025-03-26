@@ -1,7 +1,5 @@
-
 import React from 'react';
-import Navbar from '../components/navigation/Navbar';
-import Footer from '../components/sections/Footer';
+import PageLayout from '@/components/layout/PageLayout';
 import { MapPin, Phone, Mail, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,17 +7,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 
 const Contact = () => {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Form submission logic would go here
-    console.log('Form submitted');
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-pelican-cream/30 font-body">
-      <div className="fixed inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.02] pointer-events-none z-0"></div>
-      <Navbar />
-      
+    <PageLayout>
       {/* Hero Section with improved spacing */}
       <section className="content-top-spacing pb-16 relative">
         <div className="content-container relative z-10">
@@ -139,9 +128,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
-      
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 
