@@ -16,9 +16,9 @@ const Hero = () => {
     <section id="hero" className="pt-28 pb-20 relative overflow-hidden bg-white">
       <div className="absolute inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.03] pointer-events-none"></div>
       
-      {/* Decorative elements */}
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-pelican-teal/5 rounded-full filter blur-3xl"></div>
-      <div className="absolute bottom-1/3 left-0 w-80 h-80 bg-accent/5 rounded-full filter blur-3xl"></div>
+      {/* Enhanced decorative elements with animations */}
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-pelican-teal/5 rounded-full filter blur-3xl animate-pulse-slow"></div>
+      <div className="absolute bottom-1/3 left-0 w-80 h-80 bg-accent/5 rounded-full filter blur-3xl animate-pulse-slow" style={{ animationDelay: '1.5s' }}></div>
       
       <div className="content-container relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-12">
@@ -36,14 +36,14 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button asChild size="lg" variant="accent" className="font-medium text-base px-6 py-6 shadow-md hover:shadow-lg animate-bounce-in" style={{ animationDelay: '0.3s' }}>
+              <Button asChild size="lg" variant="accent" className="font-medium text-base px-6 py-6 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-bounce-in" style={{ animationDelay: '0.3s' }}>
                 <Link to="/estimating-maturity" className="flex items-center">
                   <ClipboardCheck className="ml-1 h-5 w-5 mr-2" />
                   Take Free Assessment
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="outline" className="border-black text-black hover:bg-black/5" asChild size="lg">
+              <Button variant="outline" className="border-black text-black hover:bg-black/5 hover:-translate-y-1 transition-all duration-300" asChild size="lg">
                 <Link to="/contact">Schedule Consultation</Link>
               </Button>
             </div>
@@ -51,10 +51,10 @@ const Hero = () => {
             <div className="pt-8 hidden md:block">
               <button 
                 onClick={scrollToFeatures}
-                className="flex items-center text-pelican-slate hover:text-pelican-teal transition-colors"
+                className="flex items-center text-pelican-slate hover:text-pelican-teal transition-colors group"
               >
                 <span className="mr-2">Discover how we help</span>
-                <ChevronDown className="h-4 w-4 animate-bounce" />
+                <ChevronDown className="h-4 w-4 animate-bounce group-hover:animate-float" />
               </button>
             </div>
           </div>
@@ -66,7 +66,7 @@ const Hero = () => {
               <div className="absolute -top-6 -left-6 w-24 h-24 bg-accent/10 rounded-full animate-pulse-slow"></div>
               <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-pelican-teal/10 rounded-full animate-pulse-slow" style={{ animationDelay: '1.5s' }}></div>
               
-              <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 hover-glow">
+              <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 hover-glow transform transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02]">
                 <img 
                   src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" 
                   alt="Construction Estimating Data Analysis" 

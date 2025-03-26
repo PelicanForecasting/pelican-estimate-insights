@@ -11,15 +11,25 @@ import CustomerJourney from '../components/sections/CustomerJourney';
 import Footer from '../components/sections/Footer';
 
 const Index = () => {
-  // Intersection Observer for scroll animations
+  // Enhanced Intersection Observer for scroll animations with thresholds
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
+          
+          // Add staggered animation for children with delay
+          if (entry.target.classList.contains('stagger-children')) {
+            const children = entry.target.querySelectorAll('.stagger-item');
+            children.forEach((child, index) => {
+              setTimeout(() => {
+                child.classList.add('active');
+              }, index * 100); // 100ms stagger between each item
+            });
+          }
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15, rootMargin: '0px 0px -100px 0px' });
     
     const elements = document.querySelectorAll('.reveal');
     elements.forEach(el => observer.observe(el));
@@ -27,7 +37,7 @@ const Index = () => {
     return () => elements.forEach(el => observer.unobserve(el));
   }, []);
 
-  // Handler for URL hash navigation
+  // Handler for URL hash navigation with smooth scrolling
   useEffect(() => {
     // Handle hash navigation after page load
     const handleHashNavigation = () => {
@@ -39,11 +49,11 @@ const Index = () => {
         
         if (element) {
           setTimeout(() => {
-            element.scrollIntoView({ behavior: 'smooth' });
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 100);
         }
       } else {
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
 
