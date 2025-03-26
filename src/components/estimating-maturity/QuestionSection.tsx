@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -17,6 +17,7 @@ interface QuestionSectionProps {
   assessmentType?: 'quick' | 'comprehensive';
   onAdditionalInfo?: (questionId: string, info: string) => void;
   onConfidenceLevel?: (questionId: string, level: number) => void;
+  onSectionInView?: () => void; // Add the missing prop definition
 }
 
 const QuestionSection = ({ 
@@ -25,11 +26,19 @@ const QuestionSection = ({
   onChange,
   assessmentType = 'quick',
   onAdditionalInfo,
-  onConfidenceLevel
+  onConfidenceLevel,
+  onSectionInView
 }: QuestionSectionProps) => {
   const [expandedQuestions, setExpandedQuestions] = useState<Record<string, boolean>>({});
   const [additionalInfo, setAdditionalInfo] = useState<Record<string, string>>({});
   const [confidenceLevels, setConfidenceLevels] = useState<Record<string, number>>({});
+  
+  // Call onSectionInView when the component mounts
+  useEffect(() => {
+    if (onSectionInView) {
+      onSectionInView();
+    }
+  }, [onSectionInView]);
   
   const toggleExpand = (questionId: string) => {
     setExpandedQuestions(prev => ({

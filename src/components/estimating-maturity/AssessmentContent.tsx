@@ -96,6 +96,8 @@ const AssessmentContent = ({
         sectionQuestions={sectionQuestions} 
         onOptionChange={onOptionChange} 
         assessmentType={assessmentType}
+        onAdditionalInfo={onAdditionalInfo}
+        onConfidenceLevel={onConfidenceLevel}
       />
       
       <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
