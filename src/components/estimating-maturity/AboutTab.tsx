@@ -1,102 +1,122 @@
+
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { ChevronRight, BarChart3, FileText, CheckCircle2, Calendar } from "lucide-react";
+
 interface AboutTabProps {
   onStartAssessment: () => void;
 }
+
 const AboutTab = ({
   onStartAssessment
 }: AboutTabProps) => {
   return <Card className="border-pelican-teal/20 shadow-sm">
       <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white rounded-t-md">
-        <CardTitle className="text-[24px] font-heading font-medium text-slate-50">About the Assessment Tool</CardTitle>
+        <CardTitle className="text-[24px] font-heading font-medium text-slate-50">About the Enhanced Assessment</CardTitle>
         <CardDescription className="text-white/90">
-          Understanding the evaluation methodology
+          Our multi-stage approach to evaluating estimating maturity
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-6">
-        <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Purpose</h3>
+        <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">A New Approach to Estimating Maturity</h3>
         <p className="text-pelican-slate mb-6">
-          This assessment tool is designed to help construction companies evaluate their current estimating capabilities
-          against industry best practices. It provides a structured framework to identify strengths and areas for improvement
-          in your estimating processes.
+          Our enhanced assessment tool provides a personalized evaluation experience, starting with a quick initial assessment 
+          that offers immediate insights, followed by an option to continue to a comprehensive assessment tailored to your 
+          specific needs and technological sophistication.
         </p>
         
-        <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Methodology</h3>
-        <p className="text-pelican-slate mb-6">
-          The assessment is divided into four key areas that contribute to estimating excellence: 
-          Process & Methodology, Data & Technology, Analysis & Decision Making, and Team & Knowledge.
-          Each question evaluates a specific aspect of estimating maturity on a scale from foundational to optimized practices.
-        </p>
+        <div className="mb-8">
+          <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Multi-Stage Assessment Journey</h3>
+          <div className="space-y-4">
+            <div className="flex items-start gap-4">
+              <div className="bg-accent/10 p-2 rounded-full">
+                <CheckCircle2 className="h-6 w-6 text-accent" />
+              </div>
+              <div>
+                <h4 className="text-[18px] font-heading font-medium text-pelican-navy">Initial Quick Assessment</h4>
+                <p className="text-pelican-slate text-sm">Complete a 5-minute assessment to receive immediate preliminary insights about your estimating maturity.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="bg-accent/10 p-2 rounded-full">
+                <BarChart3 className="h-6 w-6 text-accent" />
+              </div>
+              <div>
+                <h4 className="text-[18px] font-heading font-medium text-pelican-navy">Comprehensive Assessment</h4>
+                <p className="text-pelican-slate text-sm">Dive deeper into specific areas of estimating excellence with our full assessment, tailored to your company's profile.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="bg-accent/10 p-2 rounded-full">
+                <FileText className="h-6 w-6 text-accent" />
+              </div>
+              <div>
+                <h4 className="text-[18px] font-heading font-medium text-pelican-navy">Detailed Results & Recommendations</h4>
+                <p className="text-pelican-slate text-sm">Receive a comprehensive analysis with actionable recommendations prioritized by impact and effort.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="bg-accent/10 p-2 rounded-full">
+                <Calendar className="h-6 w-6 text-accent" />
+              </div>
+              <div>
+                <h4 className="text-[18px] font-heading font-medium text-pelican-navy">Expert Consultation</h4>
+                <p className="text-pelican-slate text-sm">Schedule a consultation with our experts to discuss your results and develop an implementation roadmap.</p>
+              </div>
+            </div>
+          </div>
+        </div>
         
-        <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Scoring System</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Assessment Categories</h3>
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
           <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
-            <h4 className="text-[18px] font-heading font-medium text-pelican-navy mb-2">Foundational Stage (12-19 points)</h4>
-            <p className="text-sm text-pelican-slate">
-              Your estimating process has significant opportunity for improvement through systematization 
-              and data utilization. Focus on documenting processes and centralizing historical information.
+            <h4 className="text-[16px] font-heading font-medium text-pelican-navy mb-2">Process & Methodology</h4>
+            <p className="text-xs text-pelican-slate">
+              Evaluates your estimating process structure, documentation, and improvement approaches.
             </p>
           </div>
           <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
-            <h4 className="text-[18px] font-heading font-medium text-pelican-navy mb-2">Developing Stage (20-29 points)</h4>
-            <p className="text-sm text-pelican-slate">
-              You have established basics but could benefit from improved analytics and integration. 
-              Focus on connecting your existing data and developing more sophisticated analysis.
+            <h4 className="text-[16px] font-heading font-medium text-pelican-navy mb-2">Data Architecture</h4>
+            <p className="text-xs text-pelican-slate">
+              Assesses your data storage, accessibility, and integration between systems.
             </p>
           </div>
           <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
-            <h4 className="text-[18px] font-heading font-medium text-pelican-navy mb-2">Advanced Stage (30-39 points)</h4>
-            <p className="text-sm text-pelican-slate">
-              Your estimating capabilities are strong but could be enhanced with predictive analytics 
-              and deeper integration. Focus on statistical analysis and strategic intelligence.
+            <h4 className="text-[16px] font-heading font-medium text-pelican-navy mb-2">Technology Adoption</h4>
+            <p className="text-xs text-pelican-slate">
+              Evaluates your technology stack, utilization, and system integrations.
             </p>
           </div>
           <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
-            <h4 className="text-[18px] font-heading font-medium text-pelican-navy mb-2">Optimized Stage (40-48 points)</h4>
-            <p className="text-sm text-pelican-slate">
-              Your estimating function is highly mature. Focus on continuous refinement and 
-              cutting-edge analytics to maintain your competitive advantage.
+            <h4 className="text-[16px] font-heading font-medium text-pelican-navy mb-2">Analytics Capabilities</h4>
+            <p className="text-xs text-pelican-slate">
+              Examines your use of analytics, statistical methods, and decision support.
+            </p>
+          </div>
+          <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
+            <h4 className="text-[16px] font-heading font-medium text-pelican-navy mb-2">Knowledge Management</h4>
+            <p className="text-xs text-pelican-slate">
+              Assesses how you capture, transfer, and preserve institutional knowledge.
             </p>
           </div>
         </div>
         
         <Separator className="my-6" />
         
-        <div className="flex flex-col md:flex-row gap-6">
-          <div className="md:w-1/2">
-            <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Benefits</h3>
-            <ul className="space-y-2 text-pelican-slate list-disc pl-5">
-              <li>Identify strengths and weaknesses in your estimating processes</li>
-              <li>Benchmark your capabilities against industry best practices</li>
-              <li>Develop a roadmap for estimating improvement</li>
-              <li>Gain insights into potential technology investments</li>
-              <li>Prioritize process improvements that will yield the greatest returns</li>
-            </ul>
-          </div>
-          <div className="md:w-1/2">
-            <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Next Steps</h3>
-            <ul className="space-y-2 text-pelican-slate list-disc pl-5">
-              <li>Complete the assessment to receive your score and recommendations</li>
-              <li>Request a detailed report with personalized improvement strategies</li>
-              <li>Schedule a consultation to discuss your results with an expert</li>
-              <li>Develop an action plan based on the assessment findings</li>
-              <li>Implement targeted improvements to enhance your estimating capabilities</li>
-            </ul>
-          </div>
-        </div>
-        
         <div className="mt-8 bg-pelican-lightGray/30 p-6 rounded-md border border-pelican-cream">
           <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-3">Ready to Assess Your Estimating Maturity?</h3>
           <p className="text-pelican-slate mb-4">
-            Switch to the Self-Assessment tab to evaluate your current estimating processes and identify opportunities for improvement.
+            Start with our quick assessment to receive immediate insights into your estimating processes and identify key opportunities for improvement.
           </p>
-          <Button onClick={onStartAssessment} variant="primary">
-            Start Assessment
+          <Button onClick={onStartAssessment} variant="primary" className="group">
+            Start Quick Assessment
+            <ChevronRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
       </CardContent>
     </Card>;
 };
+
 export default AboutTab;

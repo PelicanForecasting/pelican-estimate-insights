@@ -4,46 +4,105 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckIcon, MailIcon, CalendarIcon } from "lucide-react";
+import { CheckIcon, MailIcon, CalendarIcon, FileText, ChevronRight, ArrowRight } from "lucide-react";
+import { AssessmentCategory, AssessmentRecommendation, CompanyProfile } from './types';
+import { 
+  PieChart, 
+  Pie, 
+  Cell, 
+  ResponsiveContainer,
+  Radar, 
+  RadarChart, 
+  PolarGrid, 
+  PolarAngleAxis, 
+  PolarRadiusAxis, 
+  Tooltip 
+} from 'recharts';
 
 interface ResultsDisplayProps {
   score: number;
   onReset: () => void;
+  maturityLevel?: 'foundational' | 'developing' | 'advanced' | 'optimized';
+  companyProfile?: CompanyProfile;
+  categoryScores: Record<AssessmentCategory, { score: number, maxPossible: number }>;
+  recommendations: AssessmentRecommendation[];
+  onContinueToComprehensive: () => void;
 }
 
-const ResultsDisplay = ({ score, onReset }: ResultsDisplayProps) => {
+const ResultsDisplay = ({ 
+  score, 
+  onReset, 
+  maturityLevel,
+  companyProfile,
+  categoryScores,
+  recommendations,
+  onContinueToComprehensive
+}: ResultsDisplayProps) => {
   const [email, setEmail] = React.useState('');
   const [emailSubmitted, setEmailSubmitted] = React.useState(false);
   
-  let category = '';
   let description = '';
+  let nextSteps = '';
   
-  if (score >= 12 && score <= 19) {
-    category = 'Foundational Stage';
+  if (maturityLevel === 'foundational') {
     description = 'Your estimating process has significant opportunity for improvement through systematization and data utilization. Focus on documenting processes and centralizing historical information.';
-  } else if (score >= 20 && score <= 29) {
-    category = 'Developing Stage';
+    nextSteps = 'Start by documenting your current processes and creating a central repository for historical project data.';
+  } else if (maturityLevel === 'developing') {
     description = 'You have established basics but could benefit from improved analytics and integration. Focus on connecting your existing data and developing more sophisticated analysis.';
-  } else if (score >= 30 && score <= 39) {
-    category = 'Advanced Stage';
+    nextSteps = 'Focus on improving data connections between systems and implementing basic statistical analysis.';
+  } else if (maturityLevel === 'advanced') {
     description = 'Your estimating capabilities are strong but could be enhanced with predictive analytics and deeper integration. Focus on statistical analysis and strategic intelligence.';
-  } else if (score >= 40 && score <= 48) {
-    category = 'Optimized Stage';
+    nextSteps = 'Implement more advanced statistical methods and explore predictive analytics capabilities.';
+  } else if (maturityLevel === 'optimized') {
     description = 'Your estimating function is highly mature. Focus on continuous refinement and cutting-edge analytics to maintain your competitive advantage.';
+    nextSteps = 'Explore advanced analytics, machine learning applications, and continuous optimization.';
   }
+
+  // Prepare radar chart data
+  const radarData = Object.entries(categoryScores).map(([category, { score, maxPossible }]) => {
+    const categoryName = category === 'processMethodology' ? 'Process' :
+                        category === 'dataTechnology' ? 'Data' :
+                        category === 'analysisDecision' ? 'Analysis' :
+                        category === 'teamKnowledge' ? 'Knowledge' :
+                        category === 'technologyAdoption' ? 'Technology' : '';
+                        
+    return {
+      subject: categoryName,
+      A: (score / maxPossible) * 100, // Convert to percentage
+      fullMark: 100
+    };
+  });
 
   const handleSubmitEmail = (e: React.FormEvent) => {
     e.preventDefault();
     setEmailSubmitted(true);
     // In a real implementation, this would send the email to a server
   };
+  
+  const lowEffortRecommendations = recommendations.filter(rec => rec.effort === 'low');
+  const mediumEffortRecommendations = recommendations.filter(rec => rec.effort === 'medium');
+  const highEffortRecommendations = recommendations.filter(rec => rec.effort === 'high');
+  
+  const getImpactClass = (impact: 'low' | 'medium' | 'high') => {
+    if (impact === 'high') return 'bg-green-50 border-green-200 text-green-800';
+    if (impact === 'medium') return 'bg-yellow-50 border-yellow-200 text-yellow-800';
+    return 'bg-gray-50 border-gray-200 text-gray-800';
+  };
+  
+  const getEffortClass = (effort: 'low' | 'medium' | 'high') => {
+    if (effort === 'low') return 'bg-green-50 border-green-200 text-green-800';
+    if (effort === 'medium') return 'bg-yellow-50 border-yellow-200 text-yellow-800';
+    return 'bg-red-50 border-red-200 text-red-800';
+  };
 
   return (
     <Card className="mb-8 border-pelican-teal/20 shadow-sm bg-white">
       <CardHeader className="bg-gradient-to-r from-pelican-navy to-pelican-teal text-white rounded-t-md">
-        <CardTitle className="text-[20px] font-heading font-medium">Your Assessment Results</CardTitle>
+        <CardTitle className="text-[20px] font-heading font-medium">
+          Assessment Results{companyProfile?.companyName ? ` for ${companyProfile.companyName}` : ''}
+        </CardTitle>
         <CardDescription className="text-white/90">
-          Your score: {score} points - {category}
+          Your score: {score} points - {maturityLevel && maturityLevel.charAt(0).toUpperCase() + maturityLevel.slice(1)} Stage
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-6">
@@ -63,9 +122,114 @@ const ResultsDisplay = ({ score, onReset }: ResultsDisplayProps) => {
           </div>
         </div>
         
-        <div className="mb-8 p-4 bg-pelican-cream rounded-md">
-          <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-2">{category}</h3>
-          <p className="text-pelican-slate">{description}</p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <div className="p-4 bg-pelican-cream/30 rounded-md border border-pelican-cream">
+            <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-2">
+              {maturityLevel && maturityLevel.charAt(0).toUpperCase() + maturityLevel.slice(1)} Stage
+            </h3>
+            <p className="text-pelican-slate">{description}</p>
+            <div className="mt-3 text-sm text-pelican-slate font-medium">
+              Recommended next steps:
+              <p className="font-normal mt-1">{nextSteps}</p>
+            </div>
+          </div>
+          
+          <div className="p-4 bg-white rounded-md border border-gray-100">
+            <h3 className="text-[18px] font-heading font-medium text-pelican-navy mb-3">Category Performance</h3>
+            <div className="h-[200px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <RadarChart outerRadius={80} data={radarData}>
+                  <PolarGrid />
+                  <PolarAngleAxis dataKey="subject" />
+                  <PolarRadiusAxis domain={[0, 100]} />
+                  <Radar
+                    name="Your Score"
+                    dataKey="A"
+                    stroke="#2EC4B6"
+                    fill="#2EC4B6"
+                    fillOpacity={0.6}
+                  />
+                  <Tooltip />
+                </RadarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+        
+        <div className="mb-8">
+          <h3 className="text-[20px] font-heading font-medium text-pelican-navy mb-4">Prioritized Recommendations</h3>
+          
+          {lowEffortRecommendations.length > 0 && (
+            <div className="mb-6">
+              <h4 className="text-[16px] font-heading font-medium text-pelican-navy mb-2">Quick Wins (High Impact, Low Effort)</h4>
+              <div className="space-y-3">
+                {lowEffortRecommendations.map(rec => (
+                  <div key={rec.id} className="p-3 border rounded-md bg-white">
+                    <div className="flex justify-between items-start mb-2">
+                      <h5 className="text-[14px] font-medium text-pelican-navy">{rec.title}</h5>
+                      <div className="flex gap-2">
+                        <span className={`text-xs px-2 py-1 rounded-full border ${getImpactClass(rec.impact)}`}>
+                          {rec.impact.charAt(0).toUpperCase() + rec.impact.slice(1)} Impact
+                        </span>
+                        <span className={`text-xs px-2 py-1 rounded-full border ${getEffortClass(rec.effort)}`}>
+                          {rec.effort.charAt(0).toUpperCase() + rec.effort.slice(1)} Effort
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-pelican-slate">{rec.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {mediumEffortRecommendations.length > 0 && (
+            <div className="mb-6">
+              <h4 className="text-[16px] font-heading font-medium text-pelican-navy mb-2">Strategic Initiatives (Medium Effort)</h4>
+              <div className="space-y-3">
+                {mediumEffortRecommendations.map(rec => (
+                  <div key={rec.id} className="p-3 border rounded-md bg-white">
+                    <div className="flex justify-between items-start mb-2">
+                      <h5 className="text-[14px] font-medium text-pelican-navy">{rec.title}</h5>
+                      <div className="flex gap-2">
+                        <span className={`text-xs px-2 py-1 rounded-full border ${getImpactClass(rec.impact)}`}>
+                          {rec.impact.charAt(0).toUpperCase() + rec.impact.slice(1)} Impact
+                        </span>
+                        <span className={`text-xs px-2 py-1 rounded-full border ${getEffortClass(rec.effort)}`}>
+                          {rec.effort.charAt(0).toUpperCase() + rec.effort.slice(1)} Effort
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-pelican-slate">{rec.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {highEffortRecommendations.length > 0 && (
+            <div>
+              <h4 className="text-[16px] font-heading font-medium text-pelican-navy mb-2">Transformational Changes (High Effort)</h4>
+              <div className="space-y-3">
+                {highEffortRecommendations.map(rec => (
+                  <div key={rec.id} className="p-3 border rounded-md bg-white">
+                    <div className="flex justify-between items-start mb-2">
+                      <h5 className="text-[14px] font-medium text-pelican-navy">{rec.title}</h5>
+                      <div className="flex gap-2">
+                        <span className={`text-xs px-2 py-1 rounded-full border ${getImpactClass(rec.impact)}`}>
+                          {rec.impact.charAt(0).toUpperCase() + rec.impact.slice(1)} Impact
+                        </span>
+                        <span className={`text-xs px-2 py-1 rounded-full border ${getEffortClass(rec.effort)}`}>
+                          {rec.effort.charAt(0).toUpperCase() + rec.effort.slice(1)} Effort
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-pelican-slate">{rec.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
         
         {!emailSubmitted ? (
@@ -101,6 +265,23 @@ const ResultsDisplay = ({ score, onReset }: ResultsDisplayProps) => {
             </div>
           </div>
         )}
+        
+        <div className="p-4 bg-accent/10 rounded-md border border-accent/20 mb-6">
+          <div className="flex items-start">
+            <FileText className="h-5 w-5 text-accent mt-1 mr-3 flex-shrink-0" />
+            <div>
+              <h4 className="text-[16px] font-heading font-medium text-pelican-navy mb-1">Continue Your Assessment Journey</h4>
+              <p className="text-sm text-pelican-slate mb-3">
+                This initial assessment gives you a foundational understanding of your estimating maturity. 
+                For a more comprehensive analysis with tailored recommendations, continue to our detailed assessment.
+              </p>
+              <Button variant="accent" className="group" onClick={onContinueToComprehensive}>
+                Continue to Comprehensive Assessment
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+          </div>
+        </div>
         
         <div className="flex flex-col sm:flex-row gap-4">
           <Button variant="secondary-outline" onClick={onReset} className="border-secondary text-secondary hover:bg-secondary/5">

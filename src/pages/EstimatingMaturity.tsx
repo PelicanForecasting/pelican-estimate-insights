@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/navigation/Navbar';
 import Footer from '@/components/sections/Footer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,15 +8,37 @@ import AboutTab from '@/components/estimating-maturity/AboutTab';
 import AssessmentContent from '@/components/estimating-maturity/AssessmentContent';
 import FeatureCards from '@/components/estimating-maturity/FeatureCards';
 import { assessmentQuestions } from '@/components/estimating-maturity/assessmentQuestions';
-import { Question, SectionQuestions } from '@/components/estimating-maturity/types';
+import { 
+  Question, 
+  SectionQuestions, 
+  AssessmentState, 
+  CompanyProfile 
+} from '@/components/estimating-maturity/types';
+import CompanyProfileForm from '@/components/estimating-maturity/CompanyProfileForm';
+import WelcomeScreen from '@/components/estimating-maturity/WelcomeScreen';
+import { calculateMaturityLevel, getRecommendationsForScore } from '@/components/estimating-maturity/assessmentUtils';
 
 const EstimatingMaturity = () => {
   const [currentTab, setCurrentTab] = useState<string>("assessment");
   const [questions, setQuestions] = useState<Question[]>(assessmentQuestions);
-  const [score, setScore] = useState<number>(0);
-  const [showResults, setShowResults] = useState<boolean>(false);
-  const [allQuestionsAnswered, setAllQuestionsAnswered] = useState<boolean>(false);
+  
+  // Initialize assessment state
+  const [assessmentState, setAssessmentState] = useState<AssessmentState>({
+    stage: 'welcome',
+    companyProfile: {},
+    quickAssessmentCompleted: false,
+    comprehensiveAssessmentCompleted: false,
+    score: 0,
+    maxPossibleScore: questions.length * 4, // Assuming 4 points max per question
+    categoryScores: {
+      processMethodology: { score: 0, maxPossible: 12 },
+      dataTechnology: { score: 0, maxPossible: 12 },
+      analysisDecision: { score: 0, maxPossible: 12 },
+      teamKnowledge: { score: 0, maxPossible: 12 }
+    }
+  });
 
+  // Structure questions by section
   const sectionQuestions: SectionQuestions = {
     processMethodology: questions.slice(0, 3),
     dataTechnology: questions.slice(3, 6),
@@ -24,6 +46,7 @@ const EstimatingMaturity = () => {
     teamKnowledge: questions.slice(9, 12)
   };
 
+  // Handle question responses
   const handleOptionChange = (questionId: string, value: string, points: number) => {
     const updatedQuestions = questions.map(q => 
       q.id === questionId ? { ...q, selectedOption: value } : q
@@ -31,6 +54,7 @@ const EstimatingMaturity = () => {
     
     setQuestions(updatedQuestions);
     
+    // Calculate new scores
     const newScore = updatedQuestions.reduce((total, q) => {
       if (q.selectedOption) {
         const option = q.options.find(opt => opt.value === q.selectedOption);
@@ -39,22 +63,104 @@ const EstimatingMaturity = () => {
       return total;
     }, 0);
     
-    setScore(newScore);
+    // Update category scores
+    const updatedCategoryScores = { ...assessmentState.categoryScores };
+    const question = questions.find(q => q.id === questionId);
     
-    const allAnswered = updatedQuestions.every(q => q.selectedOption !== undefined);
-    setAllQuestionsAnswered(allAnswered);
+    if (question?.category) {
+      const category = question.category;
+      const categoryQuestions = updatedQuestions.filter(q => q.category === category);
+      const categoryScore = categoryQuestions.reduce((total, q) => {
+        if (q.selectedOption) {
+          const option = q.options.find(opt => opt.value === q.selectedOption);
+          return total + (option ? option.points : 0);
+        }
+        return total;
+      }, 0);
+      
+      updatedCategoryScores[category] = {
+        ...updatedCategoryScores[category],
+        score: categoryScore
+      };
+    }
+    
+    // Update assessment state
+    setAssessmentState(prev => ({
+      ...prev,
+      score: newScore,
+      categoryScores: updatedCategoryScores
+    }));
   };
 
+  // Check if all questions for quick assessment are answered
+  const allQuestionsAnswered = questions.every(q => q.selectedOption !== undefined);
+
+  // Handle form submission
   const handleSubmit = () => {
-    setShowResults(true);
+    const maturityLevel = calculateMaturityLevel(assessmentState.score);
+    
+    setAssessmentState(prev => ({
+      ...prev,
+      stage: 'results',
+      quickAssessmentCompleted: true,
+      maturityLevel
+    }));
   };
 
+  // Handle company profile submission
+  const handleProfileSubmit = (profile: CompanyProfile) => {
+    setAssessmentState(prev => ({
+      ...prev,
+      companyProfile: profile,
+      stage: 'quickAssessment'
+    }));
+  };
+
+  // Reset assessment
   const handleReset = () => {
-    const resetQuestions = questions.map(q => ({ ...q, selectedOption: undefined }));
+    const resetQuestions = questions.map(q => ({ ...q, selectedOption: undefined, additionalInfo: undefined }));
     setQuestions(resetQuestions);
-    setScore(0);
-    setShowResults(false);
-    setAllQuestionsAnswered(false);
+    
+    setAssessmentState({
+      stage: 'welcome',
+      companyProfile: {},
+      quickAssessmentCompleted: false,
+      comprehensiveAssessmentCompleted: false,
+      score: 0,
+      maxPossibleScore: questions.length * 4,
+      categoryScores: {
+        processMethodology: { score: 0, maxPossible: 12 },
+        dataTechnology: { score: 0, maxPossible: 12 },
+        analysisDecision: { score: 0, maxPossible: 12 },
+        teamKnowledge: { score: 0, maxPossible: 12 }
+      }
+    });
+  };
+
+  // Start assessment from welcome or about tab
+  const startAssessment = () => {
+    setCurrentTab("assessment");
+    setAssessmentState(prev => ({
+      ...prev,
+      stage: 'companyProfile'
+    }));
+  };
+
+  // Continue to comprehensive assessment
+  const continueToComprehensive = () => {
+    setAssessmentState(prev => ({
+      ...prev,
+      stage: 'comprehensiveAssessment'
+    }));
+  };
+
+  // Save progress for later
+  const saveForLater = (email: string) => {
+    // In a real implementation, this would save to a database
+    console.log("Saving progress for:", email);
+    
+    // For demo purposes, just show an alert
+    alert(`Your progress has been saved. We'll email you at ${email} with a link to continue.`);
   };
 
   return (
@@ -79,22 +185,43 @@ const EstimatingMaturity = () => {
           </TabsList>
           
           <TabsContent value="assessment" className="space-y-6">
-            {!showResults ? (
+            {assessmentState.stage === 'welcome' && (
+              <WelcomeScreen onStart={startAssessment} />
+            )}
+            
+            {assessmentState.stage === 'companyProfile' && (
+              <CompanyProfileForm onSubmit={handleProfileSubmit} />
+            )}
+            
+            {assessmentState.stage === 'quickAssessment' && !assessmentState.quickAssessmentCompleted && (
               <AssessmentContent 
                 questions={questions}
                 sectionQuestions={sectionQuestions}
-                score={score}
+                score={assessmentState.score}
                 allQuestionsAnswered={allQuestionsAnswered}
                 onOptionChange={handleOptionChange}
                 onSubmit={handleSubmit}
+                companyProfile={assessmentState.companyProfile}
+                assessmentType="quick"
+                onSaveForLater={saveForLater}
               />
-            ) : (
-              <ResultsDisplay score={score} onReset={handleReset} />
+            )}
+            
+            {assessmentState.stage === 'results' && (
+              <ResultsDisplay 
+                score={assessmentState.score} 
+                onReset={handleReset}
+                maturityLevel={assessmentState.maturityLevel}
+                companyProfile={assessmentState.companyProfile}
+                categoryScores={assessmentState.categoryScores}
+                recommendations={getRecommendationsForScore(assessmentState.score)}
+                onContinueToComprehensive={continueToComprehensive}
+              />
             )}
           </TabsContent>
           
           <TabsContent value="about">
-            <AboutTab onStartAssessment={() => setCurrentTab("assessment")} />
+            <AboutTab onStartAssessment={startAssessment} />
           </TabsContent>
         </Tabs>
         
