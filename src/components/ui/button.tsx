@@ -20,9 +20,9 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent/5 hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         accent: "bg-[#FF9F1C] text-white hover:bg-[#FF9F1C]/90 hover:translate-y-[-2px] hover:shadow-md",
-        // Adding new style guide button variants
-        primary: "bg-secondary text-white hover:bg-secondary/90 hover:translate-y-[-2px] hover:shadow-md",
-        "secondary-outline": "bg-white text-secondary border border-secondary hover:bg-secondary/5",
+        // Adding new style system button variants
+        primary: "primary-button",
+        "secondary-outline": "secondary-button",
       },
       size: {
         default: "h-10 px-4 py-3 rounded-md",
@@ -34,7 +34,6 @@ const buttonVariants = cva(
       rounded: {
         default: "rounded-md",
         full: "rounded-full",
-        // Add medium radius option to fix error
         md: "rounded-md",
       }
     },

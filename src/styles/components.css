@@ -51,6 +51,23 @@
     @apply relative before:absolute before:inset-0 before:p-[2px] before:rounded-lg before:bg-gradient-to-br before:from-secondary before:to-primary before:-z-10 before:content-[''];
   }
 
+  /* New styling system classes */
+  .primary-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-accent text-white font-medium px-6 py-3 shadow-sm hover:bg-accent/90 hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50;
+  }
+
+  .secondary-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-white text-pelican-navy border border-pelican-navy font-medium px-6 py-3 shadow-sm hover:bg-pelican-navy/5 hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pelican-navy focus:ring-opacity-25;
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-sm rounded-xl border border-white/30 shadow-md hover:shadow-lg transition-all duration-300 p-6;
+  }
+
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-md rounded-xl border border-white/20 shadow-lg p-8;
+  }
+
   /* Button variants per style guide */
   .btn-primary {
     @apply bg-secondary text-primary-foreground rounded-md px-4 py-3 hover:bg-secondary/90 transition-colors;

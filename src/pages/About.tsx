@@ -15,7 +15,7 @@ const About = () => {
       <section className="pt-28 pb-16 relative">
         <div className="content-container relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-pelican-navy mb-6">About Pelican Forecasting Group</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-gradient bg-gradient-to-r from-pelican-navy to-pelican-teal mb-6">About Pelican Forecasting Group</h1>
             <p className="text-lg text-pelican-slate">
               We bridge the gap between construction expertise and data science, helping companies leverage their historical project data.
             </p>
@@ -44,7 +44,7 @@ const About = () => {
                 <div className="absolute -top-4 -left-4 w-16 h-16 bg-accent/10 rounded-full"></div>
                 <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-pelican-teal/10 rounded-full"></div>
                 
-                <div className="relative z-10 bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 max-w-sm mx-auto">
+                <div className="relative z-10 glass-card max-w-sm mx-auto">
                   <img src="/lovable-uploads/55ba6c29-7c4a-4f43-b063-49a9051b315a.png" alt="Construction crane on a waterfront project" className="w-full h-auto object-cover max-h-[280px]" />
                 </div>
               </div>
@@ -55,7 +55,7 @@ const About = () => {
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-pelican-navy mb-8 text-center">Our Expertise</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center">
+              <div className="glass-card text-center">
                 <div className="bg-pelican-navy/5 p-4 inline-flex rounded-full mb-4">
                   <Award className="w-8 h-8 text-pelican-teal" />
                 </div>
@@ -65,7 +65,7 @@ const About = () => {
                 </p>
               </div>
               
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center">
+              <div className="glass-card text-center">
                 <div className="bg-pelican-navy/5 p-4 inline-flex rounded-full mb-4">
                   <Database className="w-8 h-8 text-pelican-teal" />
                 </div>
@@ -75,7 +75,7 @@ const About = () => {
                 </p>
               </div>
               
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center">
+              <div className="glass-card text-center">
                 <div className="bg-pelican-navy/5 p-4 inline-flex rounded-full mb-4">
                   <LineChart className="w-8 h-8 text-pelican-teal" />
                 </div>
@@ -85,7 +85,7 @@ const About = () => {
                 </p>
               </div>
               
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center">
+              <div className="glass-card text-center">
                 <div className="bg-pelican-navy/5 p-4 inline-flex rounded-full mb-4">
                   <Users className="w-8 h-8 text-pelican-teal" />
                 </div>
@@ -101,7 +101,7 @@ const About = () => {
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-pelican-navy mb-8 text-center">Our Values</h2>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+              <div className="glass-card">
                 <h4 className="text-xl font-bold text-pelican-navy mb-3">Data-Driven Decisions</h4>
                 <p className="text-pelican-slate">
                   We believe in the power of objective data to drive better business decisions. Our solutions 
@@ -109,7 +109,7 @@ const About = () => {
                 </p>
               </div>
               
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+              <div className="glass-card">
                 <h4 className="text-xl font-bold text-pelican-navy mb-3">Practical Implementation</h4>
                 <p className="text-pelican-slate">
                   We focus on real-world applications, not theoretical models. Our solutions are designed 
@@ -117,7 +117,7 @@ const About = () => {
                 </p>
               </div>
               
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+              <div className="glass-card">
                 <h4 className="text-xl font-bold text-pelican-navy mb-3">Knowledge Transfer</h4>
                 <p className="text-pelican-slate">
                   We believe in empowering our clients with the skills and understanding to maintain and 
@@ -130,7 +130,7 @@ const About = () => {
           {/* Team Section */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-pelican-navy mb-8 text-center">Our Team</h2>
-            <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md border border-gray-100">
+            <div className="max-w-3xl mx-auto glass-panel">
               <div className="flex flex-col sm:flex-row gap-8 items-center">
                 <div className="w-48 h-48 sm:w-56 sm:h-56 rounded-full overflow-hidden border-4 border-pelican-teal/20 flex-shrink-0">
                   <img alt="Mason Hennings" src="/lovable-uploads/bb6df2e4-5c08-47ce-86c9-f8801514e861.png" className="w-full h-full object-cover object-center" />
@@ -156,8 +156,8 @@ const About = () => {
           </div>
           
           {/* CTA Section */}
-          <div className="text-center max-w-2xl mx-auto bg-pelican-navy/5 p-8 rounded-lg">
-            <h3 className="text-2xl font-bold text-pelican-navy mb-4">
+          <div className="text-center max-w-2xl mx-auto glass-panel bg-pelican-navy/5">
+            <h3 className="text-2xl font-bold text-gradient bg-gradient-to-r from-pelican-navy to-pelican-teal mb-4">
               Ready to transform your estimating process?
             </h3>
             <p className="text-pelican-slate mb-6">
@@ -165,10 +165,10 @@ const About = () => {
               estimating accuracy and efficiency.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="accent" size="lg" asChild>
+              <Button className="primary-button" asChild>
                 <Link to="/estimating-maturity">Take Assessment</Link>
               </Button>
-              <Button variant="outline" size="lg" asChild>
+              <Button className="secondary-button" asChild>
                 <Link to="/contact">Contact Us</Link>
               </Button>
             </div>
