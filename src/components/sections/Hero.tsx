@@ -43,7 +43,7 @@ const Hero = () => {
               <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-pelican-teal/10 rounded-full"></div>
               
               <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
-                <img src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" alt="Construction Estimating Data Analysis" className="w-full h-auto" />
+                <img src="/lovable-uploads/bb6df2e4-5c08-47ce-86c9-f8801514e861.png" alt="Construction Estimating Process Assessment" className="w-full h-auto" />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-pelican-navy/90 to-transparent text-white p-6">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="bg-accent text-white text-xs px-2 py-1 rounded-full">Free Assessment</span>
