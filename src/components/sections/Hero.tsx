@@ -6,14 +6,14 @@ import { ArrowRight, ClipboardCheck } from 'lucide-react';
 
 const Hero = () => {
   return (
-    <section id="hero" className="pt-28 pb-20 relative overflow-hidden bg-white">
+    <section id="hero" className="relative z-10 pt-28 pb-20 overflow-hidden bg-white">
       <div className="absolute inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.03] pointer-events-none"></div>
       
       {/* Decorative elements */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-pelican-teal/5 rounded-full filter blur-3xl"></div>
       <div className="absolute bottom-1/3 left-0 w-80 h-80 bg-accent/5 rounded-full filter blur-3xl"></div>
       
-      <div className="content-container relative z-10">
+      <div className="content-container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex flex-col lg:flex-row items-center gap-12">
           <div className="lg:w-3/5 reveal fade-in space-y-6">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-pelican-navy leading-tight">

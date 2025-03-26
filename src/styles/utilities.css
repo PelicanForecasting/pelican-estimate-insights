@@ -2,229 +2,42 @@
 @tailwind utilities;
 
 @layer utilities {
-  /* =============================================================================
-   * TEXT STYLING & TYPOGRAPHY
-   * ============================================================================= */
+  .content-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
   
-  /* Text gradients */
+  /* Animation utilities for the reveal effects */
+  .reveal {
+    @apply opacity-0 transition-all duration-700 ease-out;
+  }
+  
+  .reveal.active {
+    @apply opacity-100 transform translate-y-0;
+  }
+  
+  .fade-in {
+    @apply animate-fade-in;
+  }
+  
+  /* Gradient text utilities */
   .text-gradient {
-    background-image: linear-gradient(to right, var(--tw-gradient-stops));
-    --tw-gradient-from: #17A2B8 var(--tw-gradient-from-position);
-    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-    --tw-gradient-to: #FF8C42 var(--tw-gradient-to-position);
-    background-clip: text;
-    color: transparent;
+    @apply bg-gradient-to-r from-pelican-navy to-pelican-teal bg-clip-text text-transparent;
   }
   
-  .text-shadow {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  /* =============================================================================
-   * BACKGROUND & GRADIENTS
-   * ============================================================================= */
-  
-  .bg-pelican-gradient {
-    @apply bg-gradient-to-r from-primary to-secondary;
-  }
-
-  .bg-pelican-gradient-soft {
-    @apply bg-gradient-to-r from-secondary/10 to-accent/5;
-  }
-
-  /* =============================================================================
-   * TRANSITIONS & EFFECTS
-   * ============================================================================= */
-  
-  .transition-smooth {
-    @apply transition-all duration-300 ease-in-out;
-  }
-  
-  /* Enhanced hover effects */
-  .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
-  }
-
-  .hover-glow {
-    @apply transition-all duration-300 hover:shadow-[0_0_15px_rgba(23,162,184,0.3)];
-  }
-  
-  .animate-image-glow {
-    @apply transition-all duration-300;
-  }
-  
-  .animate-image-glow:hover {
-    filter: drop-shadow(0 0 8px rgba(23, 162, 184, 0.6));
-    transform: scale(1.03);
-  }
-
-  /* =============================================================================
-   * ANIMATION UTILITIES
-   * ============================================================================= */
-  
-  /* Basic animations */
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .animate-pulse-slow {
-    animation: pulse-slow 3s infinite;
-  }
-
-  .animate-slide-up {
-    animation: slide-up 0.5s ease-out;
-  }
-
-  .animate-fade-in {
-    animation: fade-in 0.4s ease-out forwards;
-  }
-
-  .animate-reveal-right {
-    animation: reveal-right 0.6s ease-out forwards;
-  }
-
-  .animate-expand-width {
-    animation: expand-width 0.8s ease-out forwards;
-  }
-
-  .animate-rotate-in {
-    animation: rotate-in 0.6s ease-out forwards;
-  }
-
-  .animate-bounce-in {
-    animation: bounce-in 0.6s ease-out forwards;
-  }
-
-  .animate-slide-in-right {
-    animation: slide-in-right 0.6s ease-out forwards;
-  }
-
-  .animate-slide-in-left {
-    animation: slide-in-left 0.6s ease-out forwards;
-  }
-  
+  /* Animation for button pulse effect */
   .animate-button-pulse {
     animation: button-pulse 2s infinite;
   }
-
-  /* Animation delays */
-  .animate-delay-100 {
-    animation-delay: 100ms;
-  }
-
-  .animate-delay-200 {
-    animation-delay: 200ms;
-  }
-
-  .animate-delay-300 {
-    animation-delay: 300ms;
-  }
-
-  .animate-delay-400 {
-    animation-delay: 400ms;
-  }
-
-  .animate-delay-500 {
-    animation-delay: 500ms;
-  }
-
-  .animate-delay-700 {
-    animation-delay: 700ms;
-  }
-
-  .animate-delay-1000 {
-    animation-delay: 1000ms;
-  }
-
-  /* =============================================================================
-   * REVEAL ANIMATIONS (SCROLL EFFECTS)
-   * ============================================================================= */
   
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.6s ease-out;
+  @keyframes button-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 159, 28, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(255, 159, 28, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 159, 28, 0);
+    }
   }
-
-  .reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .reveal.fade-in {
-    opacity: 0;
-    transform: translateY(0);
-  }
-
-  .reveal.slide-up {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  .reveal.slide-right {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-
-  .reveal.slide-left {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-
-  .reveal.scale-in {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-
-  /* =============================================================================
-   * STAGGERED ANIMATIONS
-   * ============================================================================= */
-  
-  .stagger-item {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s ease-out;
-  }
-
-  .stagger-item.active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* =============================================================================
-   * LAYOUT & SPACING
-   * ============================================================================= */
-  
-  .section-padding {
-    @apply py-10 md:py-20 lg:py-[80px];
-  }
-
-  .component-spacing {
-    @apply mb-6 lg:mb-[24px];
-  }
-
-  .section-spacing {
-    @apply mb-12 lg:mb-[48px];
-  }
-
-  .content-container {
-    @apply max-w-[1200px] mx-auto px-6;
-  }
-
-  /* =============================================================================
-   * CARD STYLING
-   * ============================================================================= */
-  
-  .card-highlight {
-    @apply border-l-4 border-accent;
-  }
-  
-  .stat-card {
-    @apply bg-white rounded-lg shadow-md p-6 hover-lift;
-  }
-
-  /* =============================================================================
-   * KEYFRAME DEFINITIONS (MOVED TO animations.css)
-   * ============================================================================= */
-  /* All keyframes have been moved to animations.css for better organization */
 }
