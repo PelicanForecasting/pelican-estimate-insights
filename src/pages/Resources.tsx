@@ -7,33 +7,33 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 const Resources = () => {
-  // Sample blog articles
+  // Sample blog articles with updated images
   const articles = [
     {
       title: "Are Your Production Rates Real or Wishful Thinking?",
       excerpt: "Many estimators use production rates based on gut feel rather than data. Here's how to establish accurate, data-backed rates for more competitive bids.",
-      image: "/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png",
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
       readTime: "5 min read",
       slug: "#"
     },
     {
       title: "When Your Chief Estimator Retires: Preserving Institutional Knowledge",
       excerpt: "The impending retirement of experienced estimators represents a significant risk. Learn how to capture their expertise before it walks out the door.",
-      image: "/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png",
+      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
       readTime: "7 min read",
       slug: "#"
     },
     {
       title: "From Data Rich to Insight Poor: Why Construction Companies Struggle with Analytics",
       excerpt: "Construction generates massive amounts of data, but few companies effectively leverage it. Discover how to turn your data into competitive advantage.",
-      image: "/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png",
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
       readTime: "6 min read",
       slug: "#"
     },
     {
       title: "Bid Smart, Not Often: Creating an Objective Project Pursuit Strategy",
       excerpt: "Many contractors bid everything that comes across their desk. Learn how to develop a data-driven approach to project selection that increases win rates.",
-      image: "/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png",
+      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
       readTime: "8 min read",
       slug: "#"
     }
