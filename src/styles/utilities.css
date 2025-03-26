@@ -2,6 +2,11 @@
 @tailwind utilities;
 
 @layer utilities {
+  /* =============================================================================
+   * TEXT STYLING & TYPOGRAPHY
+   * ============================================================================= */
+  
+  /* Text gradients */
   .text-gradient {
     background-image: linear-gradient(to right, var(--tw-gradient-stops));
     --tw-gradient-from: #17A2B8 var(--tw-gradient-from-position);
@@ -11,6 +16,14 @@
     color: transparent;
   }
   
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* =============================================================================
+   * BACKGROUND & GRADIENTS
+   * ============================================================================= */
+  
   .bg-pelican-gradient {
     @apply bg-gradient-to-r from-primary to-secondary;
   }
@@ -18,16 +31,38 @@
   .bg-pelican-gradient-soft {
     @apply bg-gradient-to-r from-secondary/10 to-accent/5;
   }
-  
-  .text-shadow {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+
+  /* =============================================================================
+   * TRANSITIONS & EFFECTS
+   * ============================================================================= */
   
   .transition-smooth {
     @apply transition-all duration-300 ease-in-out;
   }
+  
+  /* Enhanced hover effects */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
 
-  /* Animation utility classes */
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-[0_0_15px_rgba(23,162,184,0.3)];
+  }
+  
+  .animate-image-glow {
+    @apply transition-all duration-300;
+  }
+  
+  .animate-image-glow:hover {
+    filter: drop-shadow(0 0 8px rgba(23, 162, 184, 0.6));
+    transform: scale(1.03);
+  }
+
+  /* =============================================================================
+   * ANIMATION UTILITIES
+   * ============================================================================= */
+  
+  /* Basic animations */
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
@@ -67,16 +102,7 @@
   .animate-slide-in-left {
     animation: slide-in-left 0.6s ease-out forwards;
   }
-
-  .animate-image-glow {
-    @apply transition-all duration-300;
-  }
   
-  .animate-image-glow:hover {
-    filter: drop-shadow(0 0 8px rgba(23, 162, 184, 0.6));
-    transform: scale(1.03);
-  }
-
   .animate-button-pulse {
     animation: button-pulse 2s infinite;
   }
@@ -110,127 +136,10 @@
     animation-delay: 1000ms;
   }
 
-  /* Enhanced animations */
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  @keyframes pulse-slow {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.7;
-    }
-  }
-
-  @keyframes slide-up {
-    from {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes reveal-right {
-    from {
-      transform: translateX(-20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes expand-width {
-    from {
-      width: 0;
-      opacity: 0;
-    }
-    to {
-      width: 100%;
-      opacity: 1;
-    }
-  }
-
-  @keyframes rotate-in {
-    from {
-      transform: rotate(-5deg) scale(0.95);
-      opacity: 0;
-    }
-    to {
-      transform: rotate(0) scale(1);
-      opacity: 1;
-    }
-  }
-
-  @keyframes bounce-in {
-    0% {
-      transform: scale(0.8);
-      opacity: 0;
-    }
-    70% {
-      transform: scale(1.05);
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slide-in-right {
-    from {
-      transform: translateX(50px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slide-in-left {
-    from {
-      transform: translateX(-50px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes button-pulse {
-    0% {
-      box-shadow: 0 0 0 0 rgba(255, 159, 28, 0.7);
-    }
-    70% {
-      box-shadow: 0 0 0 10px rgba(255, 159, 28, 0);
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(255, 159, 28, 0);
-    }
-  }
-
-  /* Reveal animations for scroll effects */
+  /* =============================================================================
+   * REVEAL ANIMATIONS (SCROLL EFFECTS)
+   * ============================================================================= */
+  
   .reveal {
     opacity: 0;
     transform: translateY(20px);
@@ -267,7 +176,10 @@
     transform: scale(0.95);
   }
 
-  /* Enhanced staggered animations for children */
+  /* =============================================================================
+   * STAGGERED ANIMATIONS
+   * ============================================================================= */
+  
   .stagger-item {
     opacity: 0;
     transform: translateY(20px);
@@ -279,7 +191,10 @@
     transform: translateY(0);
   }
 
-  /* Spacing utilities */
+  /* =============================================================================
+   * LAYOUT & SPACING
+   * ============================================================================= */
+  
   .section-padding {
     @apply py-10 md:py-20 lg:py-[80px];
   }
@@ -292,21 +207,14 @@
     @apply mb-12 lg:mb-[48px];
   }
 
-  /* Container utility */
   .content-container {
     @apply max-w-[1200px] mx-auto px-6;
   }
 
-  /* Enhanced hover effects */
-  .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
-  }
-
-  .hover-glow {
-    @apply transition-all duration-300 hover:shadow-[0_0_15px_rgba(23,162,184,0.3)];
-  }
+  /* =============================================================================
+   * CARD STYLING
+   * ============================================================================= */
   
-  /* Card styling */
   .card-highlight {
     @apply border-l-4 border-accent;
   }
@@ -314,4 +222,9 @@
   .stat-card {
     @apply bg-white rounded-lg shadow-md p-6 hover-lift;
   }
+
+  /* =============================================================================
+   * KEYFRAME DEFINITIONS (MOVED TO animations.css)
+   * ============================================================================= */
+  /* All keyframes have been moved to animations.css for better organization */
 }
