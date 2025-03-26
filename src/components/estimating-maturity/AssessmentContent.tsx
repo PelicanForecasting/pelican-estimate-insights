@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,6 +7,7 @@ import AssessmentHeader from './AssessmentHeader';
 import QuestionSections from './QuestionSections';
 import { Question, SectionQuestions, CompanyProfile } from './types';
 import { Save } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface AssessmentContentProps {
   questions: Question[];
@@ -35,14 +36,50 @@ const AssessmentContent = ({
   onAdditionalInfo,
   onConfidenceLevel
 }: AssessmentContentProps) => {
-  const [email, setEmail] = React.useState('');
-  const [showSaveForm, setShowSaveForm] = React.useState(false);
+  const [email, setEmail] = useState('');
+  const [showSaveForm, setShowSaveForm] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const { toast } = useToast();
   
-  const handleSaveForLater = (e: React.FormEvent) => {
+  const handleSaveForLater = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
-      onSaveForLater(email);
-      setShowSaveForm(false);
+      setSubmitting(true);
+      try {
+        await onSaveForLater(email);
+        setShowSaveForm(false);
+        toast({
+          title: "Progress saved",
+          description: "We'll email you a link to continue where you left off.",
+        });
+      } catch (error) {
+        toast({
+          title: "Save failed",
+          description: "There was an error saving your progress. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setSubmitting(false);
+      }
+    }
+  };
+
+  const handleSubmitAssessment = async () => {
+    setSubmitting(true);
+    try {
+      await onSubmit();
+      toast({
+        title: "Assessment submitted",
+        description: "Your assessment has been submitted successfully. Generating results...",
+      });
+    } catch (error) {
+      toast({
+        title: "Submission failed",
+        description: "There was an error submitting your assessment. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -81,11 +118,14 @@ const AssessmentContent = ({
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              <Button type="submit">Save</Button>
+              <Button type="submit" disabled={submitting}>
+                {submitting ? "Saving..." : "Save"}
+              </Button>
               <Button 
                 type="button" 
                 variant="outline" 
                 onClick={() => setShowSaveForm(false)}
+                disabled={submitting}
               >
                 Cancel
               </Button>
@@ -95,12 +135,12 @@ const AssessmentContent = ({
         
         <Button 
           size="lg"
-          onClick={onSubmit} 
-          disabled={!allQuestionsAnswered}
+          onClick={handleSubmitAssessment} 
+          disabled={!allQuestionsAnswered || submitting}
           variant="primary"
           className="px-8 py-3"
         >
-          View My Results
+          {submitting ? "Processing..." : "View My Results"}
         </Button>
       </div>
       

@@ -5,6 +5,7 @@ import {
   CompanyProfile 
 } from '../types';
 import { calculateMaturityLevel } from '../assessmentUtils';
+import { submitAssessmentData } from '../utils/formSubmission';
 
 export const useBaseAssessmentState = () => {
   // Initialize assessment state
@@ -33,7 +34,13 @@ export const useBaseAssessmentState = () => {
   };
 
   // Handle company profile submission
-  const handleProfileSubmit = (profile: CompanyProfile) => {
+  const handleProfileSubmit = async (profile: CompanyProfile) => {
+    // Submit company profile data to Formspree
+    await submitAssessmentData({
+      formType: 'companyProfile',
+      ...profile
+    });
+    
     updateAssessmentState({
       companyProfile: profile,
       stage: 'quickAssessment'
@@ -41,8 +48,17 @@ export const useBaseAssessmentState = () => {
   };
 
   // Handle assessment submit
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const maturityLevel = calculateMaturityLevel(assessmentState.score);
+    
+    // Submit quick assessment data to Formspree
+    await submitAssessmentData({
+      formType: 'quickAssessment',
+      companyProfile: assessmentState.companyProfile,
+      score: assessmentState.score,
+      maturityLevel,
+      categoryScores: assessmentState.categoryScores
+    });
     
     updateAssessmentState({
       stage: 'results',
@@ -52,8 +68,17 @@ export const useBaseAssessmentState = () => {
   };
   
   // Handle comprehensive assessment submission
-  const handleComprehensiveSubmit = (totalScore: number) => {
+  const handleComprehensiveSubmit = async (totalScore: number) => {
     const maturityLevel = calculateMaturityLevel(totalScore);
+    
+    // Submit comprehensive assessment data to Formspree
+    await submitAssessmentData({
+      formType: 'comprehensiveAssessment',
+      companyProfile: assessmentState.companyProfile,
+      score: totalScore,
+      maturityLevel,
+      categoryScores: assessmentState.categoryScores
+    });
     
     updateAssessmentState({
       stage: 'results',
@@ -90,11 +115,18 @@ export const useBaseAssessmentState = () => {
   };
 
   // Save progress for later
-  const saveForLater = (email: string) => {
-    // In a real implementation, this would save to a database
-    console.log("Saving progress for:", email);
+  const saveForLater = async (email: string) => {
+    // Submit saved assessment data to Formspree
+    await submitAssessmentData({
+      formType: 'saveForLater',
+      email,
+      stage: assessmentState.stage,
+      companyProfile: assessmentState.companyProfile,
+      score: assessmentState.score,
+      categoryScores: assessmentState.categoryScores
+    });
     
-    // For demo purposes, just show an alert
+    // For demo purposes, show an alert
     alert(`Your progress has been saved. We'll email you at ${email} with a link to continue.`);
   };
 

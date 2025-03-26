@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import SaveForLaterForm from './SaveForLaterForm';
+import { useToast } from "@/hooks/use-toast";
 
 interface ActionButtonsProps {
   allQuestionsAnswered: boolean;
@@ -14,19 +15,59 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   onSubmit, 
   onSaveForLater 
 }) => {
+  const [submitting, setSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    try {
+      await onSubmit();
+      toast({
+        title: "Assessment submitted",
+        description: "Your comprehensive assessment has been submitted successfully. Generating results...",
+      });
+    } catch (error) {
+      toast({
+        title: "Submission failed",
+        description: "There was an error submitting your assessment. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleSaveForLater = async (email: string) => {
+    try {
+      await onSaveForLater(email);
+      toast({
+        title: "Progress saved",
+        description: "We'll email you a link to continue your comprehensive assessment.",
+      });
+      return true;
+    } catch (error) {
+      toast({
+        title: "Save failed",
+        description: "There was an error saving your progress. Please try again.",
+        variant: "destructive",
+      });
+      return false;
+    }
+  };
+
   return (
     <>
       <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <SaveForLaterForm onSaveForLater={onSaveForLater} />
+        <SaveForLaterForm onSaveForLater={handleSaveForLater} />
         
         <Button 
           size="lg"
-          onClick={onSubmit} 
-          disabled={!allQuestionsAnswered}
+          onClick={handleSubmit} 
+          disabled={!allQuestionsAnswered || submitting}
           variant="primary"
           className="px-8 py-3"
         >
-          View My Comprehensive Results
+          {submitting ? "Processing..." : "View My Comprehensive Results"}
         </Button>
       </div>
       
