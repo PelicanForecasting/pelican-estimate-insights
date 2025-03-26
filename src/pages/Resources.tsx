@@ -127,7 +127,7 @@ const Resources = () => {
                   <div className="absolute -top-4 -left-4 w-20 h-20 bg-accent/10 rounded-full"></div>
                   <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
                     <img 
-                      src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" 
+                      src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6" 
                       alt="Resource Library" 
                       className="w-full h-auto"
                     />
