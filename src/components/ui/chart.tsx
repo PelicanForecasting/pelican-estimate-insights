@@ -1,6 +1,6 @@
 
 export {
-  ChartContainer as Chart,
+  ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
   ChartLegend,
