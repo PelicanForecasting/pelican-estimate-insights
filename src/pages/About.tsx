@@ -1,14 +1,11 @@
-
 import React from 'react';
 import Navbar from '../components/navigation/Navbar';
 import Footer from '../components/sections/Footer';
 import { Database, LineChart, Users, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-
 const About = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-pelican-cream/30 font-body">
+  return <div className="min-h-screen bg-gradient-to-b from-white to-pelican-cream/30 font-body">
       <div className="fixed inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.02] pointer-events-none z-0"></div>
       <Navbar />
       
@@ -46,11 +43,7 @@ const About = () => {
                 <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-pelican-teal/10 rounded-full"></div>
                 
                 <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
-                  <img 
-                    src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" 
-                    alt="Construction Estimating Data Analysis" 
-                    className="w-full h-auto"
-                  />
+                  <img src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" alt="Construction Estimating Data Analysis" className="w-full h-auto" />
                 </div>
               </div>
             </div>
@@ -138,11 +131,7 @@ const About = () => {
             <div className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md border border-gray-100">
               <div className="flex flex-col sm:flex-row gap-6 items-center">
                 <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-pelican-teal/20">
-                  <img 
-                    src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" 
-                    alt="Mason Hennings" 
-                    className="w-full h-full object-cover"
-                  />
+                  <img alt="Mason Hennings" src="/lovable-uploads/bb6df2e4-5c08-47ce-86c9-f8801514e861.png" className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h4 className="text-2xl font-bold text-pelican-navy mb-1">Mason Hennings</h4>
@@ -186,8 +175,6 @@ const About = () => {
       </section>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default About;
