@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ClipboardCheck } from 'lucide-react';
 
 const Hero = () => {
   return (
@@ -31,6 +31,7 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button asChild size="lg" variant="accent" className="font-medium text-base px-6 py-6 shadow-md hover:shadow-lg">
                 <Link to="/estimating-maturity" className="flex items-center">
+                  <ClipboardCheck className="ml-1 h-5 w-5 mr-2" />
                   Take Free Assessment
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
@@ -50,17 +51,17 @@ const Hero = () => {
               
               <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
                 <img 
-                  src="/lovable-uploads/44565eeb-2f67-4a29-b5f8-ad2c444cefa3.png" 
+                  src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" 
                   alt="Construction Estimating Data Analysis" 
                   className="w-full h-auto" 
                 />
-                
-                <div className="absolute top-4 right-4 bg-white rounded-lg p-3 shadow-md">
-                  <div className="flex items-end gap-2">
-                    <span className="text-2xl font-bold text-pelican-navy">38%</span>
-                    <span className="text-sm text-green-500 font-medium">↑ 12%</span>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-pelican-navy/90 to-transparent text-white p-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="bg-accent text-white text-xs px-2 py-1 rounded-full">Free Assessment</span>
+                    <span className="text-white/80 text-sm">5-minute completion</span>
                   </div>
-                  <div className="text-xs text-pelican-slate">Project Success Rate</div>
+                  <h3 className="text-xl font-bold">Estimating Maturity Assessment</h3>
+                  <p className="text-white/90 text-sm mt-1">Get your personalized report with actionable insights</p>
                 </div>
               </div>
             </div>
