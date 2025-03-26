@@ -22,24 +22,19 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
 }) => {
   return (
     <div className="hidden md:flex md:items-center md:space-x-6">
-      <button 
-        onClick={() => handleSectionLink('services')} 
-        className={`text-gray-800 hover:text-secondary transition-colors ${isNavItemActive('#services') ? 'border-b-2 border-secondary' : ''}`}
+      <Link 
+        to="/" 
+        className={`text-gray-800 hover:text-secondary transition-colors ${isNavItemActive('/') && !isNavItemActive('/#services') && !isNavItemActive('/#about') ? 'border-b-2 border-secondary' : ''}`}
+      >
+        Home
+      </Link>
+      
+      <Link 
+        to="/services" 
+        className={`text-gray-800 hover:text-secondary transition-colors ${isNavItemActive('/services') ? 'border-b-2 border-secondary' : ''}`}
       >
         Services
-      </button>
-      <button 
-        onClick={() => handleSectionLink('customer-journey')} 
-        className={`text-gray-800 hover:text-secondary transition-colors ${isNavItemActive('#customer-journey') ? 'border-b-2 border-secondary' : ''}`}
-      >
-        Process
-      </button>
-      <button 
-        onClick={() => handleSectionLink('about')} 
-        className={`text-gray-800 hover:text-secondary transition-colors ${isNavItemActive('#about') ? 'border-b-2 border-secondary' : ''}`}
-      >
-        About Us
-      </button>
+      </Link>
       
       <ToolsDropdown 
         isOpen={isToolsDropdownOpen}
@@ -48,13 +43,34 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
         closeMenu={closeMenu}
       />
       
+      <Link 
+        to="/resources" 
+        className={`text-gray-800 hover:text-secondary transition-colors ${isNavItemActive('/resources') ? 'border-b-2 border-secondary' : ''}`}
+      >
+        Resources
+      </Link>
+      
+      <Link 
+        to="/about" 
+        className={`text-gray-800 hover:text-secondary transition-colors ${isNavItemActive('/about') ? 'border-b-2 border-secondary' : ''}`}
+      >
+        About
+      </Link>
+      
+      <Link 
+        to="/contact" 
+        className={`text-gray-800 hover:text-secondary transition-colors ${isNavItemActive('/contact') ? 'border-b-2 border-secondary' : ''}`}
+      >
+        Contact
+      </Link>
+      
       <Button 
         variant="accent"
         size="default"
         asChild
         className="flex items-center gap-1.5 shadow-md hover:shadow-lg"
       >
-        <Link to="/estimating-maturity">
+        <Link to="/estimating-maturity" onClick={closeMenu}>
           <ClipboardCheck className="h-4 w-4" />
           <span>Take Assessment</span>
         </Link>

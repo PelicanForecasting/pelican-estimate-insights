@@ -17,11 +17,11 @@ const Hero = () => {
         <div className="flex flex-col lg:flex-row items-center gap-12">
           <div className="lg:w-3/5 reveal fade-in space-y-6">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-pelican-navy leading-tight">
-              Measure, Compare, and Improve Your Estimating Capabilities
+              Transform Your Historical Project Data into Estimating Intelligence
             </h1>
             <p className="text-lg md:text-xl text-pelican-slate max-w-2xl">
-              Discover where your estimating process stands compared to industry benchmarks. 
-              Our free assessment reveals opportunities to improve accuracy, efficiency, and profitability.
+              Meet your construction company where it is today. Build the systems for tomorrow.
+              Our assessment reveals opportunities to improve accuracy, efficiency, and profitability.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -33,7 +33,7 @@ const Hero = () => {
                 </Link>
               </Button>
               <Button variant="outline" className="border-pelican-navy text-pelican-navy" asChild size="lg">
-                <a href="#services">Explore Services</a>
+                <Link to="/contact">Schedule Consultation</Link>
               </Button>
             </div>
           </div>

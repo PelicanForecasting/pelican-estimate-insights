@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles } from 'lucide-react';
+import { ClipboardCheck } from 'lucide-react';
 
 interface ToolsDropdownProps {
   isOpen: boolean;
@@ -20,13 +21,10 @@ const ToolsDropdown: React.FC<ToolsDropdownProps> = ({
       <button 
         onClick={() => setIsOpen(!isOpen)}
         className={`text-gray-800 hover:text-secondary transition-colors flex items-center ${
-          isNavItemActive('/labor-burden-calculator') || 
-          isNavItemActive('/estimating-maturity') ||
-          isNavItemActive('/quadrilateral-deck-calculator') 
-            ? 'border-b-2 border-secondary' : ''
+          isNavItemActive('/estimating-maturity') ? 'border-b-2 border-secondary' : ''
         }`}
       >
-        Tools
+        Assessment
         <svg 
           className={`ml-1 w-4 h-4 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} 
           fill="none" 
@@ -46,31 +44,12 @@ const ToolsDropdown: React.FC<ToolsDropdownProps> = ({
           >
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-1.5">
-                <Sparkles className="h-4 w-4 text-accent" />
+                <ClipboardCheck className="h-4 w-4 text-accent" />
                 <span className="font-medium">Estimating Maturity Assessment</span>
               </div>
               <span className="bg-accent text-white text-xs px-2 py-0.5 rounded-full font-medium">Featured</span>
             </div>
             <p className="text-xs text-pelican-slate mt-1">Benchmark your estimating capabilities in 5 minutes</p>
-          </Link>
-          
-          <div className="my-1 border-t border-pelican-lightGray mx-4"></div>
-          
-          <Link 
-            to="/labor-burden-calculator" 
-            className={`block px-4 py-2 text-gray-800 hover:bg-pelican-lightGray transition-colors ${isNavItemActive('/labor-burden-calculator') ? 'border-l-4 border-secondary pl-3' : ''}`}
-            onClick={closeMenu}
-          >
-            <span>Labor Burden Calculator</span>
-            <p className="text-xs text-pelican-slate mt-0.5">Calculate true labor costs</p>
-          </Link>
-          <Link 
-            to="/quadrilateral-deck-calculator" 
-            className={`block px-4 py-2 text-gray-800 hover:bg-pelican-lightGray transition-colors ${isNavItemActive('/quadrilateral-deck-calculator') ? 'border-l-4 border-secondary pl-3' : ''}`}
-            onClick={closeMenu}
-          >
-            <span>Quadrilateral Deck Calculator</span>
-            <p className="text-xs text-pelican-slate mt-0.5">Measure complex deck areas</p>
           </Link>
         </div>
       )}

@@ -1,30 +1,10 @@
+
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Facebook, Linkedin, Youtube } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
-  
-  // Helper function to determine whether to use anchor tags or links
-  const HomeLink = ({ to, children, className }: { to: string; children: React.ReactNode; className?: string }) => {
-    if (isHomePage && to.startsWith('/#')) {
-      // Use anchor tag for same-page navigation when on home page
-      return (
-        <a href={to} className={className}>
-          {children}
-        </a>
-      );
-    } else {
-      // Use Link component for navigation to other pages or home page with hash
-      return (
-        <Link to={to} className={className}>
-          {children}
-        </Link>
-      );
-    }
-  };
   
   return (
     <footer className="bg-pelican-navy text-white py-12">
@@ -61,34 +41,40 @@ const Footer = () => {
             <h4 className="text-white font-heading font-medium text-[18px] mb-5">Quick Links</h4>
             <ul className="space-y-3">
               <li>
-                <HomeLink to="/#services" className="text-white/70 hover:text-secondary transition-colors">Services</HomeLink>
+                <Link to="/" className="text-white/70 hover:text-secondary transition-colors">Home</Link>
               </li>
               <li>
-                <HomeLink to="/#customer-journey" className="text-white/70 hover:text-secondary transition-colors">Process</HomeLink>
+                <Link to="/services" className="text-white/70 hover:text-secondary transition-colors">Services</Link>
               </li>
               <li>
-                <HomeLink to="/#testimonials" className="text-white/70 hover:text-secondary transition-colors">Testimonials</HomeLink>
+                <Link to="/estimating-maturity" className="text-white/70 hover:text-secondary transition-colors">Assessment</Link>
               </li>
               <li>
-                <HomeLink to="/#about" className="text-white/70 hover:text-secondary transition-colors">About Us</HomeLink>
+                <Link to="/resources" className="text-white/70 hover:text-secondary transition-colors">Resources</Link>
               </li>
               <li>
-                <HomeLink to="/#contact" className="text-white/70 hover:text-secondary transition-colors">Contact</HomeLink>
+                <Link to="/about" className="text-white/70 hover:text-secondary transition-colors">About</Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-white/70 hover:text-secondary transition-colors">Contact</Link>
               </li>
             </ul>
           </div>
           
           <div>
-            <h4 className="text-white font-heading font-medium text-[18px] mb-5">Our Tools</h4>
+            <h4 className="text-white font-heading font-medium text-[18px] mb-5">Our Services</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/estimating-maturity" className="text-white/70 hover:text-secondary transition-colors">Estimating Maturity Assessment</Link>
+                <Link to="/services" className="text-white/70 hover:text-secondary transition-colors">Data Integration</Link>
               </li>
               <li>
-                <Link to="/labor-burden-calculator" className="text-white/70 hover:text-secondary transition-colors">Labor Burden Calculator</Link>
+                <Link to="/services" className="text-white/70 hover:text-secondary transition-colors">Analytics & Intelligence</Link>
               </li>
               <li>
-                <Link to="/quadrilateral-deck-calculator" className="text-white/70 hover:text-secondary transition-colors">Quadrilateral Deck Calculator</Link>
+                <Link to="/services" className="text-white/70 hover:text-secondary transition-colors">Process Enhancement</Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-white/70 hover:text-secondary transition-colors">Knowledge Transfer</Link>
               </li>
             </ul>
           </div>
