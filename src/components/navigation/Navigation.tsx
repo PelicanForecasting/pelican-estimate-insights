@@ -20,6 +20,12 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    // Close the mobile menu when route changes
+    setIsOpen(false);
+    setActiveDropdown(null);
+  }, [location.pathname]);
+
   const toggleDropdown = (dropdown: string) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
@@ -32,7 +38,9 @@ const Navigation = () => {
       path: '/estimating-maturity',
       isDropdown: true,
       dropdownItems: [
-        { name: 'Estimating Maturity Assessment', path: '/estimating-maturity' }
+        { name: 'Estimating Maturity Assessment', path: '/estimating-maturity' },
+        { name: 'Labor Burden Calculator', path: '/labor-burden-calculator' },
+        { name: 'Deck Area Calculator', path: '/quadrilateral-deck-calculator' }
       ]
     },
     { name: 'Resources', path: '/resources' },
@@ -63,7 +71,7 @@ const Navigation = () => {
         <div className="md:hidden">
           <button 
             onClick={() => setIsOpen(!isOpen)}
-            className="text-pelican-navy p-2"
+            className="text-pelican-navy p-2 hover:bg-gray-100 rounded-md transition-colors"
             aria-label={isOpen ? 'Close Menu' : 'Open Menu'}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -84,7 +92,7 @@ const Navigation = () => {
                     <ChevronDown size={16} className={`transition-transform ${activeDropdown === link.name ? 'rotate-180' : ''}`} />
                   </button>
                   {activeDropdown === link.name && (
-                    <div className="absolute mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-50">
+                    <div className="absolute mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-50 animate-fade-in">
                       {link.dropdownItems?.map((item, idx) => (
                         <Link
                           key={idx}
@@ -108,32 +116,32 @@ const Navigation = () => {
               )}
             </div>
           ))}
-          <Button variant="accent" size="sm" asChild>
+          <Button variant="accent" size="sm" asChild className="shadow-sm hover:shadow-md">
             <Link to="/estimating-maturity">Take Assessment</Link>
           </Button>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md py-4 px-6 flex flex-col space-y-4">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md py-4 px-6 flex flex-col space-y-4 animate-slide-up">
             {navLinks.map((link, index) => (
               <div key={index}>
                 {link.isDropdown ? (
                   <>
                     <button
                       onClick={() => toggleDropdown(link.name)}
-                      className="flex items-center justify-between w-full text-pelican-navy hover:text-pelican-teal transition-colors"
+                      className="flex items-center justify-between w-full text-pelican-navy hover:text-pelican-teal transition-colors py-2"
                     >
                       <span>{link.name}</span>
                       <ChevronDown size={16} className={`transition-transform ${activeDropdown === link.name ? 'rotate-180' : ''}`} />
                     </button>
                     {activeDropdown === link.name && (
-                      <div className="pl-4 mt-2 border-l-2 border-pelican-teal/20 space-y-2">
+                      <div className="pl-4 mt-2 border-l-2 border-pelican-teal/20 space-y-2 animate-fade-in">
                         {link.dropdownItems?.map((item, idx) => (
                           <Link
                             key={idx}
                             to={item.path}
-                            className={`block py-1 text-pelican-navy hover:text-pelican-teal transition-colors ${isActive(item.path) ? 'text-pelican-teal font-medium' : ''}`}
+                            className={`block py-2 text-pelican-navy hover:text-pelican-teal transition-colors ${isActive(item.path) ? 'text-pelican-teal font-medium' : ''}`}
                             onClick={() => {
                               setActiveDropdown(null);
                               setIsOpen(false);
@@ -148,7 +156,7 @@ const Navigation = () => {
                 ) : (
                   <Link
                     to={link.path}
-                    className={`block text-pelican-navy hover:text-pelican-teal transition-colors ${isActive(link.path) ? 'text-pelican-teal font-medium' : ''}`}
+                    className={`block py-2 text-pelican-navy hover:text-pelican-teal transition-colors ${isActive(link.path) ? 'text-pelican-teal font-medium' : ''}`}
                     onClick={() => setIsOpen(false)}
                   >
                     {link.name}
@@ -156,7 +164,7 @@ const Navigation = () => {
                 )}
               </div>
             ))}
-            <Button variant="accent" size="sm" asChild className="mt-4" onClick={() => setIsOpen(false)}>
+            <Button variant="accent" size="sm" asChild className="mt-4 w-full shadow-sm">
               <Link to="/estimating-maturity">Take Assessment</Link>
             </Button>
           </div>

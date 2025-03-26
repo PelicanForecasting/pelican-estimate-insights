@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Check, ArrowRight, BarChart3, Database, Workflow } from 'lucide-react';
+import { Check, ArrowRight, BarChart3, Database, Workflow, Trophy } from 'lucide-react';
 
 const CallToAction = () => {
   return (
@@ -57,10 +57,13 @@ const CallToAction = () => {
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 p-6 text-white">
-            <h3 className="text-2xl font-bold mb-6">What You'll Discover</h3>
+            <h3 className="text-2xl font-bold mb-6 flex items-center">
+              <Trophy className="h-6 w-6 text-accent mr-2" />
+              What You'll Discover
+            </h3>
             
             <div className="space-y-6">
-              <div className="bg-white/5 rounded-lg p-5 border border-white/10">
+              <div className="bg-white/5 rounded-lg p-5 border border-white/10 hover:-translate-y-1 transition-transform duration-300">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="bg-accent/20 p-2 rounded-lg">
                     <BarChart3 className="h-5 w-5 text-accent" />
@@ -72,7 +75,7 @@ const CallToAction = () => {
                 </p>
               </div>
               
-              <div className="bg-white/5 rounded-lg p-5 border border-white/10">
+              <div className="bg-white/5 rounded-lg p-5 border border-white/10 hover:-translate-y-1 transition-transform duration-300">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="bg-accent/20 p-2 rounded-lg">
                     <Workflow className="h-5 w-5 text-accent" />
@@ -84,7 +87,7 @@ const CallToAction = () => {
                 </p>
               </div>
               
-              <div className="bg-white/5 rounded-lg p-5 border border-white/10">
+              <div className="bg-white/5 rounded-lg p-5 border border-white/10 hover:-translate-y-1 transition-transform duration-300">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="bg-accent/20 p-2 rounded-lg">
                     <Database className="h-5 w-5 text-accent" />
@@ -95,6 +98,11 @@ const CallToAction = () => {
                   Identify gaps and opportunities in your technology utilization.
                 </p>
               </div>
+            </div>
+            
+            <div className="mt-6 pt-6 border-t border-white/10 text-center">
+              <div className="text-accent text-3xl font-bold mb-1">5-Minute</div>
+              <p className="text-white/80">Quick assessment, valuable insights</p>
             </div>
           </div>
         </div>

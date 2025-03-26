@@ -6,6 +6,8 @@ import Benefits from '../components/sections/Benefits';
 import Features from '../components/sections/Features';
 import NewServices from '../components/sections/NewServices';
 import CallToAction from '../components/sections/CallToAction';
+import Testimonials from '../components/sections/Testimonials';
+import CustomerJourney from '../components/sections/CustomerJourney';
 import Footer from '../components/sections/Footer';
 
 const Index = () => {
@@ -64,6 +66,8 @@ const Index = () => {
       <Benefits />
       <Features />
       <NewServices />
+      <Testimonials />
+      <CustomerJourney />
       <CallToAction />
       <Footer />
     </div>

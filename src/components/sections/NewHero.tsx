@@ -2,9 +2,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, ClipboardCheck } from 'lucide-react';
+import { ArrowRight, ClipboardCheck, ChevronDown } from 'lucide-react';
 
 const Hero = () => {
+  const scrollToFeatures = () => {
+    const featuresSection = document.getElementById('features');
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="hero" className="pt-28 pb-20 relative overflow-hidden bg-white">
       <div className="absolute inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.03] pointer-events-none"></div>
@@ -15,7 +22,7 @@ const Hero = () => {
       
       <div className="content-container relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-12">
-          <div className="lg:w-3/5 reveal fade-in space-y-6">
+          <div className="lg:w-3/5 space-y-6 animate-fade-in">
             <div className="inline-block rounded-full bg-pelican-teal/10 px-4 py-1.5 text-sm font-medium text-pelican-teal mb-2">
               Construction Data Intelligence
             </div>
@@ -29,27 +36,37 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button asChild size="lg" variant="accent" className="font-medium text-base px-6 py-6 shadow-md hover:shadow-lg">
+              <Button asChild size="lg" variant="accent" className="font-medium text-base px-6 py-6 shadow-md hover:shadow-lg animate-bounce-in" style={{ animationDelay: '0.3s' }}>
                 <Link to="/estimating-maturity" className="flex items-center">
                   <ClipboardCheck className="ml-1 h-5 w-5 mr-2" />
                   Take Free Assessment
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="outline" className="border-black text-black" asChild size="lg">
+              <Button variant="outline" className="border-black text-black hover:bg-black/5" asChild size="lg">
                 <Link to="/contact">Schedule Consultation</Link>
               </Button>
             </div>
+
+            <div className="pt-8 hidden md:block">
+              <button 
+                onClick={scrollToFeatures}
+                className="flex items-center text-pelican-slate hover:text-pelican-teal transition-colors"
+              >
+                <span className="mr-2">Discover how we help</span>
+                <ChevronDown className="h-4 w-4 animate-bounce" />
+              </button>
+            </div>
           </div>
           
-          <div className="lg:w-2/5 reveal fade-in" style={{
-            transitionDelay: '200ms'
+          <div className="lg:w-2/5 animate-fade-in" style={{
+            animationDelay: '200ms'
           }}>
             <div className="relative">
-              <div className="absolute -top-6 -left-6 w-24 h-24 bg-accent/10 rounded-full"></div>
-              <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-pelican-teal/10 rounded-full"></div>
+              <div className="absolute -top-6 -left-6 w-24 h-24 bg-accent/10 rounded-full animate-pulse-slow"></div>
+              <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-pelican-teal/10 rounded-full animate-pulse-slow" style={{ animationDelay: '1.5s' }}></div>
               
-              <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
+              <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 hover-glow">
                 <img 
                   src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" 
                   alt="Construction Estimating Data Analysis" 
