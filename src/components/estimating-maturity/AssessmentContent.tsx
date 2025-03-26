@@ -3,11 +3,14 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 import AssessmentHeader from './AssessmentHeader';
 import QuestionSections from './QuestionSections';
 import { Question, SectionQuestions, CompanyProfile } from './types';
-import { Save } from "lucide-react";
+import { Save, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import InfoBanner from './InfoBanner';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface AssessmentContentProps {
   questions: Question[];
@@ -40,6 +43,11 @@ const AssessmentContent = ({
   const [showSaveForm, setShowSaveForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const { toast } = useToast();
+  
+  // Calculate completion percentage for progress bar
+  const totalQuestions = questions.length;
+  const answeredQuestions = questions.filter(q => q.selectedOption !== undefined).length;
+  const completionPercentage = totalQuestions > 0 ? Math.round((answeredQuestions / totalQuestions) * 100) : 0;
   
   const handleSaveForLater = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,6 +93,21 @@ const AssessmentContent = ({
 
   return (
     <>
+      {assessmentType === 'quick' && (
+        <InfoBanner 
+          title="Quick Assessment" 
+          description="This 5-minute assessment will provide an initial evaluation of your estimating maturity. You'll receive immediate insights and can continue to a more comprehensive assessment if desired."
+        />
+      )}
+      
+      <div className="mb-6">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-sm text-pelican-slate font-medium">Assessment Progress</span>
+          <span className="text-sm text-pelican-slate">{answeredQuestions}/{totalQuestions} questions answered</span>
+        </div>
+        <Progress value={completionPercentage} className="h-2" />
+      </div>
+      
       <AssessmentHeader 
         questions={questions} 
         score={score} 
@@ -135,19 +158,33 @@ const AssessmentContent = ({
           )}
         </div>
         
-        <Button 
-          size="lg"
-          onClick={handleSubmitAssessment} 
-          disabled={!allQuestionsAnswered || submitting}
-          variant="primary"
-          className="px-8 py-3"
-        >
-          {submitting ? "Processing..." : "View My Results"}
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div>
+                <Button 
+                  size="lg"
+                  onClick={handleSubmitAssessment} 
+                  disabled={!allQuestionsAnswered || submitting}
+                  variant="primary"
+                  className="px-8 py-3"
+                >
+                  {submitting ? "Processing..." : "View My Results"}
+                </Button>
+              </div>
+            </TooltipTrigger>
+            {!allQuestionsAnswered && (
+              <TooltipContent>
+                <p>Please answer all questions to view your results</p>
+              </TooltipContent>
+            )}
+          </Tooltip>
+        </TooltipProvider>
       </div>
       
       {!allQuestionsAnswered && (
         <p className="text-center text-orange-500 mt-4">
+          <Info className="inline h-4 w-4 mr-1" />
           Please answer all questions to view your results
         </p>
       )}
