@@ -33,6 +33,13 @@ export const useBaseAssessmentState = () => {
     }));
   };
 
+  // Start assessment by moving to company profile
+  const startAssessment = () => {
+    updateAssessmentState({
+      stage: 'companyProfile'
+    });
+  };
+
   // Handle company profile submission
   const handleProfileSubmit = async (profile: CompanyProfile) => {
     // Submit company profile data to Formspree
@@ -125,14 +132,12 @@ export const useBaseAssessmentState = () => {
       score: assessmentState.score,
       categoryScores: assessmentState.categoryScores
     });
-    
-    // For demo purposes, show an alert
-    alert(`Your progress has been saved. We'll email you at ${email} with a link to continue.`);
   };
 
   return {
     assessmentState,
     updateAssessmentState,
+    startAssessment,
     handleProfileSubmit,
     handleSubmit,
     handleComprehensiveSubmit,

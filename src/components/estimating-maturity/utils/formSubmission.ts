@@ -14,8 +14,13 @@ export async function submitAssessmentData(data: Record<string, any>) {
       ...data,
       submittedAt: new Date().toISOString(),
       userAgent: navigator.userAgent,
-      source: window.location.href
+      source: window.location.href,
+      referrer: document.referrer
     };
+    
+    // Sanitize data before sending
+    // Avoid circular references and remove any undefined/null values
+    const safeData = JSON.parse(JSON.stringify(enhancedData));
     
     const response = await fetch(FORMSPREE_ENDPOINT, {
       method: 'POST',
@@ -23,7 +28,7 @@ export async function submitAssessmentData(data: Record<string, any>) {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      body: JSON.stringify(enhancedData)
+      body: JSON.stringify(safeData)
     });
     
     if (!response.ok) {
@@ -46,7 +51,8 @@ export async function submitAdditionalInfo(questionId: string, data: Record<stri
   return submitAssessmentData({
     formType: 'additionalInfo',
     questionId,
-    ...data
+    ...data,
+    timestamp: new Date().toISOString()
   });
 }
 
@@ -54,6 +60,27 @@ export async function submitAdditionalInfo(questionId: string, data: Record<stri
 export async function submitQuestionResponse(questionData: Record<string, any>) {
   return submitAssessmentData({
     formType: 'questionResponse',
-    ...questionData
+    ...questionData,
+    timestamp: new Date().toISOString()
+  });
+}
+
+// Track section navigation
+export async function trackSectionNavigation(sectionId: string, action: 'view' | 'complete') {
+  return submitAssessmentData({
+    formType: 'sectionNavigation',
+    sectionId,
+    action,
+    timestamp: new Date().toISOString()
+  });
+}
+
+// Track user engagement metrics
+export async function trackEngagement(metricType: string, data: Record<string, any>) {
+  return submitAssessmentData({
+    formType: 'engagement',
+    metricType,
+    ...data,
+    timestamp: new Date().toISOString()
   });
 }

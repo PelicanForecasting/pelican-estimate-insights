@@ -29,13 +29,14 @@ const EstimatingMaturityContent: React.FC<EstimatingMaturityContentProps> = ({ d
     continueToComprehensive,
     saveForLater,
     handleAdditionalInfo,
-    handleConfidenceLevel
+    handleConfidenceLevel,
+    startAssessment
   } = useAssessmentState();
 
   // Start assessment from welcome or about tab
-  const startAssessment = () => {
+  const handleStartAssessment = () => {
     setCurrentTab("assessment");
-    handleProfileSubmit({});
+    startAssessment();
   };
 
   return (
@@ -68,7 +69,7 @@ const EstimatingMaturityContent: React.FC<EstimatingMaturityContentProps> = ({ d
       </TabsContent>
       
       <TabsContent value="about">
-        <AboutTab onStartAssessment={startAssessment} />
+        <AboutTab onStartAssessment={handleStartAssessment} />
       </TabsContent>
       
       <FeatureCards />

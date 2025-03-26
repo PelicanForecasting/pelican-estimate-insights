@@ -12,7 +12,8 @@ export const useAssessmentState = () => {
     handleComprehensiveSubmit: baseHandleComprehensiveSubmit,
     continueToComprehensive,
     handleReset: baseHandleReset,
-    saveForLater
+    saveForLater,
+    startAssessment
   } = useBaseAssessmentState();
   
   const {
@@ -69,6 +70,7 @@ export const useAssessmentState = () => {
     continueToComprehensive,
     saveForLater,
     handleAdditionalInfo,
-    handleConfidenceLevel
+    handleConfidenceLevel,
+    startAssessment
   };
 };

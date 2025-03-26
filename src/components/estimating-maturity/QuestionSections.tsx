@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import QuestionSection from './QuestionSection';
 import { SectionQuestions } from './types';
+import { trackSectionNavigation } from './utils/formSubmission';
 
 interface QuestionSectionsProps {
   sectionQuestions: SectionQuestions;
@@ -18,6 +19,17 @@ const QuestionSections = ({
   onAdditionalInfo,
   onConfidenceLevel
 }: QuestionSectionsProps) => {
+  
+  useEffect(() => {
+    // Track when all sections are loaded
+    trackSectionNavigation('all-sections', 'view');
+  }, []);
+
+  const handleSectionInView = (sectionId: string) => {
+    // Track when a specific section comes into view
+    trackSectionNavigation(sectionId, 'view');
+  };
+
   return (
     <div className="space-y-6 lg:space-y-[24px]">
       <h2 className="text-2xl lg:text-[24px] font-heading font-medium text-pelican-navy mb-4">Section 1: Process & Methodology</h2>
@@ -28,6 +40,7 @@ const QuestionSections = ({
         assessmentType={assessmentType}
         onAdditionalInfo={onAdditionalInfo}
         onConfidenceLevel={onConfidenceLevel}
+        onSectionInView={() => handleSectionInView('processMethodology')}
       />
       
       <h2 className="text-2xl lg:text-[24px] font-heading font-medium text-pelican-navy mb-4">Section 2: Data & Technology</h2>
@@ -38,6 +51,7 @@ const QuestionSections = ({
         assessmentType={assessmentType}
         onAdditionalInfo={onAdditionalInfo}
         onConfidenceLevel={onConfidenceLevel}
+        onSectionInView={() => handleSectionInView('dataTechnology')}
       />
       
       <h2 className="text-2xl lg:text-[24px] font-heading font-medium text-pelican-navy mb-4">Section 3: Analysis & Decision Making</h2>
@@ -48,6 +62,7 @@ const QuestionSections = ({
         assessmentType={assessmentType}
         onAdditionalInfo={onAdditionalInfo}
         onConfidenceLevel={onConfidenceLevel}
+        onSectionInView={() => handleSectionInView('analysisDecision')}
       />
       
       <h2 className="text-2xl lg:text-[24px] font-heading font-medium text-pelican-navy mb-4">Section 4: Team & Knowledge</h2>
@@ -58,6 +73,7 @@ const QuestionSections = ({
         assessmentType={assessmentType}
         onAdditionalInfo={onAdditionalInfo}
         onConfidenceLevel={onConfidenceLevel}
+        onSectionInView={() => handleSectionInView('teamKnowledge')}
       />
 
       {assessmentType === 'comprehensive' && sectionQuestions.technologyAdoption && (
@@ -70,6 +86,7 @@ const QuestionSections = ({
             assessmentType={assessmentType}
             onAdditionalInfo={onAdditionalInfo}
             onConfidenceLevel={onConfidenceLevel}
+            onSectionInView={() => handleSectionInView('technologyAdoption')}
           />
         </>
       )}
