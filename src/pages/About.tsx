@@ -4,6 +4,7 @@ import Footer from '../components/sections/Footer';
 import { Database, LineChart, Users, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+
 const About = () => {
   return <div className="min-h-screen bg-gradient-to-b from-white to-pelican-cream/30 font-body">
       <div className="fixed inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.02] pointer-events-none z-0"></div>
@@ -128,9 +129,9 @@ const About = () => {
           {/* Team Section */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-pelican-navy mb-8 text-center">Our Team</h2>
-            <div className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md border border-gray-100">
-              <div className="flex flex-col sm:flex-row gap-6 items-center">
-                <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-pelican-teal/20">
+            <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md border border-gray-100">
+              <div className="flex flex-col sm:flex-row gap-8 items-center">
+                <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-pelican-teal/20">
                   <img alt="Mason Hennings" src="/lovable-uploads/bb6df2e4-5c08-47ce-86c9-f8801514e861.png" className="w-full h-full object-cover" />
                 </div>
                 <div>
@@ -177,4 +178,5 @@ const About = () => {
       <Footer />
     </div>;
 };
+
 export default About;
