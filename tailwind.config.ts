@@ -20,10 +20,10 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				heading: ['Montserrat', 'sans-serif'],
-				display: ['Montserrat', 'sans-serif'],
-				body: ['Open Sans', 'sans-serif'],
-				sans: ['Open Sans', 'sans-serif'],
+				heading: ['Merriweather', 'Georgia', 'serif'],
+				display: ['Merriweather', 'Georgia', 'serif'],
+				body: ['Inter', 'SF Pro Display', 'system-ui', 'sans-serif'],
+				sans: ['Inter', 'SF Pro Display', 'system-ui', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -32,12 +32,12 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: '#195E8E',
-					foreground: '#FFFFFF'
+					DEFAULT: 'hsl(222 47% 11%)',
+					foreground: 'hsl(210 40% 98%)'
 				},
 				secondary: {
-					DEFAULT: '#17A2B8',
-					foreground: '#FFFFFF'
+					DEFAULT: 'hsl(187 76% 48%)',
+					foreground: 'hsl(222 47% 11%)'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -48,8 +48,8 @@ export default {
 					foreground: 'hsl(var(--muted-foreground))'
 				},
 				accent: {
-					DEFAULT: '#FF8C42',
-					foreground: '#333333'
+					DEFAULT: 'hsl(35 100% 56%)',
+					foreground: 'hsl(222 47% 11%)'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -61,18 +61,18 @@ export default {
 				},
 				// Custom color scheme for Pelican Forecasting Group
 				pelican: {
-					navy: '#195E8E',  // Updated to deep blue
-					teal: '#17A2B8',  // Updated to teal
-					orange: '#FF8C42', // Updated to orange
-					cream: '#F8F9FA',  // Updated to light gray
-					slate: '#333333',  // Updated to dark gray for text
-					softTeal: '#17A2B8', // Same as teal now
+					navy: 'hsl(222 47% 11%)',
+					teal: 'hsl(187 76% 48%)',
+					orange: 'hsl(35 100% 56%)',
+					cream: 'hsl(210 40% 98%)',
+					slate: 'hsl(222 47% 11%)',
+					softTeal: 'hsl(187 76% 48%, 0.5)',
 					success: '#3D9970',
 					warning: '#F4A835',
 					error: '#E05D5D',
 					black: '#333333',
 					white: '#FFFFFF',
-					lightGray: '#F8F9FA',
+					lightGray: 'hsl(210 40% 98%)',
 					mediumGray: '#DCE0E5',
 				},
 				sidebar: {
@@ -87,7 +87,7 @@ export default {
 				},
                 // Add text color specifically for the style guide
                 gray: {
-                    800: '#333333' // For body text
+                    800: 'hsl(222 47% 11%)' // For body text
                 }
 			},
 			borderRadius: {

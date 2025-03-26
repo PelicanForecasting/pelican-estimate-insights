@@ -1,37 +1,37 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap');
 
 @tailwind base;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 210 11% 20%;
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 11% 20%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 11% 20%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 204 70% 33%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 222 47% 11%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 189 78% 41%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 187 76% 48%;
+    --secondary-foreground: 222 47% 11%;
 
-    --accent: 25 100% 63%;
-    --accent-foreground: 210 11% 20%;
+    --accent: 35 100% 56%;
+    --accent-foreground: 222 47% 11%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 204 70% 33%;
+    --ring: 222 47% 11%;
 
     --radius: 0.75rem;
   }
@@ -45,7 +45,7 @@
   }
   
   body {
-    @apply bg-white text-gray-800 font-body antialiased;
+    @apply bg-background text-foreground font-body antialiased;
     line-height: 1.5;
   }
   

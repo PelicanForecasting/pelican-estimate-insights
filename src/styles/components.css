@@ -18,6 +18,15 @@
     @apply max-w-7xl mx-auto px-6 py-10 md:px-6 md:py-20 lg:py-[80px];
   }
   
+  /* New layout classes */
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
   .reveal {
     @apply opacity-0 transition-all duration-700 ease-out;
   }
@@ -44,15 +53,15 @@
 
   /* Button variants per style guide */
   .btn-primary {
-    @apply bg-secondary text-white rounded-md px-4 py-3 hover:bg-secondary/90 transition-colors;
+    @apply bg-secondary text-primary-foreground rounded-md px-4 py-3 hover:bg-secondary/90 transition-colors;
   }
 
   .btn-secondary {
-    @apply bg-white text-secondary border border-secondary rounded-md px-4 py-3 hover:bg-secondary/5 transition-colors;
+    @apply bg-white text-primary border border-secondary rounded-md px-4 py-3 hover:bg-secondary/5 transition-colors;
   }
 
   .btn-accent {
-    @apply bg-accent text-white rounded-md px-4 py-3 hover:bg-accent/90 transition-colors;
+    @apply bg-accent text-accent-foreground rounded-md px-4 py-3 hover:bg-accent/90 transition-colors;
   }
 
   /* Form inputs per style guide */

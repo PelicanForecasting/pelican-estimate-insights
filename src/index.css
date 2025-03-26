@@ -1,3 +1,16 @@
 
 /* Main styles file - imports all modular CSS files */
 @import './styles/index.css';
+
+/* Global styles that apply to the entire application */
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Additional global utility classes */
+.text-balance {
+  text-wrap: balance;
+}
