@@ -1,12 +1,9 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ClipboardCheck } from 'lucide-react';
-
 const Hero = () => {
-  return (
-    <section id="hero" className="pt-28 pb-20 relative overflow-hidden bg-white">
+  return <section id="hero" className="pt-28 pb-20 relative overflow-hidden bg-white">
       <div className="absolute inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.03] pointer-events-none"></div>
       
       {/* Decorative elements */}
@@ -19,10 +16,7 @@ const Hero = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-pelican-navy leading-tight">
               Transform Your Historical Project Data into Estimating Intelligence
             </h1>
-            <p className="text-lg md:text-xl text-pelican-slate max-w-2xl">
-              Meet your construction company where it is today. Build the systems for tomorrow.
-              Our assessment reveals opportunities to improve accuracy, efficiency, and profitability.
-            </p>
+            <p className="text-lg md:text-xl text-pelican-slate max-w-2xl">We meet your construction company where it is today to build the systems for tomorrow. Take our assessment to reveal opportunities to improve accuracy, efficiency, and profitability in your preconstruction processes. </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button asChild size="lg" variant="accent" className="font-medium text-base px-6 py-6 shadow-md hover:shadow-lg">
@@ -38,17 +32,15 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className="lg:w-2/5 reveal fade-in" style={{ transitionDelay: '200ms' }}>
+          <div className="lg:w-2/5 reveal fade-in" style={{
+          transitionDelay: '200ms'
+        }}>
             <div className="relative">
               <div className="absolute -top-6 -left-6 w-24 h-24 bg-accent/10 rounded-full"></div>
               <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-pelican-teal/10 rounded-full"></div>
               
               <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
-                <img 
-                  src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" 
-                  alt="Construction Estimating Data Analysis" 
-                  className="w-full h-auto"
-                />
+                <img src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" alt="Construction Estimating Data Analysis" className="w-full h-auto" />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-pelican-navy/90 to-transparent text-white p-6">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="bg-accent text-white text-xs px-2 py-1 rounded-full">Free Assessment</span>
@@ -62,8 +54,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
