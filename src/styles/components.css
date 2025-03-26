@@ -18,6 +18,11 @@
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
+  /* New spacing utility for consistent main content distance from navbar */
+  .content-top-spacing {
+    @apply pt-28 md:pt-32 lg:pt-36;
+  }
+
   /* =============================================================================
    * CARDS & SURFACES
    * ============================================================================= */

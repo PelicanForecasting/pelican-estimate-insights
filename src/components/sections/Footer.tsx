@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Facebook, Linkedin, Youtube } from 'lucide-react';
+import { MapPin, Phone, Mail, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -24,15 +24,15 @@ const Footer = () => {
             <p className="text-white/70 mb-6">
               Transforming construction estimating through data-driven insights and analytics.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-white/70 hover:text-secondary transition-colors" aria-label="Facebook">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-white/70 hover:text-secondary transition-colors" aria-label="LinkedIn">
+            <div>
+              <a 
+                href="https://www.linkedin.com/in/mason-hennings-409a8113b/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-white/70 hover:text-secondary transition-colors" 
+                aria-label="LinkedIn"
+              >
                 <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-white/70 hover:text-secondary transition-colors" aria-label="YouTube">
-                <Youtube className="w-5 h-5" />
               </a>
             </div>
           </div>

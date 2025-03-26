@@ -10,7 +10,7 @@ const EstimatingMaturity = () => {
       <div className="fixed inset-0 bg-[url('/lovable-uploads/dcbc1815-252a-4087-a2de-8ce2ba0406ad.png')] bg-center bg-no-repeat opacity-[0.02] pointer-events-none z-0"></div>
       <Navbar />
       
-      <main className="container max-w-[1200px] mx-auto py-20 md:py-[80px] px-6 animate-fade-in">
+      <main className="container max-w-[1200px] mx-auto content-top-spacing px-6 animate-fade-in">
         <div className="text-center mb-12 lg:mb-[48px]">
           <h1 className="text-3xl md:text-4xl lg:text-[32px] font-heading font-medium text-gradient bg-gradient-to-r from-pelican-navy to-pelican-teal mb-4">
             Estimating Maturity Assessment

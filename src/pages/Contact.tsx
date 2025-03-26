@@ -20,8 +20,8 @@ const Contact = () => {
       <div className="fixed inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.02] pointer-events-none z-0"></div>
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="pt-28 pb-16 relative">
+      {/* Hero Section with improved spacing */}
+      <section className="content-top-spacing pb-16 relative">
         <div className="content-container relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-pelican-navy mb-6">Get in Touch</h1>
