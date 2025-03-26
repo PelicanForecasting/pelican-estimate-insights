@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Navbar from '../components/navigation/Navbar';
 import Footer from '../components/sections/Footer';
@@ -44,7 +45,7 @@ const About = () => {
                 <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-pelican-teal/10 rounded-full"></div>
                 
                 <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
-                  <img src="/lovable-uploads/f931ac31-6ce6-4f64-a3dd-0b091a39367a.png" alt="Construction Estimating Data Analysis" className="w-full h-auto" />
+                  <img src="/lovable-uploads/55ba6c29-7c4a-4f43-b063-49a9051b315a.png" alt="Construction crane on a waterfront project" className="w-full h-auto object-cover" />
                 </div>
               </div>
             </div>
