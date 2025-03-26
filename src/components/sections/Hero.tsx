@@ -1,9 +1,12 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ClipboardCheck } from 'lucide-react';
+
 const Hero = () => {
-  return <section id="hero" className="pt-28 pb-20 relative overflow-hidden bg-white">
+  return (
+    <section id="hero" className="pt-28 pb-20 relative overflow-hidden bg-white">
       <div className="absolute inset-0 bg-[url('/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png')] bg-center bg-no-repeat opacity-[0.03] pointer-events-none"></div>
       
       {/* Decorative elements */}
@@ -54,6 +57,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default Hero;
