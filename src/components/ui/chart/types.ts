@@ -1,7 +1,4 @@
 
-import { ChartConfig } from "./ChartContainer";
-import { ReactNode } from "react";
-
 // Format: { THEME_NAME: CSS_SELECTOR }
 export const THEMES = { light: "", dark: ".dark" } as const;
 
@@ -10,8 +7,8 @@ export interface ChartContextProps {
 }
 
 export interface ChartConfig {
-  [k in string]: {
-    label?: ReactNode;
+  [key: string]: {
+    label?: React.ReactNode;
     icon?: React.ComponentType;
   } & (
     | { color?: string; theme?: never }

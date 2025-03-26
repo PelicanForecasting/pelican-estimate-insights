@@ -5,6 +5,6 @@ export {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-} from "./chart";
+} from "./chart/index";
 
-export type { ChartConfig } from "./chart";
+export type { ChartConfig } from "./chart/types";

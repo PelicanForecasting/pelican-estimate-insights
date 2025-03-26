@@ -6,13 +6,11 @@ import { ChartStyle } from "./ChartStyle";
 import { ChartContext } from "./chart-context";
 import { ChartConfig } from "./types";
 
-const ChartContainer = React.forwardRef<
+export const ChartContainer = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
     config: ChartConfig;
-    children: React.ComponentProps<
-      typeof RechartsPrimitive.ResponsiveContainer
-    >["children"];
+    children: React.ReactNode;
   }
 >(({ id, className, children, config, ...props }, ref) => {
   const uniqueId = React.useId();
@@ -38,6 +36,3 @@ const ChartContainer = React.forwardRef<
   );
 });
 ChartContainer.displayName = "Chart";
-
-export { ChartContainer };
-export type { ChartConfig };

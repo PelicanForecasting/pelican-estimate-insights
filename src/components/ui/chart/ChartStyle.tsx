@@ -1,4 +1,5 @@
 
+import React from "react";
 import { ChartConfig, THEMES } from "./types";
 
 interface ChartStyleProps {
@@ -29,6 +30,7 @@ ${colorConfig
       itemConfig.color;
     return color ? `  --color-${key}: ${color};` : null;
   })
+  .filter(Boolean)
   .join("\n")}
 }
 `

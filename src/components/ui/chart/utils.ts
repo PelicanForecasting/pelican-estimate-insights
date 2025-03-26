@@ -4,7 +4,7 @@ import { ChartConfig } from "./types";
 // Helper to extract item config from a payload.
 export function getPayloadConfigFromPayload(
   config: ChartConfig,
-  payload: unknown,
+  payload: any,
   key: string
 ) {
   if (typeof payload !== "object" || payload === null) {
@@ -35,7 +35,5 @@ export function getPayloadConfigFromPayload(
     ] as string;
   }
 
-  return configLabelKey in config
-    ? config[configLabelKey]
-    : config[key as keyof typeof config];
+  return config[configLabelKey] || config[key];
 }
