@@ -41,11 +41,11 @@ const About = () => {
             </div>
             <div className="md:w-1/2">
               <div className="relative">
-                <div className="absolute -top-6 -left-6 w-24 h-24 bg-accent/10 rounded-full"></div>
-                <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-pelican-teal/10 rounded-full"></div>
+                <div className="absolute -top-4 -left-4 w-16 h-16 bg-accent/10 rounded-full"></div>
+                <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-pelican-teal/10 rounded-full"></div>
                 
-                <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
-                  <img src="/lovable-uploads/55ba6c29-7c4a-4f43-b063-49a9051b315a.png" alt="Construction crane on a waterfront project" className="w-full h-auto object-cover" />
+                <div className="relative z-10 bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 max-w-sm mx-auto">
+                  <img src="/lovable-uploads/55ba6c29-7c4a-4f43-b063-49a9051b315a.png" alt="Construction crane on a waterfront project" className="w-full h-auto object-cover max-h-[280px]" />
                 </div>
               </div>
             </div>
