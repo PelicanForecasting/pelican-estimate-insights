@@ -45,7 +45,7 @@ const About = () => {
                 <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-pelican-teal/10 rounded-full"></div>
                 
                 <div className="relative z-10 glass-card max-w-sm mx-auto">
-                  <img src="/lovable-uploads/55ba6c29-7c4a-4f43-b063-49a9051b315a.png" alt="Construction crane on a waterfront project" className="w-full h-auto object-cover max-h-[280px]" />
+                  <img src="/lovable-uploads/4ba790a2-2cfa-429b-bb51-65e6f2f7596d.png" alt="Construction site with workers on a marine project" className="w-full h-auto object-cover rounded-lg shadow-lg" />
                 </div>
               </div>
             </div>
