@@ -1,5 +1,6 @@
 import React from 'react';
 import { Database, BrainCircuit, Workflow } from 'lucide-react';
+import FloatingCard from './FloatingCard';
 
 const services = [
   {
@@ -21,31 +22,29 @@ const services = [
 
 const WhatWeDo = () => {
   return (
-    <section className="py-16 bg-pelican-cream/30">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <h2 className="text-2xl sm:text-3xl font-bold text-pelican-navy text-center mb-4">
-          How I Help
-        </h2>
-        <p className="text-pelican-slate text-center mb-12 max-w-2xl mx-auto">
-          Whether you're drowning in spreadsheets or ready to deploy machine learning, I design and build solutions matched to your current capabilities and future ambitions.
-        </p>
-        <div className="grid sm:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <div key={index} className="text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent/10 mb-4">
-                <service.icon className="w-6 h-6 text-accent" />
-              </div>
-              <h3 className="text-lg font-semibold text-pelican-navy mb-2">
-                {service.title}
-              </h3>
-              <p className="text-pelican-slate text-sm leading-relaxed">
-                {service.description}
-              </p>
+    <FloatingCard delay={0.1}>
+      <h2 className="text-2xl sm:text-3xl font-bold text-pelican-navy text-center mb-4">
+        How I Help
+      </h2>
+      <p className="text-pelican-slate text-center mb-10 max-w-2xl mx-auto">
+        Whether you're drowning in spreadsheets or ready to deploy machine learning, I design and build solutions matched to your current capabilities and future ambitions.
+      </p>
+      <div className="grid sm:grid-cols-3 gap-8">
+        {services.map((service, index) => (
+          <div key={index} className="text-center">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent/10 mb-4">
+              <service.icon className="w-6 h-6 text-accent" />
             </div>
-          ))}
-        </div>
+            <h3 className="text-lg font-semibold text-pelican-navy mb-2">
+              {service.title}
+            </h3>
+            <p className="text-pelican-slate text-sm leading-relaxed">
+              {service.description}
+            </p>
+          </div>
+        ))}
       </div>
-    </section>
+    </FloatingCard>
   );
 };
 
