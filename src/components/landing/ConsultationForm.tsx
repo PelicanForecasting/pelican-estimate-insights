@@ -242,7 +242,7 @@ const ConsultationForm = () => {
             {/* Challenge */}
             <div className="space-y-2 sm:col-span-2">
               <Label htmlFor="challenge" className="text-pelican-navy">
-                What's your biggest estimating challenge right now? <span className="text-red-500">*</span>
+                What can we help you innovate? What are your primary organizational challenges? <span className="text-red-500">*</span>
               </Label>
               <Textarea
                 id="challenge"
@@ -252,14 +252,14 @@ const ConsultationForm = () => {
                 value={formData.challenge}
                 onChange={handleInputChange}
                 className="text-base resize-none"
-                placeholder="Describe your current pain points..."
+                placeholder="Describe your current challenges..."
               />
             </div>
 
             {/* Success Vision */}
             <div className="space-y-2 sm:col-span-2">
               <Label htmlFor="successVision" className="text-pelican-navy">
-                What would success look like for your estimating department in 12 months? <span className="text-red-500">*</span>
+                What does success look like for your organization in 6 months? A year? <span className="text-red-500">*</span>
               </Label>
               <Textarea
                 id="successVision"
