@@ -203,7 +203,6 @@ const ConsultationForm = () => {
               <Select
                 value={formData.companySize}
                 onValueChange={(value) => handleSelectChange('companySize', value)}
-                required
               >
                 <SelectTrigger className="text-base">
                   <SelectValue placeholder="Select company size" />
@@ -226,7 +225,6 @@ const ConsultationForm = () => {
               <Select
                 value={formData.primaryBusiness}
                 onValueChange={(value) => handleSelectChange('primaryBusiness', value)}
-                required
               >
                 <SelectTrigger className="text-base">
                   <SelectValue placeholder="Select your primary business type" />
