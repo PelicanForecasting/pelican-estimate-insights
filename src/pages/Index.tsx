@@ -1,21 +1,23 @@
-
 import React from 'react';
-import PageLayout from '@/components/layout/PageLayout';
-import Hero from '@/components/sections/Hero'; // Make sure we're using the correct Hero component
-import ServicesSection from '@/components/sections/ServicesSection';
-import FeaturesSection from '@/components/sections/FeaturesSection';
-import TestimonialsSection from '@/components/sections/TestimonialsSection';
-import ContactSection from '@/components/sections/ContactSection';
+import SimpleHeader from '@/components/landing/SimpleHeader';
+import LandingHero from '@/components/landing/LandingHero';
+import WhatWeDo from '@/components/landing/WhatWeDo';
+import Credibility from '@/components/landing/Credibility';
+import ConsultationForm from '@/components/landing/ConsultationForm';
+import SimpleFooter from '@/components/landing/SimpleFooter';
 
 const Index = () => {
   return (
-    <PageLayout>
-      <Hero />
-      <ServicesSection />
-      <FeaturesSection />
-      <TestimonialsSection />
-      <ContactSection />
-    </PageLayout>
+    <div className="min-h-screen bg-white font-body">
+      <SimpleHeader />
+      <main>
+        <LandingHero />
+        <WhatWeDo />
+        <Credibility />
+        <ConsultationForm />
+      </main>
+      <SimpleFooter />
+    </div>
   );
 };
 
