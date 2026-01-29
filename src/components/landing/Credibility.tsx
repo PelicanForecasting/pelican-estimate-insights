@@ -2,13 +2,13 @@ import React from 'react';
 
 const Credibility = () => {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-pelican-cream/30">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
         <h2 className="text-2xl sm:text-3xl font-bold text-pelican-navy mb-6">
-          Experience That Matters
+          Built on Real Project Experience
         </h2>
         <p className="text-lg text-pelican-slate leading-relaxed max-w-2xl mx-auto">
-          Our team brings hands-on experience from major American infrastructure projects including the Howard Frankland Bridge, Tappan Zee Bridge, and Soo Locks—representing over $15 billion in project exposure.
+          Over $15 billion in project exposure across marine infrastructure, heavy civil, and complex civil works. I've estimated these projects, managed their data, and learned what information actually drives better outcomes.
         </p>
       </div>
     </section>

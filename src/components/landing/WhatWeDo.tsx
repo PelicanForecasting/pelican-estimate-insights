@@ -1,21 +1,21 @@
 import React from 'react';
-import { ClipboardList, TrendingUp, Zap } from 'lucide-react';
+import { Database, BrainCircuit, Workflow } from 'lucide-react';
 
 const services = [
   {
-    icon: ClipboardList,
-    title: "Historic Data Analysis",
-    description: "We transform your years of untapped cost data into actionable insights, revealing patterns that inform future estimating decisions."
+    icon: Database,
+    title: "Data Architecture & Integration",
+    description: "Unify scattered project data into structured, queryable systems. Connect your estimating tools, accounting software, and project controls into a single source of truth."
   },
   {
-    icon: TrendingUp,
-    title: "Cost Forecasting Models",
-    description: "Using machine learning, we develop tailored models that predict future project costs with increased accuracy."
+    icon: BrainCircuit,
+    title: "AI & Machine Learning",
+    description: "Production-ready ML models trained on your historical data. Cost forecasting, risk identification, and anomaly detection that actually deploys—not just a proof of concept."
   },
   {
-    icon: Zap,
-    title: "Process Optimization",
-    description: "We streamline your estimating workflow by implementing data-driven methodologies that save time and improve accuracy."
+    icon: Workflow,
+    title: "Workflow Automation",
+    description: "Eliminate manual data entry and repetitive tasks. Automate the tail so your team can focus on the high-judgment work that wins projects."
   }
 ];
 
@@ -23,9 +23,12 @@ const WhatWeDo = () => {
   return (
     <section className="py-16 bg-pelican-cream/30">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <h2 className="text-2xl sm:text-3xl font-bold text-pelican-navy text-center mb-12">
-          What We Do
+        <h2 className="text-2xl sm:text-3xl font-bold text-pelican-navy text-center mb-4">
+          How I Help
         </h2>
+        <p className="text-pelican-slate text-center mb-12 max-w-2xl mx-auto">
+          Whether you're drowning in spreadsheets or ready to deploy machine learning, I design and build solutions matched to your current capabilities and future ambitions.
+        </p>
         <div className="grid sm:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div key={index} className="text-center">

@@ -2,6 +2,7 @@ import React from 'react';
 import SimpleHeader from '@/components/landing/SimpleHeader';
 import LandingHero from '@/components/landing/LandingHero';
 import WhatWeDo from '@/components/landing/WhatWeDo';
+import Differentiator from '@/components/landing/Differentiator';
 import Credibility from '@/components/landing/Credibility';
 import ConsultationForm from '@/components/landing/ConsultationForm';
 import SimpleFooter from '@/components/landing/SimpleFooter';
@@ -13,6 +14,7 @@ const Index = () => {
       <main>
         <LandingHero />
         <WhatWeDo />
+        <Differentiator />
         <Credibility />
         <ConsultationForm />
       </main>
