@@ -28,10 +28,10 @@ const LandingHero = () => {
         <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 sm:p-12 shadow-xl border-t-4 border-t-accent border-b-4 border-b-pelican-navy">
           <div className="text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-pelican-navy leading-tight mb-6">
-              Transform Your Existing Data into Organizational Intelligence
+              Your Historical Data Already Has the Answers
             </h1>
             <p className="text-lg sm:text-xl text-pelican-slate mb-8 max-w-2xl mx-auto">
-              Tired of scattered spreadsheets and gut-feel bidding? Your historical project data holds the answers—you just need the right systems to unlock them. I help construction companies turn messy data into confident decisions, from data architecture to AI-powered forecasting.
+              You've got years of project data sitting in spreadsheets, estimating software, and accounting systems. Most of it never gets used after closeout. We build the systems that connect it all and turn it into forecasts you can actually trust.
             </p>
             <Button 
               onClick={scrollToForm}

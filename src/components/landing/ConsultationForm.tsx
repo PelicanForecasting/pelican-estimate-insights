@@ -103,11 +103,19 @@ const ConsultationForm = () => {
       <div id="consultation" className="scroll-mt-8">
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-bold text-pelican-navy mb-4">
-            Let's Talk About Your Challenges
+            Let's Talk Through Your Situation
           </h2>
-          <p className="text-pelican-slate max-w-xl mx-auto">
-            No pitch, no pressure—just a 30-minute conversation about where you are today and where you want to be. I'll share some ideas, and you'll walk away with actionable next steps whether we work together or not.
+          <p className="text-pelican-slate max-w-xl mx-auto mb-6">
+            30 minutes, no pitch. Tell us what's broken and we'll tell you how we'd approach it. You'll leave with a clear picture of what's possible, whether you hire us or not.
           </p>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-pelican-slate">
+            <span className="px-3 py-1 bg-pelican-navy/5 rounded-full">Data Cleanup & Migration</span>
+            <span className="px-3 py-1 bg-pelican-navy/5 rounded-full">Forecasting Models</span>
+            <span className="px-3 py-1 bg-pelican-navy/5 rounded-full">Database Architecture</span>
+            <span className="px-3 py-1 bg-pelican-navy/5 rounded-full">Workflow Automation</span>
+            <span className="px-3 py-1 bg-pelican-navy/5 rounded-full">Custom Integrations</span>
+            <span className="px-3 py-1 bg-pelican-navy/5 rounded-full">AI/ML Systems</span>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-pelican-cream/20 rounded-xl p-6 sm:p-8 border border-pelican-slate/10">
