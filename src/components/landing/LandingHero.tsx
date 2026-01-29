@@ -23,15 +23,15 @@ const LandingHero = () => {
       {/* Overlay for additional contrast */}
       <div className="absolute inset-0 bg-white/30 z-[1]" />
       
-      {/* Logo overlaid directly on video */}
-      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 pt-4 pb-8">
-        <div className="flex items-center">
+      {/* Logo overlaid directly on video - centered in upper area */}
+      <div className="relative z-10 flex-1 flex items-center justify-center max-h-[200px] sm:max-h-[240px]">
+        <div className="flex items-center justify-center">
           <img 
             src="/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png" 
             alt="Pelican Forecasting Group Logo" 
-            className="h-10 mr-2" 
+            className="h-20 sm:h-28 md:h-32 mr-3" 
           />
-          <span className="font-heading text-xl font-bold text-pelican-navy drop-shadow-sm">
+          <span className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-pelican-navy drop-shadow-sm">
             Pelican<span className="text-secondary">Forecasting</span>
           </span>
         </div>
