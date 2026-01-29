@@ -99,14 +99,14 @@ const ConsultationForm = () => {
   };
 
   return (
-    <FloatingCard accentBorder="top" delay={0.25} className="max-w-none">
+    <FloatingCard accentBorder="top" bottomBorder delay={0.25} className="max-w-none">
       <div id="consultation" className="scroll-mt-8">
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-bold text-pelican-navy mb-4">
-            Schedule Your Free Consultation
+            Let's Talk About Your Challenges
           </h2>
-          <p className="text-pelican-slate">
-            Tell us about your estimating challenges and we'll reach out to schedule a 30-minute discovery call.
+          <p className="text-pelican-slate max-w-xl mx-auto">
+            No pitch, no pressure—just a 30-minute conversation about where you are today and where you want to be. I'll share some ideas, and you'll walk away with actionable next steps whether we work together or not.
           </p>
         </div>
 
@@ -243,7 +243,7 @@ const ConsultationForm = () => {
             {/* Challenge */}
             <div className="space-y-2 sm:col-span-2">
               <Label htmlFor="challenge" className="text-pelican-navy">
-                What can we help you innovate? What are your primary organizational challenges? <span className="text-red-500">*</span>
+                What's your biggest data or estimating challenge right now? <span className="text-red-500">*</span>
               </Label>
               <Textarea
                 id="challenge"
@@ -253,14 +253,14 @@ const ConsultationForm = () => {
                 value={formData.challenge}
                 onChange={handleInputChange}
                 className="text-base resize-none bg-white"
-                placeholder="Describe your current challenges..."
+                placeholder="e.g., Our bid data lives in 50 different spreadsheets, we can't benchmark costs across projects..."
               />
             </div>
 
             {/* Success Vision */}
             <div className="space-y-2 sm:col-span-2">
               <Label htmlFor="successVision" className="text-pelican-navy">
-                What does success look like for your organization in 6 months? A year? <span className="text-red-500">*</span>
+                What would change if this problem was solved? <span className="text-red-500">*</span>
               </Label>
               <Textarea
                 id="successVision"
@@ -270,12 +270,12 @@ const ConsultationForm = () => {
                 value={formData.successVision}
                 onChange={handleInputChange}
                 className="text-base resize-none bg-white"
-                placeholder="Describe your ideal future state..."
+                placeholder="e.g., We'd bid more confidently, catch pricing mistakes before submission, win more profitable work..."
               />
             </div>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
             <Button
               type="submit"
               variant="accent"
@@ -283,8 +283,9 @@ const ConsultationForm = () => {
               className="w-full sm:w-auto px-8 py-6 text-base font-medium"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Request Consultation"}
+              {isSubmitting ? "Submitting..." : "Get Started"}
             </Button>
+            <span className="text-sm text-pelican-slate/70 text-center sm:text-left">Free 30-min call • No obligation</span>
           </div>
         </form>
       </div>

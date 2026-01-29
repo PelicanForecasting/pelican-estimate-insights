@@ -18,20 +18,20 @@ const LandingHero = () => {
             className="h-20 sm:h-28 md:h-32 mr-3" 
           />
           <span className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-pelican-navy drop-shadow-sm">
-            Pelican<span className="text-secondary">Forecasting</span>
+            Pelican Forecasting Group
           </span>
         </div>
       </div>
       
       {/* Content Card */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 flex-1 flex items-center">
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 sm:p-12 shadow-xl border border-white/50">
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 sm:p-12 shadow-xl border-t-4 border-t-accent border-b-4 border-b-pelican-navy">
           <div className="text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-pelican-navy leading-tight mb-6">
-              Forward-Deployed Excellence. Transform Your Existing Data into Organizational Intelligence
+              Transform Your Existing Data into Organizational Intelligence
             </h1>
             <p className="text-lg sm:text-xl text-pelican-slate mb-8 max-w-2xl mx-auto">
-              I help construction companies build the systems they need to make better decisions, faster, and backed by evidence. From data architecture to AI-powered forecasting—I meet you where you are and deliver custom solutions that work.
+              Tired of scattered spreadsheets and gut-feel bidding? Your historical project data holds the answers—you just need the right systems to unlock them. I help construction companies turn messy data into confident decisions, from data architecture to AI-powered forecasting.
             </p>
             <Button 
               onClick={scrollToForm}

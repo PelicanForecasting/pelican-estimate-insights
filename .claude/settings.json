@@ -1,0 +1,21 @@
+{
+  "projectType": "react-vite",
+  "language": "typescript",
+  "packageManager": "npm",
+  "devServer": {
+    "command": "npm run dev",
+    "port": 8080
+  },
+  "buildCommand": "npm run build",
+  "testCommand": "npm run lint",
+  "paths": {
+    "components": "src/components",
+    "pages": "src/pages",
+    "styles": "src/styles"
+  },
+  "conventions": {
+    "componentStyle": "functional",
+    "cssFramework": "tailwind",
+    "uiLibrary": "shadcn-ui"
+  }
+}

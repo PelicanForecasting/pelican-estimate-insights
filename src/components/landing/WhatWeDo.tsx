@@ -6,28 +6,28 @@ const services = [
   {
     icon: Database,
     title: "Data Architecture & Integration",
-    description: "Unify scattered project data into structured, queryable systems. Connect your estimating tools, accounting software, and project controls into a single source of truth."
+    description: "Stop hunting through folders and spreadsheets for the numbers you need. Connect your estimating tools, accounting software, and project controls into a single source of truth you can actually query."
   },
   {
     icon: BrainCircuit,
     title: "AI & Machine Learning",
-    description: "Production-ready ML models trained on your historical data. Cost forecasting, risk identification, and anomaly detection that actually deploys—not just a proof of concept."
+    description: "Move beyond gut-feel pricing. Production-ready ML models trained on your historical data give you cost forecasting, risk flags, and anomaly detection that actually deploys—not just another proof of concept."
   },
   {
     icon: Workflow,
     title: "Workflow Automation",
-    description: "Eliminate manual data entry and repetitive tasks. Automate the tail so your team can focus on the high-judgment work that wins projects."
+    description: "Your estimators shouldn't waste hours on data entry. Automate the repetitive tasks so your team can focus on the high-judgment work that actually wins projects."
   }
 ];
 
 const WhatWeDo = () => {
   return (
-    <FloatingCard delay={0.1}>
+    <FloatingCard delay={0.1} accentBorder="top" bottomBorder>
       <h2 className="text-2xl sm:text-3xl font-bold text-pelican-navy text-center mb-4">
-        How I Help
+        Solutions That Meet You Where You Are
       </h2>
       <p className="text-pelican-slate text-center mb-10 max-w-2xl mx-auto">
-        Whether you're drowning in spreadsheets or ready to deploy machine learning, I design and build solutions matched to your current capabilities and future ambitions.
+        Whether you're drowning in spreadsheets or ready to deploy machine learning, I design and build solutions matched to your current capabilities—and scale with your ambitions.
       </p>
       <div className="grid sm:grid-cols-3 gap-8">
         {services.map((service, index) => (
