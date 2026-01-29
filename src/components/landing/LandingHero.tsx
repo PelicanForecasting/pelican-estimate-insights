@@ -8,23 +8,9 @@ const LandingHero = () => {
   };
 
   return (
-    <section className="relative pt-8 pb-24 overflow-hidden min-h-[90vh] flex flex-col">
-      {/* Video Background */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0"
-      >
-        <source src="/videos/dither-bg.webm" type="video/webm" />
-      </video>
-      
-      {/* Overlay for additional contrast */}
-      <div className="absolute inset-0 bg-white/30 z-[1]" />
-      
+    <section className="relative min-h-screen flex flex-col pt-8 pb-32">
       {/* Logo overlaid directly on video - centered in upper area */}
-      <div className="relative z-10 flex-1 flex items-center justify-center max-h-[200px] sm:max-h-[240px]">
+      <div className="flex-1 flex items-center justify-center max-h-[200px] sm:max-h-[240px]">
         <div className="flex items-center justify-center">
           <img 
             src="/lovable-uploads/985727ce-a419-46ea-9978-f8dda539591e.png" 
@@ -38,7 +24,7 @@ const LandingHero = () => {
       </div>
       
       {/* Content Card */}
-      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 flex-1 flex items-center">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 flex-1 flex items-center">
         <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 sm:p-12 shadow-xl border border-white/50">
           <div className="text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-pelican-navy leading-tight mb-6">

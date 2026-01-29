@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
+import FloatingCard from './FloatingCard';
 
 const companySizes = [
   "1-10 employees",
@@ -98,8 +99,8 @@ const ConsultationForm = () => {
   };
 
   return (
-    <section id="consultation" className="py-16 bg-pelican-cream/30">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
+    <FloatingCard accentBorder="top" delay={0.25} className="max-w-none">
+      <div id="consultation" className="scroll-mt-8">
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-bold text-pelican-navy mb-4">
             Schedule Your Free Consultation
@@ -109,7 +110,7 @@ const ConsultationForm = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-gray-100">
+        <form onSubmit={handleSubmit} className="bg-pelican-cream/20 rounded-xl p-6 sm:p-8 border border-pelican-slate/10">
           <div className="grid sm:grid-cols-2 gap-6">
             {/* Full Name */}
             <div className="space-y-2">
@@ -123,7 +124,7 @@ const ConsultationForm = () => {
                 required
                 value={formData.fullName}
                 onChange={handleInputChange}
-                className="text-base"
+                className="text-base bg-white"
                 placeholder="John Smith"
               />
             </div>
@@ -140,7 +141,7 @@ const ConsultationForm = () => {
                 required
                 value={formData.email}
                 onChange={handleInputChange}
-                className="text-base"
+                className="text-base bg-white"
                 placeholder="john@company.com"
               />
             </div>
@@ -156,7 +157,7 @@ const ConsultationForm = () => {
                 type="tel"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className="text-base"
+                className="text-base bg-white"
                 placeholder="(555) 123-4567"
               />
             </div>
@@ -173,7 +174,7 @@ const ConsultationForm = () => {
                 required
                 value={formData.companyName}
                 onChange={handleInputChange}
-                className="text-base"
+                className="text-base bg-white"
                 placeholder="Acme Construction"
               />
             </div>
@@ -190,7 +191,7 @@ const ConsultationForm = () => {
                 required
                 value={formData.role}
                 onChange={handleInputChange}
-                className="text-base"
+                className="text-base bg-white"
                 placeholder="Chief Estimator"
               />
             </div>
@@ -204,7 +205,7 @@ const ConsultationForm = () => {
                 value={formData.companySize}
                 onValueChange={(value) => handleSelectChange('companySize', value)}
               >
-                <SelectTrigger className="text-base">
+                <SelectTrigger className="text-base bg-white">
                   <SelectValue placeholder="Select company size" />
                 </SelectTrigger>
                 <SelectContent>
@@ -226,7 +227,7 @@ const ConsultationForm = () => {
                 value={formData.primaryBusiness}
                 onValueChange={(value) => handleSelectChange('primaryBusiness', value)}
               >
-                <SelectTrigger className="text-base">
+                <SelectTrigger className="text-base bg-white">
                   <SelectValue placeholder="Select your primary business type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -251,7 +252,7 @@ const ConsultationForm = () => {
                 rows={3}
                 value={formData.challenge}
                 onChange={handleInputChange}
-                className="text-base resize-none"
+                className="text-base resize-none bg-white"
                 placeholder="Describe your current challenges..."
               />
             </div>
@@ -268,7 +269,7 @@ const ConsultationForm = () => {
                 rows={3}
                 value={formData.successVision}
                 onChange={handleInputChange}
-                className="text-base resize-none"
+                className="text-base resize-none bg-white"
                 placeholder="Describe your ideal future state..."
               />
             </div>
@@ -287,7 +288,7 @@ const ConsultationForm = () => {
           </div>
         </form>
       </div>
-    </section>
+    </FloatingCard>
   );
 };
 
